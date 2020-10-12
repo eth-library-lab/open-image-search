@@ -4,10 +4,14 @@ import os
 import numpy as np
 from PIL import Image
 import tensorflow as tf
+from typing import List, Optional, Text, Tuple
 
-def get_list_of_files_dir(fldr_path, file_types = ['jpg', 'jpeg','png']):
+
+
+def get_list_of_files_in_dir(fldr_path, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True):
     """
-    
+    file_types: 'all' or list of allowed file endings
+    keep_fldr_path: boolean, if false the input fldr_path prefix will be removed from the returned list entries
     """
 
     existing_flist = []
@@ -15,11 +19,17 @@ def get_list_of_files_dir(fldr_path, file_types = ['jpg', 'jpeg','png']):
     for dirpath, dirnames, filenames in os.walk(fldr_path):
         for fname in filenames:
             cur_fpath = os.path.join(dirpath,fname)
-            if file_types == True:
+            
+            if keep_fldr_path == False:
+                cur_fpath = cur_fpath.replace(fldr_path, '').strip('/').strip('\\')
+            
+            if file_types == 'all':
                 existing_flist.append(cur_fpath)
             elif fname.split('.')[-1].lower() in file_types:
                 existing_flist.append(cur_fpath)
-
+    
+    print("found {:d} existing images".format(len(existing_flist)))
+    
     return existing_flist
     
 ### IMAGE PROCESSING
