@@ -33,7 +33,35 @@ def get_list_of_files_in_dir(fldr_path, file_types = ['jpg', 'jpeg','png'], keep
     return existing_flist
     
 ### IMAGE PROCESSING
-        
+
+def parse_image_func(filepath, label):
+    
+    """filename: string tensor
+    label: string tensor"""
+    
+    image_string = tf.io.read_file(filepath)
+    image = tf.image.decode_jpeg(image_string)
+    image = tf.image.convert_image_dtype(image, tf.float32)
+    #images have been resized to 224 in data cleaning/prep
+    image = tf.image.resize(image, [224, 224])
+
+    return image, label
+
+
+def augment_func(image, label): #add a dictionary for kwargs
+    
+    image = tf.image.random_flip_up_down(image)
+    image = tf.image.random_flip_left_right(image)
+    image = tf.image.random_brightness(image, max_delta=32.0 / 255.0)
+    image = tf.image.random_saturation(image, lower=0.5, upper=1.5) 
+    image = tf.image.random_contrast(image, 0.75, 1.25)
+    
+    image = tf.image.resize_with_crop_or_pad(image, 336, 336)
+    image = tf.image.random_crop(image, size=[224, 224, 3])
+    #Make sure the image is still in [0, 1]
+    #image = tf.clip_by_value(image, 0.0, 1.0) can't clip as values are normalized around 0
+    
+    return image, label
 
 def calc_rgb_means(img):
     
@@ -220,3 +248,21 @@ def make_tfdataset_from_df(df,
     dataset = dataset.prefetch(1)
     
     return dataset
+
+
+def print_dyn_progress_bar(total, i):
+    """print a progress bar in a single line to monitor a for loop """
+    
+    barwidth = 50
+
+    percent_complete = (i+1)/total
+    completed = int(percent_complete * barwidth)
+    remaining = barwidth - completed 
+    
+    bar_str = "\r[{}{}{}] {:0.2%}".format('-'*completed,
+                                          '>',
+                                          ' '*remaining,
+                                          percent_complete )
+    print(bar_str, end='')   
+    
+    return
