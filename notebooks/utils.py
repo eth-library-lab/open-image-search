@@ -5,7 +5,10 @@ import numpy as np
 from PIL import Image
 import tensorflow as tf
 from typing import List, Optional, Text, Tuple
+from datetime import datetime as dt
 
+def time_stamp():
+    return dt.now().strftime('%Y%m%d%H%M')
 
 
 def get_list_of_files_in_dir(fldr_path, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True):

@@ -11,6 +11,15 @@ To Do
 [ ] data workflow - new images, retraining comparison algorithm
     
 
+# Possible Improvements
+
+[ ] scalability & speed
+    search algo: Annoy or NMSLIB
+[ ] accuracy
+    - better pretrained model
+    - finetuning
+    - different architecture
+[ ] improve UI
 
 
 # Resources
@@ -27,6 +36,10 @@ ISBN: 9781492034865
 
 
 # Papers
+
+## image retrieval
+
+https://paperswithcode.com/task/image-retrieval
 
 
 
