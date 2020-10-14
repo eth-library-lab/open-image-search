@@ -23,7 +23,8 @@ import axios from 'axios'
       return {
         info:null,
         loading: true,
-        errord: false,
+        errored: false,
+        first_url: "http://localhost:8000/image-metadata?offset=150&limit=10/",
         objects: []
         //   {
         //     "id": 1000,
@@ -75,9 +76,8 @@ import axios from 'axios'
     },
      mounted () {
 
-
       axios
-        .get('http://localhost:8000/image-metadata?limit=10/')
+        .get(this.first_url)
         .then(response => {
           this.objects = response.data['results']
         })
