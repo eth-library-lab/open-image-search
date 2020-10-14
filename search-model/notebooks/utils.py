@@ -2,6 +2,7 @@
 
 import os
 import numpy as np
+import pandas as pd
 from PIL import Image
 import tensorflow as tf
 from typing import List, Optional, Text, Tuple
@@ -269,3 +270,14 @@ def print_dyn_progress_bar(total, i):
     print(bar_str, end='')   
     
     return
+
+
+def load_metadata():
+    # load metadata file
+    fldr_path = os.path.join('..', 'data','interim')
+    fname = 'graphik_portal_202010121646.csv'
+    fpath = os.path.join(fldr_path, fname)
+
+    df = pd.read_csv(fpath, index_col=0)
+    
+    return df
