@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = int(os.environ.get("DEBUG", default=0))
+DEBUG = int(os.environ.get("DEBUG", default=1))
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localhost').split(" ")
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.BrowsableAPIRenderer',], #,'rest_framework.renderers.JSONRenderer',],
+    # 'DEFAULT_RENDERER_CLASSES': ['rest_framework.renderers.BrowsableAPIRenderer',], #,'rest_framework.renderers.JSONRenderer',],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
     'DEFAULT_THROTTLE_RATES': {
@@ -135,7 +135,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
 MEDIA_URL = os.environ.get("HOST_URL", "localhost:8000") + '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+
+# settings related to tensorflow model / feature extraction
+TENSORFLOW_SERVING_BASE_URL = "http://localhost:8500/v1/models/{model_name}/versions/{model_version}:predict"

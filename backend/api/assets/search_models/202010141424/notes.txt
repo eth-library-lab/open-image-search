@@ -1,0 +1,26 @@
+Feature_Extraction_Model: "vgg16_imagenet"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+vgg16 (Model)                (None, 7, 7, 512)         14714688  
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 1, 1, 512)         0         
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 512)               0         
+_________________________________________________________________
+layer_normalization_1 (Layer (None, 512)               1024      
+=================================================================
+Total params: 14,715,712
+Trainable params: 14,715,712
+Non-trainable params: 0
+_________________________________________________________________
+Nonefeatures_file_serial_num: 202010121706
+search_algorithm_name: NearestNeighbors10
+algorithm: brute
+leaf_size: 30
+metric: euclidean
+metric_params: None
+n_jobs: None
+n_neighbors: 10
+p: 2
+radius: 1.0

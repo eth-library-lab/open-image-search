@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from ImageSearch.viewsets import ImageMetadataViewset
+from ImageSearch.viewsets import ImageMetadataViewset, image_search
 
 router = routers.DefaultRouter()
 router.register(r'image-metadata', ImageMetadataViewset)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path(r'image-search', image_search, name='image-search')
     # path()
 ] + router.urls
