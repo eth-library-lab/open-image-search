@@ -48,10 +48,10 @@ def image_search(request):
             print('at img_stream: ', img_stream)
             object_ids = get_nearest_object_ids(img_stream) # [3,18,19,33,52]
             qry_set = ImageMetadata.objects.all()
-            results_metadata = {}
+            results_metadata = []
 
-            for i, obj_id in enumerate(object_ids):
-                results_metadata[i] = qry_set.filter(object_id=obj_id).values()
+            for obj_id in object_ids:
+                results_metadata.append(qry_set.filter(object_id=obj_id).values()[0])
 
             # resp_serializer = ImageSearchResultSerializer(results_metadata, many=True)
 
