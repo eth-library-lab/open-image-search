@@ -1,5 +1,10 @@
 # reverse-image-search
 
+# To Do
+
+
+[ ] change image results resolution to medium or low 
+
 ## Project setup
 ```
 npm install

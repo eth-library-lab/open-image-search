@@ -1,21 +1,35 @@
 <template>
   <div>
-    <h1>This is a page of MetaData</h1>
-
-    <div v-for="object in objects" v-bind:key="object.id">
-      <hr>
-      <div>
-        <a v-bind:href="object.detail_url">{{ object.title }}</a>
+    <h1>Reverse Image Search ETH Collection</h1>
+    <div>
+      <DragAndDrop/>
+      <!-- <img src="https://www.e-gs.ethz.ch/eMP/eMuseumPlus?service=ImageAsset&module=collection&objectId=4083&resolution=lowImageResolution" height="200" > -->
+      <!-- <hr style="height:5px;border-width:0;color:black;background-color:black"> -->
+    </div>
+    <Spinner v-if="loading"/>
+    <div >
+      <h3>Search Results</h3>
+      <div class="results-wrapper" v-if="!loading" >
+        
+        <div class="result-card" v-for="object in objects" v-bind:key="object.id">
+          
+          <hr>
+          <div>
+            <a v-bind:href="object.detail_url" target="_blank">
+              <p>{{ object.title }}</p>
+              <img v-bind:src="object.image_url" height="200" >
+            </a>
+          </div>        
+        </div>
       </div>
-      <div>
-        <img v-bind:src="object.image_url" height="200">
-      </div>
-    </div>  
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Spinner from '@/components/Spinner.vue';
+import DragAndDrop from '@/components/DragAndDrop.vue';
 // axios.defaults.baseURL = 'http://localhost:8000/';
 
   export default {
@@ -24,7 +38,7 @@ import axios from 'axios'
         info:null,
         loading: true,
         errored: false,
-        first_url: "http://localhost:8000/image-metadata?offset=150&limit=10/",
+        first_url: "http://localhost:8000/image-metadata?offset=500&limit=10/",
         objects: []
         //   {
         //     "id": 1000,
@@ -86,10 +100,24 @@ import axios from 'axios'
           this.errored = true
         })
         .finally(() => this.loading = false)
+    },
+    components: {
+      Spinner,
+      DragAndDrop
     }
   }
 </script>
 
 <style scoped>
+.results-wrapper {
+  overflow-y: scroll;
+  height: 60vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 10px;
+  padding: 4px;
+}
 
 </style>

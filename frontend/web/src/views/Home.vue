@@ -1,18 +1,27 @@
 <template>
   <div>
     <img alt="Logo" height="200" src="https://gs.ethz.ch/wp-content/uploads/2020/04/Franz-Gertsch_Banner__klein_4750_1371.gif" />
-    <ReverseImageSearch msg="ETH Graphische Sammlung"/>
+    <h1>ETH Graphische Sammlung</h1>
+      <p>
+        prototype tool to search the graphics collection of ETH Zurich by finding similar images 
+      </p>
+      <p>
+        <br />
+        developed by
+      </p>
+    <LibLabLogo color="black" size="125"/>
+    <!-- <Spinner size="500"/> -->
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import ReverseImageSearch from "@/components/ReverseImageSearch.vue";
+// import Spinner from '@/components/Spinner.vue';
+import LibLabLogo from '@/components/LibLabLogo.vue';
 
 export default {
   name: "Home",
   components: {
-    ReverseImageSearch
+    LibLabLogo
   }
 };
 </script>
