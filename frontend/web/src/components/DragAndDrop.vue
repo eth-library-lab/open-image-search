@@ -1,31 +1,54 @@
 <template>
     <div style="text-align: center;">
-        <div class="upload-box" 
+        <div :class="[isUploadDisabled ?  'upload-box' : 'upload-box uploadReady']" 
             id="app" 
-            @click="this.$refs.fileInput.click" 
+            @click="clickFileInput"
             v-cloak 
-            @drop.prevent="addFile" 
+            @drop.prevent="addFile"
             @dragover.prevent>
         <h2>Upload a Search Image</h2>
-        <h5><i>Click or Drag and Drop</i></h5>
-        <input type="file" 
-            style="display: none;" 
-            ref="fileInput" 
-            @change="onInputFileSelected">
-        
-        <ul>
-            <li v-for="file in files" :key="file.id">
-                {{ file.name }} ({{ kb_filter(file.size) }} bytes) 
-                <button @click="removeFile(file)" title="Remove">X</button>
-            </li>
-        </ul>
-        
+        <div v-show="files.length==0">
+            <h5><i>Click or Drag and Drop</i></h5>
+            <input type="file" 
+                style="display: none;" 
+                ref="fileInput"
+                @change="onInputFileSelected">
         </div>
-        <button v-if="!isUploadDisabled" :class="{ uploadDisabled: isUploadDisabled }"
+        <table v-if="files.length>0"
+            class="table table-hover">
+            <thead>
+                <tr>
+                    <th>thumbnail</th>
+                    <th>file name</th>
+                    <th>size</th>
+                    <th>remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="file in files" :key="file.id">
+                    <td :id="'gallery-'+file.name"></td>
+                    <td>
+                        <p>{{ file.name }}</p> 
+                    </td>
+                    <td>{{ kb_filter(file.size) }} kb</td>
+                    <td>
+                        <button class="remove-button" 
+                            @click="removeFile(file)" 
+                            title="Remove File"
+                            v-on:click.stop>X</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="gallery"></div>
+        </div>
+        <button v-if="!isUploadDisabled" class="btn-search" 
             :disabled="isUploadDisabled" 
             @click="upload"
             :title="[isUploadDisabled ? 'need to add files first' : 'click to upload']"
             >Search</button>
+
+
     </div>
 </template>
 
@@ -43,32 +66,51 @@ export default {
         }
     },
     methods:{
+        clickFileInput() {
+            if (this.files.length == 0) {
+                this.$refs.fileInput.click()
+            }
+        },
+        previewFile(file) {
+            let reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = function() {
+                let img = document.createElement('img')
+                img.src = reader.result
+                img.height = 100
+                img.id='img-'+file.name
+                document.getElementById('gallery-'+file.name).appendChild(img)
+            }
+        },
         kb_filter(val) {
-            return Math.floor(val/1024);  
+            return Math.floor(val/1024).toLocaleString('en');  
         },
         addFile(e) {
-        let droppedFiles = e.dataTransfer.files;
-        if(!droppedFiles) return;
-        // this tip, convert FileList to array, credit: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-        ([...droppedFiles]).forEach(f => {
-            this.files.push(f);
-        });
+            let droppedFiles = e.dataTransfer.files;
+            if(!droppedFiles) return;
+            // this tip, convert FileList to array, credit: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
+            ([...droppedFiles]).forEach(f => {
+                this.files.push(f);
+            });
         },
         onInputFileSelected(event) {
-                this.files.push(event.target.files[0])
+                let newFile = event.target.files[0]
+
+                if (newFile) {
+                    this.files.push(newFile)
+                    this.previewFile(newFile)
+                }
             },
         removeFile(file){
-        this.files = this.files.filter(f => {
-            return f != file;
-        });      
+            this.files = this.files.filter(f => {
+                return f != file;
+            });      
         },
         upload() {
-        
-        let formData = new FormData();
-        this.files.forEach((f,x) => {
-            formData.append('file'+(x+1), f);
+            let formData = new FormData();
+            this.files.forEach((f,x) => {
+                formData.append('file'+(x+1), f);
         });
-        
         fetch('https://httpbin.org/post', {
             method:'POST',
             body: formData
@@ -86,18 +128,48 @@ export default {
 </script>
 
 <style scoped>
+.table{
+    margin-right: auto;
+    margin-left: auto;
+    border-collapse: separate;
+    border-spacing: 50px 0;
+}
+.td{
+    padding: 50px 0;
+}
 .upload-box{
     margin: auto;
     border: 5px solid #5C7D8A;
     background: #76a0b11a;
-    border-radius: 10px;
+    border-radius: 15px;
     max-width:750px;
+    transition: all 1s;
     
 }
 .upload-box:hover{
-    background: #98cee45e;
+    background: #98cee47c;
 }
 .uploadDisabled{
     background:rgba(61, 58, 58, 0.205);
+}
+.uploadReady{
+    background: #98cee4e3;
+    transition: all 1s;
+}
+.uploadReady:hover{
+    background:#98cee4e3;
+}
+.btn-search{
+    margin:10px;
+    padding:15px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-radius: 15px;
+    background-color:#98cee4e3;
+}
+.remove-button{
+    padding:5px;
+    background-color:black;
+    z-index: 5;
 }
 </style>
