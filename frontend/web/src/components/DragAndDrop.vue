@@ -33,7 +33,7 @@
                     <td>{{ kb_filter(selectedImage.size) }} kb</td>
                     <td>
                         <button class="remove-button" 
-                            @click="removeFile()" 
+                            @click="removeFileAndResults()" 
                             title="Remove File"
                             v-on:click.stop>X</button>
                     </td>
@@ -47,12 +47,15 @@
             @click="upload"
             :title="[isUploadDisabled ? 'need to add files first' : 'click to upload']"
             >Search</button>
-        <div>searchResults: {{ searchResults }} </div>
-    
+            
+        <SearchResults :searchResults="searchResults" />
+        <Spinner v-if="isLoading"/>
     </div>
 </template>
 
 <script>
+import SearchResults from '@/components/SearchResults.vue';
+import Spinner from '@/components/Spinner.vue';
 import axios from 'axios'
 
 export default {
@@ -60,8 +63,13 @@ export default {
         return {
             selectedImage: null,
             uploadDisabled: true,
+            isLoading: false,
             searchResults: []
         }
+    },
+    components:{
+        SearchResults,
+        Spinner
     },
     computed: {
         isUploadDisabled() {
@@ -102,11 +110,11 @@ export default {
                 this.previewFile(newFile)
             }
         },
-        removeFile(){
+        removeFileAndResults(){
             this.selectedImage = null
+            this.searchResults = []
         },
         upload() {
-            
             let formData = new FormData()
             formData.append('image', this.selectedImage)
 
@@ -116,6 +124,7 @@ export default {
                     'Content-Type': 'multipart/form-data'
                     }
                 }
+            this.isLoading = true
             axios
                 .post(searchURL, formData, headers)
                 .then(response => {
@@ -126,7 +135,7 @@ export default {
                 console.log(error)
                 this.errored = true
                 })
-                .finally(() => this.loading = false)
+                .finally(() => this.isLoading = false)
             
         }
     }
