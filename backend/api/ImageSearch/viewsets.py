@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view 
 
+from settings.settings import DEBUG
 from ImageSearch.models import ImageMetadata
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer
@@ -54,6 +55,9 @@ def image_search(request):
                 results_metadata.append(qry_set.filter(object_id=obj_id).values()[0])
 
             # resp_serializer = ImageSearchResultSerializer(results_metadata, many=True)
+            
+            if DEBUG:
+                print('\napi response: ', results_metadata, '\n\n')
 
             return Response(results_metadata, status=200)
 

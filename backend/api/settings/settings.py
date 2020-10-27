@@ -147,4 +147,4 @@ MEDIA_URL = os.environ.get("HOST_URL", "localhost:8000") + '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 # settings related to tensorflow model / feature extraction
-TENSORFLOW_SERVING_BASE_URL = "http://localhost:8500/v1/models/{model_name}/versions/{model_version}:predict"
+TENSORFLOW_SERVING_BASE_URL = "http://localhost:8501/v1/models/{model_name}/versions/{model_version}:predict"
