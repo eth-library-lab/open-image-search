@@ -7,14 +7,14 @@
             @drop.prevent="addFile"
             @dragover.prevent>
         <h2>Upload a Search Image</h2>
-        <div v-show="files.length==0">
+        <div v-show="!this.selectedImage">
             <h5><i>Click or Drag and Drop</i></h5>
             <input type="file" 
                 style="display: none;" 
                 ref="fileInput"
                 @change="onInputFileSelected">
         </div>
-        <table v-if="files.length>0"
+        <table v-if="this.selectedImage"
             class="table table-hover">
             <thead>
                 <tr>
@@ -25,15 +25,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="file in files" :key="file.id">
-                    <td :id="'gallery-'+file.name"></td>
+                <tr v-if="selectedImage" :key="selectedImage.id">
+                    <td :id="'gallery-'+selectedImage.name"></td>
                     <td>
-                        <p>{{ file.name }}</p> 
+                        <p>{{ selectedImage.name }}</p> 
                     </td>
-                    <td>{{ kb_filter(file.size) }} kb</td>
+                    <td>{{ kb_filter(selectedImage.size) }} kb</td>
                     <td>
                         <button class="remove-button" 
-                            @click="removeFile(file)" 
+                            @click="removeFile()" 
                             title="Remove File"
                             v-on:click.stop>X</button>
                     </td>
@@ -47,27 +47,30 @@
             @click="upload"
             :title="[isUploadDisabled ? 'need to add files first' : 'click to upload']"
             >Search</button>
-
-
+        <div>searchResults: {{ searchResults }} </div>
+    
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
-            files:[],
+            selectedImage: null,
             uploadDisabled: true,
+            searchResults: []
         }
     },
     computed: {
         isUploadDisabled() {
-            return this.files.length == 0 
+            return this.selectedImage == null
         }
     },
     methods:{
         clickFileInput() {
-            if (this.files.length == 0) {
+            if (this.isUploadDisabled) {
                 this.$refs.fileInput.click()
             }
         },
@@ -89,39 +92,42 @@ export default {
             let droppedFiles = e.dataTransfer.files;
             if(!droppedFiles) return;
             // this tip, convert FileList to array, credit: https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-            ([...droppedFiles]).forEach(f => {
-                this.files.push(f);
-            });
+            this.selectedImage = droppedFiles[0];
         },
         onInputFileSelected(event) {
-                let newFile = event.target.files[0]
+            let newFile = event.target.files[0]
 
-                if (newFile) {
-                    this.files.push(newFile)
-                    this.previewFile(newFile)
-                }
-            },
-        removeFile(file){
-            this.files = this.files.filter(f => {
-                return f != file;
-            });      
+            if (newFile) {
+                this.selectedImage = newFile
+                this.previewFile(newFile)
+            }
+        },
+        removeFile(){
+            this.selectedImage = null
         },
         upload() {
-            let formData = new FormData();
-            this.files.forEach((f,x) => {
-                formData.append('file'+(x+1), f);
-        });
-        fetch('https://httpbin.org/post', {
-            method:'POST',
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            console.log('done uploading', res);
-        })
-        .catch(e => {
-            console.error(JSON.stringify(e.message));
-        });
+            
+            let formData = new FormData()
+            formData.append('image', this.selectedImage)
+
+            console.log(formData.keys)
+            let searchURL = '//localhost:8000/image-search'
+            let headers = { headers: {
+                    'Content-Type': 'multipart/form-data'
+                    }
+                }
+            axios
+                .post(searchURL, formData, headers)
+                .then(response => {
+                    console.log(response)
+                    this.searchResults = response.data
+                    })
+                .catch(error => {
+                console.log(error)
+                this.errored = true
+                })
+                .finally(() => this.loading = false)
+            
         }
     }
 }
