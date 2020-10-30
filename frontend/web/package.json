@@ -11,7 +11,8 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuetify": "^2.3.16"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -26,7 +27,8 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "prettier": "^1.19.1",
     "sass": "^1.27.0",
-    "sass-loader": "^10.0.3"
+    "sass-loader": "^10.0.3",
+    "vue-cli-plugin-vuetify": "~2.0.7"
   },
   "eslintConfig": {
     "root": true,

@@ -7,6 +7,7 @@ from PIL import Image
 import tensorflow as tf
 from typing import List, Optional, Text, Tuple
 from datetime import datetime as dt
+import csv
 
 def time_stamp():
     return dt.now().strftime('%Y%m%d%H%M')
@@ -272,7 +273,25 @@ def print_dyn_progress_bar(total, i):
     return
 
 
-def load_metadata():
+def load_features(fname='features_202010121706.csv'):
+
+    fldr_path = os.path.join('..', 'data','processed')
+    fpath = os.path.join(fldr_path, fname)
+
+    with open(fpath,'r') as dest_f:
+        data_reader = csv.reader(dest_f,
+                               delimiter = ',')
+        next(data_reader) #skips the header/first line
+        data = [data for data in data_reader]
+
+    data_array = np.asarray(data, dtype=np.float32)
+    labels = data_array[:,0].astype(int)
+    features_list = data_array[:,1:].tolist()
+
+    return labels, features_list 
+
+
+def load_metadata(fname='graphik_portal_202010121646.csv'):
     # load metadata file
     fldr_path = os.path.join('..', 'data','interim')
     fname = 'graphik_portal_202010121646.csv'

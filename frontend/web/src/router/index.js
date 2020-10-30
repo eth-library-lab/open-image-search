@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
+//import ImageSearch from "../views/ImageSearch.vue";
 
 const routes = [
   {
@@ -8,13 +9,13 @@ const routes = [
     component: Home
   },
   {
-    path: "/metadata",
-    name: "Metadata",
+    path: "/search",
+    name: "ImageSearch",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Metadata.vue")
+      import(/* webpackChunkName: "about" */ "../views/ImageSearch.vue")
   }
 ];
 
