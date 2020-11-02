@@ -4,9 +4,6 @@
         <v-row class="text-center">
             <v-col>
             <p>
-                prototype tool to search the graphics collection of ETH Zurich for similar images 
-            </p>
-            <p>
                 <br />
                 developed by
             </p>

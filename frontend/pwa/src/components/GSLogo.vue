@@ -20,8 +20,8 @@
 export default {
   props: {
     size: {
-      type: String,
-      default: '150px',
+      type: Number,
+      default: 150,
     },
     color: {
         type: String,

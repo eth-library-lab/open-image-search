@@ -1,9 +1,8 @@
 <template>
   <v-app>
     <NavBar />
-
-    <v-main>
-      <router-view />
+    <v-main class="my-1 py-2">
+      <router-view class="my-1 py-1"></router-view>
     </v-main>
   </v-app>
 </template>
@@ -23,3 +22,7 @@ export default {
   }),
 };
 </script>
+
+<style >
+
+</style>
