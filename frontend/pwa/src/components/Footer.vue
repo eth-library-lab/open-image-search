@@ -1,17 +1,17 @@
 <template>
-    <div>
-        <v-container>
-        <v-row class="text-center">
-            <v-col>
-            <p>
-                <br />
-                developed by
-            </p>
-            <LibLabLogo color="black" size="125"/>
-            </v-col>
-        </v-row>
-        </v-container>
-    </div>
+    <v-footer fixed padless >
+        <v-card flat tile class="flex">
+            <v-row class="text-center">
+                <v-col>
+                <p>
+                    <br />
+                    developed by
+                </p>
+                <LibLabLogo color="black" size="125"/>
+                </v-col>
+            </v-row>
+        </v-card>
+    </v-footer>
 </template>
 
 <script>
