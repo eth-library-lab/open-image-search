@@ -25,15 +25,16 @@
                     <v-card
                         v-for="object in searchResults"
                         :key="object.id"
-                        class="pa-2 justify-center"
+                        :href="object.detail_url"
+                        target="_blank"
+                        class="pa-2 ma-1 justify-center"
                         align="center" 
                         justify="center"
+                        elevation="1"
                         outlined>
                         <div>
-                            <a v-bind:href="object.detail_url" target="_blank">
                             <p>{{ object.title }}</p>
                             <img v-bind:src="object.image_url.replace('resolution=superImageResolution', 'resolution=mediumImageResolution')" height="200" >
-                            </a>
                         </div>   
                     </v-card>
                 </v-card>
@@ -71,7 +72,7 @@ export default {
 <style lang="css" scoped>
 .results-wrapper {
   overflow-y: auto;
-  height: 60vh;
+  height: 45vh;
   display: flex;
   flex-flow: column;
   align-items: center;
