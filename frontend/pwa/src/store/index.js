@@ -52,6 +52,9 @@ export default new Vuex.Store({
     CHANGE_RESULTSLOADED_STATUS(state, status) {
       state.resultsLoaded = status
     },
+    CHANGE_ISLOADING_STATUS(state, status) {
+      state.isLoading = status
+    }
   },
   actions: {
     changeFileSelectedStatus( { commit }, status) {
@@ -59,6 +62,9 @@ export default new Vuex.Store({
     },
     changeResultsLoadedStatus( { commit }, status) {
       commit('CHANGE_RESULTSLOADED_STATUS', status)
+    },
+    changeIsLoadingStatus( { commit }, status) {
+      commit('CHANGE_ISLOADING_STATUS', status)
     }
   },
   getters: {
