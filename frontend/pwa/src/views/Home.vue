@@ -20,16 +20,10 @@ export default {
     SearchResults
   },
   computed: {
-    ...mapGetters(['isFileSelected']),
+    ...mapGetters(['isFileSelected', 'resultsLoaded']),
     getSearchResults() {
       return this.$store.getters.getSearchResults
     },
-    resultsLoaded() {
-      return this.$store.getters.resultsLoaded
-    },
-    getUploadStatus() {
-      return this.$store.getters.getUploadStatus
-    }
   }
 }
 

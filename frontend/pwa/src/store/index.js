@@ -8,6 +8,7 @@ export default new Vuex.Store({
       fileSelected: false,
       uploadReady: false,
       resultsLoaded: false,
+      isLoading: false,
       searchResults: [
         {
           title:'Hero Alpen Rosti',
@@ -47,11 +48,17 @@ export default new Vuex.Store({
     },
     CHANGE_FILESELECTED_STATUS(state, status) {
       state.fileSelected = status
-    }
+    },
+    CHANGE_RESULTSLOADED_STATUS(state, status) {
+      state.resultsLoaded = status
+    },
   },
   actions: {
-    changeUploadStatus( { commit }, status) {
+    changeFileSelectedStatus( { commit }, status) {
       commit('CHANGE_FILESELECTED_STATUS', status)
+    },
+    changeResultsLoadedStatus( { commit }, status) {
+      commit('CHANGE_RESULTSLOADED_STATUS', status)
     }
   },
   getters: {
@@ -61,11 +68,11 @@ export default new Vuex.Store({
     getSearchResults(state) {
       return state.searchResults
     },
-    getUploadStatus: state => {
-      return state.uploadReady
-    },
     resultsLoaded(state) {
-      return state.searchResults.length >0
+      return state.resultsLoaded
+    },
+    getIsLoading(state) {
+      return state.isLoading
     }
   },
   modules: {

@@ -9,6 +9,11 @@
         <v-row justify="center" >
             <h3>Search Results</h3>
         </v-row>
+        <v-row v-if="getIsLoading" 
+            justify="center"
+            align="center">
+            <Spinner />
+        </v-row>
         <v-row >
             <v-col class="results-wrapper" >
                 <v-card
@@ -34,19 +39,32 @@
                 </v-card>
             </v-col>    
         </v-row>
-
         </div>
     </v-container>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import Spinner from '@/components/Spinner.vue';
+
 export default {
     props: {
         searchResults: {
             type: Array,
             required: true
         }
+    },
+    data() {
+        return {
+        }
+    },
+    components:{
+        Spinner
+    },
+    computed: {
+        ...mapGetters(['getIsLoading'])
     }
+
 }
 </script>
 

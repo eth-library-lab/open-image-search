@@ -6,32 +6,44 @@
             </v-col>
         </v-container>
       <v-container class="my-0 py-0">
-       <v-row align="center" justify="center">
+       <v-row class="mt-0 pt-0" align="center" justify="center">
         <v-col class="mt-0 pt-0" xs="12" sm="11" md="10" lg="10" align="center">
-            <v-card  >
-                <v-card-text class="font-weight-bold">Search Image</v-card-text>
-                <v-row>
-                <v-col v-if="selectedFile">
-                    <div class="img-preview-container image-border" id="img-preview-container">
-                    <v-img 
-                        v-if="selectedFile" 
-                        :src="selectedFileSrc"
-                        contain>
-                    </v-img>
-                    </div>
-                </v-col>
-                <v-col  align-self="end">
-                    <v-file-input
-                        v-model="selectedFile"
-                        v-if="resultsLoaded"                    
-                        show-size
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Select a File"
-                        prepend-icon="mdi-image"
-                        @change="previewFile(selectedFile)"
-                    ></v-file-input>
-                </v-col>
+            <v-card >
+                <v-card-text class="font-weight-bold my-1 pb-1">Search Image</v-card-text>
+                <v-row align="center" justify="center">
+                    <v-col 
+                        v-show="isFileSelected" 
+                        align="center" 
+                        justify="center">
+                        <div 
+                            class="img-preview-container image-border" 
+                            id="img-preview-container">
+                        </div>
+                    </v-col>
+                    <v-col class="ma-0 py-0"
+                        align-self="end">
+                        <v-file-input 
+                            class="ma-0 py-0"
+                            v-model="selectedFile"            
+                            show-size
+                            accept="image/png, image/jpeg, image/bmp"
+                            placeholder="Select a File"
+                            prepend-icon="mdi-image"
+                            @change="previewFile(selectedFile)"
+                            @click:clear="clearResults()"
+                        ></v-file-input>
+                    </v-col>
                 </v-row>
+                <!-- <v-row >
+                    <v-col justify="center" v-if="resultsLoaded" class="ma-0 pa-0">
+                        <v-icon
+                            @click="clearResults()"
+                            class="pa-4"
+                            title="clear results and search image">
+                            mdi-close-box
+                        </v-icon>
+                    </v-col>
+                </v-row> -->
                 </v-card>
             </v-col>
         </v-row>
@@ -39,9 +51,11 @@
             align="center"
             justify="center">
             <v-col cols="10" align="center">
-            <v-btn class="align-center"
+            <v-btn 
+                class="align-center"
                 color="primary"
-                elevation="2">
+                elevation="2"
+                @click="uploadImage">
                 Upload
             </v-btn>
             </v-col>
@@ -58,23 +72,23 @@ export default {
       selectedFile: null,
     }),
     computed: {
-        ...mapGetters(['resultsLoaded']),
-        isFileSelected() {
-            return this.$store.getters.isFileSelected
-        },
+        ...mapGetters(['resultsLoaded', 'isFileSelected']),
     },
     methods: {
-        ...mapActions(['changeUploadStatus']),
+        ...mapActions(['changeFileSelectedStatus','changeResultsLoadedStatus']),
         removeExistingPreview() {
             var existingElement = document.getElementById('img-preview')
             if (existingElement) {
             existingElement.remove()
             }
-            this.changeUploadStatus(false)
+            this.changeFileSelectedStatus(false)
+        },
+        uploadImage() {
+            this.changeFileSelectedStatus(true)
+            this.changeResultsLoadedStatus(true)
         },
         previewFile(imageFile) {
             this.removeExistingPreview()
-
             let reader = new FileReader()
             reader.readAsDataURL(imageFile)
             reader.onloadend = function() {
@@ -86,9 +100,14 @@ export default {
                 img.display='flex'
                 document.getElementById('img-preview-container').appendChild(img)
             }
-
-            this.changeUploadStatus(true)
+            this.changeFileSelectedStatus(true)
         },
+        clearResults() {
+            this.selectedFile = null
+            this.removeExistingPreview()
+            this.changeResultsLoadedStatus(false)
+            this.changeFileSelectedStatus(false)
+        }
     }
 }
 </script>
@@ -104,9 +123,7 @@ export default {
   width: 95%;
   padding-left: 50px;
   padding-right: 50px;
-
 }
-
 .img-preview-container{
   min-height: 0vh;
   max-height: 55vh;
@@ -118,5 +135,13 @@ export default {
 .img-preview{
     height: 50px;
     display: flex;
+}
+.circle {
+    width: 100px;
+    height: 100px;
+    background: red;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
 }
 </style>
