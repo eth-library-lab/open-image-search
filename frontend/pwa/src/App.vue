@@ -1,9 +1,11 @@
 <template>
   <v-app>
     <NavBar />
-    <v-main class="my-1 py-2">
-      <router-view class="my-1 py-1"></router-view>
+    <div>
+    <v-main class="">
+      <router-view class=""></router-view>
     </v-main>
+    </div>
   </v-app>
 </template>
 

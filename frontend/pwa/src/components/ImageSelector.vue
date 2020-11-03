@@ -11,18 +11,7 @@
             <v-card  >
                 <v-card-text class="font-weight-bold">Search Image</v-card-text>
                 <v-row>
-                <v-col>
-                    <v-file-input
-                        v-model="selectedFile"
-                        v-if="resultsLoaded"                    
-                        show-size
-                        accept="image/png, image/jpeg, image/bmp"
-                        placeholder="Select a File"
-                        prepend-icon="mdi-image"
-                        @change="previewFile(selectedFile)"
-                ></v-file-input>
-                </v-col>
-                <v-col v-if="selectedFile" justify="end">
+                <v-col v-if="selectedFile">
                     <div class="img-preview-container image-border" id="img-preview-container">
                     <v-img 
                         v-if="selectedFile" 
@@ -31,11 +20,33 @@
                     </v-img>
                     </div>
                 </v-col>
+                <v-col  align-self="end">
+                    <v-file-input
+                        v-model="selectedFile"
+                        v-if="resultsLoaded"                    
+                        show-size
+                        accept="image/png, image/jpeg, image/bmp"
+                        placeholder="Select a File"
+                        prepend-icon="mdi-image"
+                        @change="previewFile(selectedFile)"
+                    ></v-file-input>
+                </v-col>
                 </v-row>
                 </v-card>
             </v-col>
         </v-row>
-        </v-container>
+        <v-row v-if="isFileSelected & !resultsLoaded" 
+            align="center"
+            justify="center">
+            <v-col cols="10" align="center">
+            <v-btn class="align-center"
+                color="primary"
+                elevation="2">
+                Upload
+            </v-btn>
+            </v-col>
+        </v-row>
+    </v-container>
     </div>
 </template>
 

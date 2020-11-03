@@ -1,21 +1,24 @@
 <template>
-  <v-toolbar>
-      <v-app-bar
-        app
-        :height="height"
-        color="primary"
-        dark>
-        <GSLogo color="white" :size="height+15"/> 
-      <v-spacer></v-spacer>
+<v-card
+  flat
+  tile
+  dense
+  :height="height">
+  <v-toolbar 
+    app
+    color="primary"
+    dark>
+    <GSLogo color="white" :size="height+15"/> 
+    <v-spacer></v-spacer>
 
-      <v-btn
-          target="_blank"
-          text
-      >
+    <v-btn
+        target="_blank"
+        text
+    >
       <v-icon>mdi-menu</v-icon>
-      </v-btn>
-      </v-app-bar>
+    </v-btn>
   </v-toolbar>
+</v-card>
 </template>
 
 <script>

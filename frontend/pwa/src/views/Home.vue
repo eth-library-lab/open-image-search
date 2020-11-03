@@ -1,18 +1,6 @@
 <template>
 <div>
-    <ImageSelector class="mt-4" />
-    <v-container v-if="isFileSelected & !resultsLoaded">
-      <v-row align="center"
-        justify="center">
-        <v-col cols="10" align="center">
-          <v-btn class="align-center"
-            color="primary"
-            elevation="2">
-            Upload
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>  
+    <ImageSelector class="mt-1" />  
     <SearchResults v-if="resultsLoaded" :searchResults="getSearchResults" />
     <Footer v-if="!isFileSelected" />
 </div>

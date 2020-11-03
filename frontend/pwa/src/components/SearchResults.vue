@@ -1,23 +1,26 @@
 <template>
-    <v-container>
+    <v-container 
+        justify="center"
+        align="center"
+        align-self="center"
+        align-contents="center"
+        >
         <div >
-        <v-row justify="center">
+        <v-row justify="center" >
             <h3>Search Results</h3>
         </v-row>
         <v-row >
-            <v-col 
-                align="center" 
-                justify="center">
-
+            <v-col class="results-wrapper" >
                 <v-card
-                    class="d-flex align-content-start flex-wrap"
-                    color="grey lighten-2"
+                    class="d-flex align-content-start flex-wrap justify-center"
+                    color="white"
                     flat
+                    over
                     >
                     <v-card
                         v-for="object in searchResults"
                         :key="object.id"
-                        class="pa-2"
+                        class="pa-2 justify-center"
                         align="center" 
                         justify="center"
                         outlined>
@@ -49,7 +52,7 @@ export default {
 
 <style lang="css" scoped>
 .results-wrapper {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 60vh;
   display: flex;
   flex-flow: column;
