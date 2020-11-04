@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
-from settings.settings import TENSORFLOW_SERVING_BASE_URL, DEBUG
+# from settings.settings import TENSORFLOW_SERVING_BASE_URL 
+from settings.settings import DEBUG
 
 import json
 import numpy as np
@@ -63,10 +64,14 @@ def preprocess_img(image_path_or_stream):
 
 
 def format_model_request(preprocessed_img):
-
+    TENSORFLOW_SERVING_BASE_URL = "http://localhost:8505/v1/models/{model_name}/versions/{model_version}:predict"
     model_url = TENSORFLOW_SERVING_BASE_URL.format(
+                        model_name='feature_extraction',
                         model_version=202010121706,
-                        model_name='feature_extraction')
+                        )
+    if DEBUG:
+        print("TENSORFLOW_SERVING_BASE_URL", model_url)
+
     request_data = json.dumps({ "instances": [preprocessed_img, ]})
     headers = {"content-type": "application/json"}
 
@@ -110,7 +115,7 @@ def post_to_model(preprocessed_img):
 def get_nearest_object_ids(img_path_or_stream):
     """
     loads a locally saved image and posts to the model server to get prediction results
-    image_localpath: 
+    image_localpath:
     """
 
     preprocessed_img = preprocess_img(img_path_or_stream)
@@ -119,8 +124,15 @@ def get_nearest_object_ids(img_path_or_stream):
 
     if DEBUG:
         print('model_response: ', model_response.status_code)
-        
+
+    if model_response.status_code != 200:
+        return Response(model_response.content, model_response.status_code)
+    
     model_response_dict = json.loads(model_response.text)
+
+    if DEBUG:
+        print('model_response_dict', model_response_dict)
+
     model_raw_values = model_response_dict['predictions'][0]  #these model values are known as logits
     image_features = np.array(model_raw_values).reshape(1, -1) # reshape for a single record
     object_ids = get_knearest_object_ids(image_features)
@@ -128,8 +140,5 @@ def get_nearest_object_ids(img_path_or_stream):
     if DEBUG:    
         # print('model_raw_values: ', model_raw_values)
         pass
-
-    if model_response.status_code != 200:     
-        return NoneResponse(model_response.content, model_response.status_code)
 
     return object_ids
