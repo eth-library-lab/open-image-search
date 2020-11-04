@@ -14,8 +14,17 @@
             align="center">
             <Spinner />
         </v-row>
-        <v-row >
-            <v-col class="results-wrapper" >
+        <v-row 
+            justify="center"
+            align="center">
+            <v-col 
+                class="results-wrapper"
+                justify="center"
+                align="center"
+                xs="12" 
+                sm="11" 
+                md="10" 
+                lg="8">
                 <v-card
                     class="d-flex align-content-start flex-wrap justify-center"
                     color="white"
@@ -28,6 +37,7 @@
                         :href="object.detail_url"
                         target="_blank"
                         class="pa-2 ma-1 justify-center"
+                        max-width="250"
                         align="center" 
                         justify="center"
                         elevation="1"
