@@ -41,7 +41,7 @@
                             placeholder="Select a File"
                             prepend-icon="mdi-image"
                             color="primary"
-                            @change="previewFile(selectedFile)"
+                            @change="previewAndSelectFile(selectedFile)"
                             @click:clear="clearResults()"
                         ></v-file-input>
                     </v-col>
@@ -82,13 +82,21 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data: () => ({
-      selectedFile: null,
+        selectedFile: null
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected']),
+        // selectedFile: {
+        //     get () {
+        //         return this.$store.state.selectedFile
+        //     },
+        //     set (value) {
+        //         this.$store.commit('UPDATE_SELECTED_FILE', value)
+        //     }
+        // }
     },
     methods: {
-        ...mapActions(['changeFileSelectedStatus','changeResultsLoadedStatus']),
+        ...mapActions(['changeFileSelectedStatus','changeResultsLoadedStatus','searchSimilarImages']),
         removeExistingPreview() {
             var existingElement = document.getElementById('img-preview')
             if (existingElement) {
@@ -96,13 +104,8 @@ export default {
             }
             this.changeFileSelectedStatus(false)
         },
-        uploadImage() {
-            this.changeFileSelectedStatus(true)
-            this.changeResultsLoadedStatus(true)
-        },
         previewFile(imageFile) {
-            this.clearResults()
-            this.removeExistingPreview()
+            
             let reader = new FileReader()
             reader.readAsDataURL(imageFile)
             reader.onloadend = function() {
@@ -121,7 +124,22 @@ export default {
             this.removeExistingPreview()
             this.changeResultsLoadedStatus(false)
             this.changeFileSelectedStatus(false)
-        }
+        },
+        selectFile(imageFile){
+            this.selectedFile = imageFile
+        },
+        previewAndSelectFile(imageFile){
+            // remove previous files and preview
+            this.clearResults()
+            this.removeExistingPreview()
+            //preview and set new file
+            this.previewFile(imageFile)
+            this.selectFile(imageFile)
+        },
+        uploadImage() {
+            console.log('in uploadImage', this.selectedFile)
+            this.searchSimilarImages(this.selectedFile)
+        },
     }
 }
 </script>

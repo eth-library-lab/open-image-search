@@ -1,38 +1,26 @@
 import axios from 'axios'
-import { mapActions } from 'vuex'
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:8000',
     withCredentials: false,
     headers: {
         'Content-Type': 'multipart/form-data'
-
     }
 })
 
 export default {
-    ...mapActions(['changeResultsLoadedStatus', 'changeIsLoadingStatus']),
-    uploadImage() {
+    uploadImage(selectedImage) {
         let formData = new FormData()
-        formData.append('image', this.selectedImage)
-        console.log(formData.keys)
+        formData.append('image', selectedImage)
+        console.log('in upload service:', selectedImage)
+        for (var key of formData.entries()) {
+            console.log(key[0] + ', ' + key[1]);
+        }
+    
         let headers = { headers: {
                 'Content-Type': 'multipart/form-data'
                 }
             }
-        this.changeIsLoadingStatus(true)
-        apiClient
-            .post('image-search', formData, headers)
-            .then(response => {
-                console.log(response)
-                this.changeResultsLoadedStatus(true)
-                return response.data
-                })
-            .catch(error => {
-            console.log(error)
-            this.errored = true
-            })
-            .finally(() => this.changeIsLoadingStatus(false))
-        
+        return apiClient.post('image-search', formData, headers)
     }
 }
