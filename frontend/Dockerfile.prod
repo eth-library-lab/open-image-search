@@ -1,0 +1,16 @@
+# Multistage Image build
+# build environment
+FROM node:12.2.0-alpine as build-stage
+WORKDIR /pwa
+ENV PATH /pwa/node_modules/.bin:$PATH
+COPY pwa/package.json /pwa/package.json
+RUN npm install --silent
+RUN npm install @vue/cli@4.5.6 -g
+COPY ./pwa /pwa
+RUN npm run build
+
+FROM nginx:1.19 as production-stage
+RUN mkdir /pwa
+COPY --from=build-stage /pwa/dist /pwa
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80

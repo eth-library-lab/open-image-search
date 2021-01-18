@@ -2,8 +2,15 @@
 
 ## Docker Setup
 
-docker build -t rev-img:dev .
-docker run -v ${PWD}/pwa:/pwa -v /pwa/node_modules -p 8081:8080 --rm rev-img:dev
+### Development
+
+    /frontend$ docker build -t rev-img:dev .
+    /frontend$ docker run -v ${PWD}/pwa:/pwa -v /pwa/node_modules -p 8081:8080 --rm rev-img:dev
+
+### Production
+
+    /frontend$ docker build -f Dockerfile.prod -t rev-img:prod .
+    /frontend$ docker run -d -p 8081:80 rev-img:prod
 
 ## Project setup
 ```
