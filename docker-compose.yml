@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  web:
+    image: rev-img:dev
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    volumes:
+      - './frontend/pwa:/pwa'
+      - './frontend/pwa/node_modules'
+    ports:
+      - 8081:8080
