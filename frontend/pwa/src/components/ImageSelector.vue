@@ -5,7 +5,7 @@
                 class='tight' 
                 align="center">
                 <p class='tight' >
-                    search the graphics collection of ETH Zurich for similar images
+                    search the Graphics Collection of ETH Zurich for similar images
                 </p>
             </v-col>
         </v-container>
