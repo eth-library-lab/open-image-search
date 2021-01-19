@@ -64,7 +64,7 @@ def preprocess_img(image_path_or_stream):
 
 
 def format_model_request(preprocessed_img):
-    TENSORFLOW_SERVING_BASE_URL = "http://localhost:8505/v1/models/{model_name}/versions/{model_version}:predict"
+    TENSORFLOW_SERVING_BASE_URL = "http://localhost:8501/v1/models/model/versions/{model_version}:predict"
     model_url = TENSORFLOW_SERVING_BASE_URL.format(
                         model_name='feature_extraction',
                         model_version=202101182225,
