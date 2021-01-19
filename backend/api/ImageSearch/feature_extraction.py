@@ -17,7 +17,7 @@ from joblib import load
 
 # load scikit-learn search algorithm into memory
 models_fldr = os.path.join(BASE_DIR,"assets","search_models")
-clf_fpath = os.path.join(models_fldr,"202010141424","NearestNeighbors10.joblib")
+clf_fpath = os.path.join(models_fldr,"202101182225","NearestNeighbors10.joblib")
 CLF = load(clf_fpath)
 
 def calc_resize_with_apect(size, min_dimension):
@@ -67,7 +67,7 @@ def format_model_request(preprocessed_img):
     TENSORFLOW_SERVING_BASE_URL = "http://localhost:8505/v1/models/{model_name}/versions/{model_version}:predict"
     model_url = TENSORFLOW_SERVING_BASE_URL.format(
                         model_name='feature_extraction',
-                        model_version=202010121706,
+                        model_version=202101182225,
                         )
     if DEBUG:
         print("TENSORFLOW_SERVING_BASE_URL", model_url)
