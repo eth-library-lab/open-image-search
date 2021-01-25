@@ -3,12 +3,38 @@ version: '3.7'
 services:
 
   web:
-    image: rev-img:dev
+    image: graph-samm:web-latest
     build:
       context: ./frontend
-      dockerfile: ./Dockerfile
-    volumes:
-      - './frontend/pwa:/pwa'
-      - './frontend/pwa/node_modules'
+      dockerfile: ./Dockerfile.prod
     ports:
-      - 8081:8080
+      - 8765:80
+    restart: always
+
+  # api-nginx:
+  #   image: nginx:latest 
+  #   ports: 
+  #     - 7777:80
+  #   volumes:
+  #     - './backend/nginx:'
+
+  api:
+    image: graph-samm:api-latest
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./backend/api/.env
+    ports:
+      - 8000:8000
+    command: "sh ./entrypoint.sh"
+    restart: always
+
+  tf:
+    image: graph-samm:ftx-latest
+    build:
+       context: ./search-model
+       dockerfile: ./Dockerfile.model
+    ports:
+      - 8501:8501
+    restart: always

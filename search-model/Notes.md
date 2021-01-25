@@ -1,6 +1,4 @@
-# 
-
-To Do
+# To Do
 
 [ ] create feature embeddings
 [ ] compare similarity algorithms

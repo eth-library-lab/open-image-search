@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:8000',
+    // Vue sends requests from the user's browser so the api url must be publicly accessible, not just name spaced in docker-compose 
+    baseURL: 'http://167.71.61.215:8000',
     withCredentials: false,
     headers: {
         'Content-Type': 'multipart/form-data'
