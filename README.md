@@ -3,19 +3,29 @@
 
 Prototype reverse image-search app for finding digitized prints and paintings; made to support workflows at graphical collections.
 
-# start up
+# Getting Started
 
+To run the project with the prebuilt images:
+
+```bash
 docker-compose up
+```
+
+The codebase is not yet optimised for reproducibility but the main steps involved are: 
+* Add the images & metadata to the search-model directory
+* Run all of the Jupyter notebooks
+* Copy the trained Nearest Neighbors Model & the database fixtures to the backend
+
 
 # Current Architecture
 
 **Libraries/Frameworks** 
 
-* Scikit-Learn
 * Tensorflow
+* Scikit-Learn
+* Vue
 * Django
 * Sqlite3
-* Vue
 * Nginx
 
 The application is currently in a prototype phase with the following simplified architecture.  
@@ -29,13 +39,17 @@ Each service runs in a docker container.
 Data processing & modelling is currently done in a set of sequential Jupyter Notebooks.
 As the project develops these notebooks will be converted into python scripts to enable better automation & testing.
 
-#### Image Preprocessing
+### Image Preprocessing
+_details to follow_
 
-#### Feature Extraction
+### Feature Extraction
+_details to follow_
 
-#### Search Model Training
+### Search Model Training
+_details to follow_
 
-#### Search Model Evaluation
+### Search Model Evaluation
+_details to follow_
 
 ## Frontend 
 The frontend is a web app made with Vue with the Vuex & Vuetify plugins.
