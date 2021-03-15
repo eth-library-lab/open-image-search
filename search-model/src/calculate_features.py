@@ -7,14 +7,14 @@
 # The results are saved to a csv.
 
 import tensorflow as tf
-import os
+import os, sys
 import csv
 import pandas as pd
 import numpy as np
 from datetime import datetime as dt
 
 import utils
-
+import settings
 
 def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
     """initialise the model to be used for feature extraction"""
@@ -36,15 +36,6 @@ def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weig
     return model
 
 
-def save_tf_model(model, model_version):
-    #optional: save tensorflow model
-    model_version = str(1)
-    fldr_path=os.path.join('..','models','feature_extraction', model_version)
-    os.makedirs(fldr_path)
-    model.save(fldr_path, save_format='tf')
-
-    return
-
 def save_feature_extractor_notes(fldr_path, model, weights):
     """
     """
@@ -59,21 +50,20 @@ def save_feature_extractor_notes(fldr_path, model, weights):
         model.summary(print_fn=lambda x: f.write(x + '\n'))
 
 
-def make_empty_features_csv(fldr_path):
+def make_empty_features_csv(fpath):
     """
     creates an empty csv file to hold extracted features
     returns fpath to the file
     """
-    
-    # save empty csv to hold features
-    fname = 'features.csv'
-    fpath = os.path.join(fldr_path, fname)
 
     # make sure the file does already exist
     assert os.path.exists(fpath)==False, "file {} already exists, rename or delete before running ".format(fpath)
 
+    # save empty csv to hold features
     with open(fpath, 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
+
+    print('outputting features to: ', fpath)
 
     return fpath
 
@@ -83,23 +73,27 @@ def append_tf_features_to_csv(features, labels, fpath):
     convert tensorflow features and labels to numpy arrays and append
     them to an existing csv
     """
-    
-    labels_column = np.expand_dims(labels.numpy(),axis=1)
+    #make sure labels are stings. e.g.: convert bytes to strings
+    labels_column = np.expand_dims(labels.numpy().astype(str), axis=1)
     lab_feat_arr = np.hstack((labels_column, features))
 
     with open(fpath, 'a', newline='') as csvfile:
-        np.savetxt(csvfile, lab_feat_arr, delimiter=',')
-        
+        np.savetxt(csvfile, lab_feat_arr, delimiter=',', fmt='%s')
+
     return    
 
 
 def create_tf_dataset(batch_size):
+    """
+    
+    """
+
     csv_fname = '../data/raw/prints.csv'
     df = pd.read_csv(csv_fname, index_col=0)
     num_images = df.shape[0]
 
     ds = utils.make_tfdataset_from_df(df,
-                            'img_path', 
+                            'img_path',
                             'object_id',
                             batch_size=batch_size,
                             for_training=False,
@@ -129,32 +123,63 @@ def print_startup_statuses(num_images, total_steps, output_fpath):
     return  
 
 
+def print_settings(sttngs):
+    print("BASE_DIR: ", sttngs.BASE_DIR)
+    print(sttngs.model_fldr_path)
+
+
 def main():
     
-    batch_size=32
-    model_name='vgg16_imagenet'
-    model_version=1
-    weights='imagenet'
-    output_fldr_path = os.path.join('..', 'data','processed')
+    print_settings(settings)
+    output_fldr_path = os.path.dirname(settings.features_fpath)
+
+    input_image_dir = settings.processed_image_dir
+    input_image_csv = settings.files_csv_fpath
 
     # load csv and make tensorflow dataset
-    ds, num_images = create_tf_dataset(batch_size)
-    
+    if input_image_csv:
+        print('using files listed in csv: ', input_image_csv)
+        df = pd.read_csv(input_image_csv, index_col=0)
+        filepath_col_name=settings.filepath_col_name
+        label_col_name=settings.label_col_name
+
+    elif input_image_dir:
+        print('using files in directory: ', input_image_dir)
+        df = utils.make_df_file_list(input_image_dir)
+        filepath_col_name='file_path'
+        label_col_name='file_path'
+
+    num_images = df.shape[0]
+
+    ds = utils.make_tfdataset_from_df(df,
+                            filepath_col_name,
+                            label_col_name,
+                            batch_size=settings.batch_size,
+                            for_training=False,
+                            normalize=False,
+                            augment=False,
+                            augment_func=None,
+                            conv_color='rgb')
+
     # load the model
     model = initialise_model_vgg16(print_summary=False, 
-                                model_name=model_name,
-                                weights=weights)
+                                model_name=settings.model_name,
+                                weights=settings.weights)
     model.compile()
+    
     # save the model that will be used for feature extraction
-    save_tf_model(model, model_version)
-    #save model summary text file
-    save_feature_extractor_notes(output_fldr_path, model, weights)
+    if not os.path.exists(settings.model_fldr_path):
+        os.makedirs(settings.model_fldr_path)
+        model.save(settings.model_fldr_path, save_format='tf')
+
+    #save model summary text file in the features file folder
+    save_feature_extractor_notes(output_fldr_path, model, settings.weights)
     
     # make an output csv file to store the features in 
-    output_fpath = make_empty_features_csv(output_fldr_path)
+    output_fpath = make_empty_features_csv(settings.features_fpath)
     
     # print start up statuses
-    total_steps = calculate_total_steps(num_images, batch_size)
+    total_steps = calculate_total_steps(num_images, settings.batch_size)
     print_startup_statuses(num_images, total_steps, output_fpath)
 
     for i, (images, labels) in enumerate(iter(ds)):

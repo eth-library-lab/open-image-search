@@ -1,20 +1,11 @@
 #!/usr/bin/env python
-# coding: utf-8
-
-# # Image preprocessing
-# 
-# images were saved as png files with full browser window.
-# Need to crop them to content and save as rgb
-# 
-# 1. convert images to jpg
-# 2. resize images
-# 3. save to processed folder
+# coding: utf-8 
 
 from PIL import Image
 import os
 import numpy as np
-
 import utils
+import settings
 
 def calc_resize_with_apect(size, min_dimension):
     """calculate the dimensions needed to resize an image with the minimum dimension on one side
@@ -51,21 +42,21 @@ def preprocess_image(input_img_path, output_img_path, min_dimension=224):
     return
 
 
-def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir):
+def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fldr_path=False):
     """
     get list of images in input_image_dir. remove fpaths from list if they
     are already in the output_image_dir
     """
 
     print('checking input directory: {}'.format(input_image_dir))
-    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png'])
+    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=keep_fldr_path)
     print('checking output directory: {}'.format(output_image_dir)) 
-    existing_fpaths_output = utils.get_list_of_files_in_dir(output_image_dir, file_types = ['jpg', 'jpeg','png'])
+    existing_fpaths_output = utils.get_list_of_files_in_dir(output_image_dir, file_types = ['jpg', 'jpeg','png'],keep_fldr_path=keep_fldr_path)
     
     existing_fnames_output = [os.path.split(f)[1] for f in existing_fpaths_output]
     fpaths_to_process = [f for f in existing_fpaths_input if os.path.split(f)[1] not in existing_fnames_output]    
 
-    return  fpaths_to_process
+    return fpaths_to_process
 
 
 def calc_print_status_interval(num_images_to_proc):
@@ -91,7 +82,7 @@ def process_dir_of_images(input_image_dir, output_image_dir):
     apply the processing pipeline to a directory of images and save them to the output_image_directory
     """
     
-    fpaths_to_process = get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir)
+    fpaths_to_process = get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fldr_path=True)
     num_images_to_proc = len(fpaths_to_process)
     print('num images to process {:,}'.format(num_images_to_proc))
     
@@ -118,20 +109,21 @@ def process_dir_of_images(input_image_dir, output_image_dir):
         #load, process and save altered image
         try:
             preprocess_image(input_img_path, output_img_path, min_dimension=224)
-        except:
+        except FileNotFoundError as e:
             print("    warning: could not preprocess image {}".format(input_img_path))
+            print("    ", e)
         
-        print_status_if_at_inteval(num_images_to_proc, print_interval, i)
-
+        # print_status_if_at_inteval(num_images_to_proc, print_interval, i)
+        utils.print_dyn_progress_bar(num_images_to_proc, i)
     return
 
 
 def main():
 
-    input_image_dir = os.path.join('..','data','raw', 'prints')
-    output_image_dir = os.path.join('..','data','processed','images')
+    input_dir = settings.raw_image_dir 
+    output_dir = settings.processed_image_dir
 
-    process_dir_of_images(input_image_dir, output_image_dir)
+    process_dir_of_images(input_dir, output_dir)
 
     return
 

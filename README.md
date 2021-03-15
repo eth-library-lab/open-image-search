@@ -3,25 +3,35 @@
 
 Prototype reverse image-search app for finding digitized prints and paintings; made to support workflows at graphical collections.
 
-# start up
+# Getting Started
 
+To run the project with the prebuilt images:
+
+```bash
 docker-compose up
+```
+
+The codebase is not yet optimised for reproducibility but the main steps involved are: 
+* Add the images & metadata to the search-model directory
+* Run all of the Jupyter notebooks
+* Copy the trained Nearest Neighbors Model & the database fixtures to the backend
+
 
 # Current Architecture
 
 **Libraries/Frameworks** 
 
-* Scikit-Learn
 * Tensorflow
+* Scikit-Learn
+* Vue
 * Django
 * Sqlite3
-* Vue
 * Nginx
 
 The application is currently in a prototype phase with the following simplified architecture.  
 Each service runs in a docker container.
 
-<img src="./images/Prototype-Architecture.png" width="400"/>
+<img src="./assets/Prototype-Architecture.png" width="400"/>
 
 
 ## Data Processing, Model Training & Evaluation
@@ -29,13 +39,30 @@ Each service runs in a docker container.
 Data processing & modelling is currently done in a set of sequential Jupyter Notebooks.
 As the project develops these notebooks will be converted into python scripts to enable better automation & testing.
 
-#### Image Preprocessing
+### Image Preprocessing
+_details to follow_
 
-#### Feature Extraction
+### Feature Extraction
 
-#### Search Model Training
+#### Build Docker Image for tensorflow model
 
-#### Search Model Evaluation
+    search-model$ docker build -t feature-extractor:latest -t feature-extractor:202101182225 -f Dockerfile.model .
+
+### Search Model Training
+_details to follow_
+
+### Search Model Evaluation
+_details to follow_
+
+
+### Potential Improvements ###
+
+* use image's aspect ratio to improve search results (possibly by including it as an additional feature)
+* fine tune a model to classify artists, use these custom weights for better clustering  
+    * requests are most commonly related to an artist
+* Testing - develop metrics for evaluating different models
+* Testing - dimensionality reduction / determine optimal number of features
+
 
 ## Frontend 
 The frontend is a web app made with Vue with the Vuex & Vuetify plugins.
@@ -52,6 +79,10 @@ These ids are used to query the Sqlite db to return the metadata for the top res
 # Project Vision
 The vision is to include more images from collections around Europe to enable better sharing of resources.
 
+
+## Research Working Doc
+
+https://docs.google.com/document/d/1wD1xoFACB7MkGiY1Hl3yUdr1wgoGNORlNu5KoZM2dWg
 
 
 ## Contact
