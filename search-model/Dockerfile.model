@@ -1,0 +1,6 @@
+FROM tensorflow/serving:latest
+
+# Identify the maintainer of an image
+LABEL maintainer="barry.sunderland@librarylab.ethz.ch"
+
+COPY ./models/feature_extraction/202101182225 /models/model/202101182225

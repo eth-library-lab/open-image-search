@@ -1,0 +1,9 @@
+*.env
+logs/
+plots/
+data/
+__pycache__/
+.ipynb_checkpoints
+models/
+test_images/
+*.joblib]
