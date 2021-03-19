@@ -60,7 +60,7 @@
                 </v-card>
             </v-col>
         </v-row>
-        <v-row v-if="isFileSelected & !resultsLoaded" 
+        <v-row v-if="isFileSelected & !(resultsLoaded | getIsLoading)" 
             align="center"
             justify="center">
             <v-col cols="10" align="center">
@@ -85,7 +85,7 @@ export default {
         selectedFile: null
     }),
     computed: {
-        ...mapGetters(['resultsLoaded', 'isFileSelected']),
+        ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
         // selectedFile: {
         //     get () {
         //         return this.$store.state.selectedFile
@@ -96,7 +96,10 @@ export default {
         // }
     },
     methods: {
-        ...mapActions(['changeFileSelectedStatus','changeResultsLoadedStatus','searchSimilarImages']),
+        ...mapActions(['changeFileSelectedStatus',
+                        'changeResultsLoadedStatus',
+                        'searchSimilarImages',
+                        'changeIsLoadingStatus']),
         removeExistingPreview() {
             var existingElement = document.getElementById('img-preview')
             if (existingElement) {
@@ -122,6 +125,7 @@ export default {
         clearResults() {
             this.selectedFile = null
             this.removeExistingPreview()
+            this.changeIsLoadingStatus(false)
             this.changeResultsLoadedStatus(false)
             this.changeFileSelectedStatus(false)
         },
@@ -138,6 +142,7 @@ export default {
         },
         uploadImage() {
             console.log('in uploadImage', this.selectedFile)
+            this.changeIsLoadingStatus(true)
             this.searchSimilarImages(this.selectedFile)
         },
     }

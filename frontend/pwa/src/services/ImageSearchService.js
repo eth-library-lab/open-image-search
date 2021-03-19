@@ -6,7 +6,9 @@ const apiClient = axios.create({
     withCredentials: false,
     headers: {
         'Content-Type': 'multipart/form-data'
-    }
+    },
+    timeout:5000,
+
 })
 
 export default {
