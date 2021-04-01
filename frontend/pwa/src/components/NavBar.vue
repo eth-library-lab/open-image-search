@@ -4,7 +4,7 @@
   tile
   dense
   :height="height">
-  <v-toolbar 
+  <v-app-bar 
     app
     color="primary"
     dark>
@@ -17,7 +17,8 @@
     >
       <v-icon>mdi-menu</v-icon>
     </v-btn>
-  </v-toolbar>
+  <!-- </v-toolbar> -->
+  </v-app-bar>
 </v-card>
 </template>
 
