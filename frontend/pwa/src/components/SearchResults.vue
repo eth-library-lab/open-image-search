@@ -9,11 +9,6 @@
         <v-row justify="center" >
             <h3>Search Results</h3>
         </v-row>
-        <v-row v-if="getIsLoading" 
-            justify="center"
-            align="center">
-            <Spinner />
-        </v-row>
         <v-row 
             justify="center"
             align="center">
@@ -55,8 +50,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Spinner from '@/components/Spinner.vue';
+import { mapGetters } from 'vuex'
 
 export default {
     props: {
@@ -70,7 +64,6 @@ export default {
         }
     },
     components:{
-        Spinner
     },
     computed: {
         ...mapGetters(['getIsLoading'])
