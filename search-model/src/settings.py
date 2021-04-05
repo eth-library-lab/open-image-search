@@ -20,6 +20,9 @@ files_csv_fpath=None
 filepath_col_name='img_path'
 label_col_name='object_id'
 
+# specify the paths of metadata files from inside the data/raw folder
+metadata_csvs_list = ['ethz/imageSearch_metadata_03.12.csv']
+
 # output file for features
 # features_fpath = os.path.join(BASE_DIR, 'data','processed','ethz','features.csv')
 features_fpath = os.path.join(BASE_DIR, 'data','processed','eth_material_archive','features.csv')
