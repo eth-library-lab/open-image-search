@@ -2,24 +2,19 @@ import axios from 'axios'
 
 const apiClient = axios.create({
     // Vue sends requests from the user's browser so the api url must be publicly accessible, not just name spaced in docker-compose 
-    baseURL: 'http://167.71.61.215:8000',
+    baseURL: process.env.VUE_APP_API_BASE_URL, //load from env file
     withCredentials: false,
     headers: {
         'Content-Type': 'multipart/form-data'
     },
-    timeout:5000,
+    timeout:10000,
 
 })
 
 export default {
     uploadImage(selectedImage) {
         let formData = new FormData()
-        formData.append('image', selectedImage)
-        console.log('in upload service:', selectedImage)
-        for (var key of formData.entries()) {
-            console.log(key[0] + ', ' + key[1]);
-        }
-    
+        formData.append('image', selectedImage)    
         let headers = { headers: {
                 'Content-Type': 'multipart/form-data'
                 }

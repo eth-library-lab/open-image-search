@@ -40,7 +40,6 @@ export default new Vuex.Store({
       state.selectedFile = file
     },
     SHOW_SNACKBAR(state, payload) {
-      console.log("in SHOW_SNACKBAR, payload: ", payload)
       state.snackbar.visible = true
       state.snackbar.timeout = payload.timeout
       state.snackbar.text = payload.text
@@ -72,8 +71,8 @@ export default new Vuex.Store({
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
-          console.log("axios error.code:", error.code)
           console.log("in searchSimilarImages error: ", error)
+          console.log("axios error.code:", error.code)
           this.errored = true
           if (error.code == "ECONNABORTED") {
             dispatch('showSnackbar', 'Request timed out. Please try again')
@@ -93,7 +92,6 @@ export default new Vuex.Store({
         })
     },
     showSnackbar({ commit }, {text, timeout} ) {
-      console.log("snackText:", text)
       let snackbarSettings = {
         visible: true,
         timeout:3000,
@@ -106,7 +104,6 @@ export default new Vuex.Store({
       if (timeout) {
         snackbarSettings.timeout = timeout
       }
-      console.log("snackbarSettings: ", snackbarSettings)
       commit('SHOW_SNACKBAR', snackbarSettings)
     },
     closeSnackbar( {commit,} ) {

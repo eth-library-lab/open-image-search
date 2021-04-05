@@ -3,10 +3,12 @@ version: '3.7'
 services:
 
   web:
-    image: graph-samm:web-latest
+    image: graph-samm:web-2021-04-05
     build:
       context: ./frontend
       dockerfile: ./Dockerfile.prod
+    env_file:
+      - ./frontend/pwa/.env.production
     ports:
       - 8765:80
     restart: always
@@ -19,7 +21,7 @@ services:
   #     - './backend/nginx:'
 
   api:
-    image: graph-samm:api-latest
+    image: graph-samm:api-2021-04-05
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -31,7 +33,7 @@ services:
     restart: always
 
   tf:
-    image: graph-samm:ftx-latest
+    image: graph-samm:ftx-2021-04-05
     build:
        context: ./search-model
        dockerfile: ./Dockerfile.model

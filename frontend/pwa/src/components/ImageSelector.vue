@@ -141,7 +141,6 @@ export default {
             this.selectFile(imageFile)
         },
         uploadImage() {
-            console.log('in uploadImage', this.selectedFile)
             this.changeIsLoadingStatus(true)
             this.searchSimilarImages(this.selectedFile)
         },

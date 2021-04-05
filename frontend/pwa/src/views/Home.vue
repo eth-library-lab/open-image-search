@@ -5,7 +5,7 @@
 
     <Spinner
       v-if="getIsLoading" 
-      message="loading image results"
+      message="searching similar images"
     />
     <Snackbar />
     <Footer v-if="!isFileSelected" />

@@ -7,7 +7,13 @@
         Approximate Nearest Neighbors Oh Yeah (see Pratical Deep Learning, O'Reilly)
 
 [ ] data workflow - new images, retraining comparison algorithm
-    
+
+
+# naming convention
+
+**field/column names**: all  in tables are in **snake_case** *e.g. author_name*  
+**models**: all models are in **CamelCase** in singular form (no plurals).  *e.g. a model defing a table for records of books is class Book(models.Model):*  
+**urls**: endpoints for models are in **kebab-case** in singular form e.g.: *the model DisorderCategory has the url disorder-category* 
 
 # Possible Improvements
 
