@@ -3,9 +3,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view 
 
 from settings.settings import DEBUG
-from ImageSearch.models import ImageMetadata
+from ImageSearch.models import ImageMetadata, SearchResult
 from ImageSearch.serializers import ImageMetadataSerializer
-from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer
+from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
 
 class ImageMetadataViewset(viewsets.ModelViewSet):
@@ -29,6 +29,27 @@ class ImageMetadataViewset(viewsets.ModelViewSet):
 
     queryset = ImageMetadata.objects.all()
     serializer_class = ImageMetadataSerializer
+
+class SearchResultViewset(viewsets.ModelViewSet):
+
+    """
+    list:
+    Returns a list of all search results
+    
+    retrieve:
+    Return results for a specific search.
+
+    create: 
+    save a new record for a search
+    (this will be done server side)
+
+    update:
+    (n/a)
+    change some of the fields for a specific search
+    """    
+
+    queryset = SearchResult.objects.all()
+    serializer_class = SearchResultSerializer
 
 
 @api_view(['POST',])

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ImageSearch.models import ImageMetadata
+from ImageSearch.models import ImageMetadata, SearchResult
 
 class ImageMetadataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,4 +23,10 @@ class ImageSearchResultSerializer(serializers.ModelSerializer):
                   'image_url',
                   'detail_url',
                   'description']
+
+
+class SearchResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SearchResult
+        fields = '__all__'
 

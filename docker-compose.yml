@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   web:
-    image: barry8000/graph-samm:web-2021-04-05
+    image: barry8000/graph-samm:web-latest
     build:
       context: ./frontend
       dockerfile: ./Dockerfile.prod
@@ -13,15 +13,15 @@ services:
       - 8765:80
     restart: always
 
-  # api-nginx:
-  #   image: nginx:latest 
-  #   ports: 
-  #     - 7777:80
-  #   volumes:
-  #     - './backend/nginx:'
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/.env.db
 
   api:
-    image: barry8000/graph-samm:api-2021-04-05
+    image: barry8000/graph-samm:latest
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -40,3 +40,5 @@ services:
     ports:
       - 8501:8501
     restart: always
+volumes:
+  postgres_data:
