@@ -4,20 +4,21 @@
   tile
   dense
   :height="height">
-  <v-toolbar 
+  <v-app-bar 
     app
     color="primary"
     dark>
     <GSLogo color="white" :size="height+15"/> 
     <v-spacer></v-spacer>
 
-    <v-btn
+    <!-- <v-btn
         target="_blank"
         text
     >
-      <v-icon>mdi-menu</v-icon>
-    </v-btn>
-  </v-toolbar>
+      <v-icon>mdi-information-outline</v-icon>
+    </v-btn> -->
+  <!-- </v-toolbar> -->
+  </v-app-bar>
 </v-card>
 </template>
 

@@ -17,7 +17,7 @@ from joblib import load
 
 # load scikit-learn search algorithm into memory
 models_fldr = os.path.join(BASE_DIR,"assets","search_models")
-clf_fpath = os.path.join(models_fldr,"202101182225","NearestNeighbors10.joblib")
+clf_fpath = os.path.join(models_fldr,"NearestNeighbors.joblib")
 CLF = load(clf_fpath)
 
 def calc_resize_with_apect(size, min_dimension):

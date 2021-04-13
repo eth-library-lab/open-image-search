@@ -27,6 +27,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 DEBUG = int(os.environ.get("DEBUG", default=1))
 ALLOWED_HOSTS = ['*', '167.71.61.215'] #os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localhost').split(" ")
 
+#this sets the base url based on the request. otherwise urls returned would use the locally defined host e.g.: localhost:8000
+#note nginx also needs to be configured to forward the header
+USE_X_FORWARDED_HOST=True
+
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
