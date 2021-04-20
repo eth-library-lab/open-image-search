@@ -1,7 +1,8 @@
-<img src="./assets/GraphischeSammlung-ReverseImageSearch-process_small.gif"/>
-
 #  Reverse Image Search for Graphical Collections 
 _- in development_ -
+
+<img src="./assets/GraphischeSammlung-ReverseImageSearch-process_small.gif"/>
+
 
 Image Retrieval / Reverse Image Seach Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
 
