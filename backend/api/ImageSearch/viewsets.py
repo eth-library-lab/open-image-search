@@ -1,12 +1,15 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view 
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 from settings.settings import DEBUG
 from ImageSearch.models import ImageMetadata, SearchResult
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
+
 
 class ImageMetadataViewset(viewsets.ModelViewSet):
 
@@ -76,11 +79,26 @@ def image_search(request):
                 results_metadata.append(qry_set.filter(record_id=obj_id).values()[0])
 
             # resp_serializer = ImageSearchResultSerializer(results_metadata, many=True)
-            
-            if DEBUG:
-                print('\napi response: ', results_metadata, '\n\n')
 
-            return Response(results_metadata, status=200)
+            # save result to reproduce results if needed (e.g. for shareable link)
+            # object_ids_json = json.dumps(object_ids, cls=DjangoJSONEncoder)
+
+            search_result = SearchResult.objects.create(
+                keep=False, # set to false unless user requests a shareable link
+                data=str(object_ids))
+
+            if DEBUG:
+                print('\nsearch_result: ', search_result, '\n\n')
+
+            result = {
+                'results':results_metadata,
+                'result_id':search_result.id
+                }
+
+            if DEBUG:
+                print('\napi response: ', result, '\n\n')
+
+            return Response(result, status=200)
 
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

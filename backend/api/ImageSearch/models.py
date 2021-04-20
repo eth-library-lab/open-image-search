@@ -6,7 +6,7 @@ import uuid
 class ImageMetadata(models.Model):
     
     record_id = models.IntegerField(blank=False, null=False)
-    created_date = models.DateTimeField("db_created_date",auto_now=True)
+    created_date = models.DateTimeField("db_created_date", auto_now=True)
     title = models.CharField(blank=True, null=True, max_length=300)
     image_url = models.URLField(blank=False, null=False, max_length=300)
     record_url = models.URLField(blank=False, null=False, max_length=300)
@@ -25,6 +25,7 @@ class SearchResult(models.Model):
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     keep = models.BooleanField("user has requested to save this link", default=False)
     data = models.JSONField()
+    image = models.ImageField('uploaded image', upload_to='uploaded_images',blank=True, null=True)
 
     def __str__(self):
-        return f"{selfcreated_date}: {self.id} (keep:{keep})"
+        return f"{self.created_date}: {self.id} (keep:{self.keep})"

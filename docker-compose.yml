@@ -25,6 +25,8 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile
+    volumes:
+      - ./backend/api:/usr/src/app
     env_file:
       - ./backend/api/.env
     ports:
