@@ -1,0 +1,46 @@
+version: '3.7'
+
+services:
+
+  web:
+    image: barry8000/graph-samm:web-2021-04-22
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.prod
+    volumes:
+      - /etc/letsencrypt/live/imagesearch.ellprototypes.ch:/etc/letsencrypt/live/imagesearch.ellprototypes.ch
+    env_file:
+      - ./frontend/pwa/.env.production
+    ports:
+      - 80:80
+    restart: always
+
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./backend/.env.db
+
+  api:
+    image: barry8000/graph-samm:api-2021-04-22
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile.prod
+    env_file:
+      - ./backend/api/.env
+    ports:
+      - 8000:8000
+    command: "sh ./entrypoint.sh"
+    restart: always
+      
+  tf:
+    image: barry8000/graph-samm:ftx-2021-04-22
+    build:
+       context: ./search-model
+       dockerfile: ./Dockerfile.model
+    ports:
+      - 8501:8501
+    restart: always
+volumes:
+  postgres_data:
