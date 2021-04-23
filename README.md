@@ -1,7 +1,7 @@
+<img src="./assets/grs-title-small.gif"/>
+
 #  Reverse Image Search for Graphical Collections 
 _- in development_ -
-
-<img src="./assets/GraphischeSammlung-ReverseImageSearch-process_small.gif"/>
 
 
 Image Retrieval / Reverse Image Seach Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
@@ -14,6 +14,7 @@ The codebase and application will be publicly available Spring 2021. If you are 
 
 
 ## Current Architecture
+
 
 ### Libraries/Frameworks
 
@@ -31,6 +32,8 @@ The application is currently in a prototype phase with the following simplified 
 <br/><br/>      
 
 ## Data Processing, Model Training & Evaluation
+
+<img src="./assets/GraphischeSammlung-ReverseImageSearch-20210420_3_compressed.gif" width="600px"/>
 
 Data processing & model training can be run end to end via python scripts (optionally in a container) or selectively run using individual jupyter notebooks. 
 

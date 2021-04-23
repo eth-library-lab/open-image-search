@@ -1,18 +1,19 @@
 version: '3.7'
 
 services:
-
   web:
-    image: barry8000/graph-samm:web-2021-04-22
+    image: barry8000/graph-samm:web-2021-04-23
     build:
       context: ./frontend
       dockerfile: ./Dockerfile.prod
     volumes:
-      - /etc/letsencrypt/live/imagesearch.ellprototypes.ch:/etc/letsencrypt/live/imagesearch.ellprototypes.ch
+      - /etc/letsencrypt:/etc/letsencrypt
+      - ./nginx/prod:/etc/nginx/nginx.conf
     env_file:
       - ./frontend/pwa/.env.production
     ports:
       - 80:80
+      - 443:443
     restart: always
 
   db:
@@ -23,14 +24,12 @@ services:
       - ./backend/.env.db
 
   api:
-    image: barry8000/graph-samm:api-2021-04-22
+    image: barry8000/graph-samm:api-2021-04-23
     build:
       context: ./backend
       dockerfile: ./Dockerfile.prod
     env_file:
       - ./backend/api/.env
-    ports:
-      - 8000:8000
     command: "sh ./entrypoint.sh"
     restart: always
       
