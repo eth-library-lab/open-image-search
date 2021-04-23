@@ -2,17 +2,19 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import ImageSearchService from '@/services/ImageSearchService.js';
-
+const { version } = require('../../package.json');
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+      appVersion: version,
       fileSelected: false,
       selectedFile: null,
       uploadReady: false,
       resultsLoaded: false,
       isLoading: false,
       searchResults: [],
+      searchResultId: null,
       snackbar: {
         visible: false,
         timeout:10000,
@@ -35,6 +37,9 @@ export default new Vuex.Store({
     },
     SET_SEARCH_RESULTS(state, searchResults) {
       state.searchResults = searchResults
+    },
+    SET_SEARCH_RESULT_ID(state, results_id) {
+      state.searchResultId = results_id
     },
     UPDATE_SELECTED_FILE(state, file) {
       state.selectedFile = file
@@ -67,7 +72,8 @@ export default new Vuex.Store({
       ImageSearchService.uploadImage(selectedImage)
         .then(response => {
           // console.log("searchSimilarImages, response.data:", response.data)
-          commit('SET_SEARCH_RESULTS', response.data)
+          commit('SET_SEARCH_RESULTS', response.data.results)
+          commit('SET_SEARCH_RESULT_ID',response.data.result_id)
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
@@ -99,8 +105,10 @@ export default new Vuex.Store({
         multiline: false
       }
       snackbarSettings.text = text
-      snackbarSettings.multiline = (text.length > 50) ? true : false
-            
+      if (text) {
+        snackbarSettings.multiline = (text.length > 50) ? true : false
+      }
+      
       if (timeout) {
         snackbarSettings.timeout = timeout
       }
@@ -111,6 +119,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    appVersion(state) {
+      return state.appVersion
+    },
     isFileSelected(state) {
       return state.fileSelected
     },
