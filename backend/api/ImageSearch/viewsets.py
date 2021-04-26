@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+import numpy as np
 
 from settings.settings import DEBUG
 from ImageSearch.models import ImageMetadata, SearchResult
@@ -83,9 +84,10 @@ def image_search(request):
             # save result to reproduce results if needed (e.g. for shareable link)
             # object_ids_json = json.dumps(object_ids, cls=DjangoJSONEncoder)
 
+            search_result_list = np.array(object_ids,'int32').tolist()
             search_result = SearchResult.objects.create(
                 keep=False, # set to false unless user requests a shareable link
-                data=str(object_ids))
+                results=search_result_list)
 
             if DEBUG:
                 print('\nsearch_result: ', search_result, '\n\n')

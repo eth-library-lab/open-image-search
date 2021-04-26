@@ -24,7 +24,7 @@ class SearchResult(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     keep = models.BooleanField("user has requested to save this link", default=False)
-    data = models.JSONField()
+    results = models.JSONField("ids of images returned to the user")
     image = models.ImageField('uploaded image', upload_to='uploaded_images',blank=True, null=True)
 
     def __str__(self):
