@@ -6,11 +6,13 @@ services:
     image: barry8000/graph-samm:web-latest
     build:
       context: ./frontend
-      dockerfile: ./Dockerfile.prod
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./frontend/pwa:/pwa
     env_file:
-      - ./frontend/pwa/.env.production
+      - ./frontend/pwa/.env.development
     ports:
-      - 8765:80
+      - 8080:8080
     restart: always
 
   db:
@@ -28,7 +30,7 @@ services:
     volumes:
       - ./backend/api:/usr/src/app
     env_file:
-      - ./backend/api/.env
+      - ./backend/api/.env.dev
     ports:
       - 8000:8000
     command: "sh ./entrypoint.sh"
