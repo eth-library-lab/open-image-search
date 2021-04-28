@@ -13,6 +13,16 @@ from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
 
+def getMetadataForListOfIds(object_ids):
+
+    qry_set = ImageMetadata.objects.all()
+    results_metadata = []
+
+    for obj_id in object_ids:
+        results_metadata.append(qry_set.filter(record_id=obj_id).values().first())
+
+    return results_metadata
+
 
 class ImageMetadataViewset(viewsets.ModelViewSet):
 
@@ -57,6 +67,22 @@ class SearchResultViewset(viewsets.ModelViewSet):
 
     queryset = SearchResult.objects.all()
     serializer_class = SearchResultSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        # do your customization here
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        resp = serializer.data
+        #load metdata for list of ids        
+        results = getMetadataForListOfIds(instance.results)        
+        resp['results'] = results
+
+        
+        if DEBUG:
+            print('serializer data: ', serializer.data)
+            print('\napi response: ', resp, '\n\n')
+
+        return Response(resp, status=200)
 
 
 
@@ -112,6 +138,7 @@ def save_search_result(request):
                 return Response(serializer.data)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST',])
 def image_search(request):
