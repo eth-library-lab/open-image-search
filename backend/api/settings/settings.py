@@ -158,7 +158,7 @@ USE_TZ = True
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
-MEDIA_URL = os.environ.get("HOST_URL", "localhost:8000") + '/media/' 
+MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 # settings related to tensorflow model / feature extraction

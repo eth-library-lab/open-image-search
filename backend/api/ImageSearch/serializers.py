@@ -30,3 +30,6 @@ class SearchResultSerializer(serializers.ModelSerializer):
         model = SearchResult
         fields = '__all__'
 
+class SaveSearchResultSerializer(serializers.Serializer):
+    id = serializers.UUIDField(read_only=True)
+    keep = serializers.BooleanField()

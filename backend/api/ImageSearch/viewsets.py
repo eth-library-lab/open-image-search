@@ -1,14 +1,16 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.decorators import api_view 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 import numpy as np
+import os
 
-from settings.settings import DEBUG
+from settings.settings import DEBUG, MEDIA_ROOT
 from ImageSearch.models import ImageMetadata, SearchResult
 from ImageSearch.serializers import ImageMetadataSerializer
-from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer
+from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
 
 
@@ -34,6 +36,7 @@ class ImageMetadataViewset(viewsets.ModelViewSet):
     queryset = ImageMetadata.objects.all()
     serializer_class = ImageMetadataSerializer
 
+
 class SearchResultViewset(viewsets.ModelViewSet):
 
     """
@@ -56,6 +59,60 @@ class SearchResultViewset(viewsets.ModelViewSet):
     serializer_class = SearchResultSerializer
 
 
+
+@api_view(['POST',])
+def save_search_result(request):
+
+        serializer = SaveSearchResultSerializer(data=request.data)
+
+        if DEBUG: 
+            print('in save_search_result')
+            print('request.data: ', request.data)
+
+        if serializer.is_valid():
+            if DEBUG: 
+                print("serializer.validated_data['keep']: ", serializer.validated_data['keep'])
+            
+            if serializer.validated_data['keep'] == True:
+                
+                print('serializer.validated_data: ', serializer.validated_data)
+
+                pk = str(request.data['id'])
+
+                print('pk: ', pk)
+                try:
+                    search_record = SearchResult.objects.get(pk=pk)
+                    print('search_record: ', search_record)
+                except SearchResult.DoesNotExist as e:
+                    return Response("search record not found", status=status.HTTP_404_NOT_FOUND)
+        
+                search_record.keep = True
+                
+                try: 
+                
+                    orig_path = search_record.image.path
+                    new_name = os.path.join('uploaded_images','saved', os.path.basename(search_record.image.name))
+                    new_path = os.path.join(MEDIA_ROOT, new_name)
+                    #move file to saved folder
+                    saved_folder = os.path.dirname(new_path)
+
+                    if not os.path.exists(saved_folder):
+                        os.makedirs(saved_folder)
+
+                    os.replace(orig_path, new_path)
+                    search_record.image.name = new_name
+                    search_record.save()                  
+
+                except Exception as e:
+                    print(e)
+
+                # return updated data
+                serializer = SearchResultSerializer(search_record)
+                
+                return Response(serializer.data)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST',])
 def image_search(request):
     """
@@ -70,14 +127,15 @@ def image_search(request):
             # TO DO
             # function to get object_ids of most similar images
 
-            img_stream = request.data['image'].open()
+            uploaded_image = request.data['image']
+            img_stream = uploaded_image.open()
             print('at img_stream: ', img_stream)
             object_ids = get_nearest_object_ids(img_stream) # [3,18,19,33,52,236, 308,312,313, 324]
             qry_set = ImageMetadata.objects.all()
             results_metadata = []
 
             for obj_id in object_ids:
-                results_metadata.append(qry_set.filter(record_id=obj_id).values()[0])
+                results_metadata.append(qry_set.filter(record_id=obj_id).values().first())
 
             # resp_serializer = ImageSearchResultSerializer(results_metadata, many=True)
 
@@ -87,7 +145,8 @@ def image_search(request):
             search_result_list = np.array(object_ids,'int32').tolist()
             search_result = SearchResult.objects.create(
                 keep=False, # set to false unless user requests a shareable link
-                results=search_result_list)
+                results=search_result_list,
+                image=uploaded_image)
 
             if DEBUG:
                 print('\nsearch_result: ', search_result, '\n\n')
