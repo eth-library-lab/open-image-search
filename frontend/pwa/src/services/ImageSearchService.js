@@ -20,5 +20,15 @@ export default {
                 }
             }
         return apiClient.post('image-search', formData, headers)
+    },
+    saveSearchResults(searchResultID) {
+        let formData = new FormData()
+        formData.append('id', searchResultID)
+        formData.append('keep', true)
+        let headers = { headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            }
+        return apiClient.post(`save-search-result`, formData, headers)
     }
 }

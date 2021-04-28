@@ -7,19 +7,53 @@
         >
         <div >
         <v-row justify="center" >
-            <h3>Search Results</h3>
-        </v-row>
-        <v-row 
-            justify="center"
-            align="center">
             <v-col 
-                class="results-wrapper"
-                justify="center"
                 align="center"
-                xs="12" 
-                sm="11" 
+                xs="11" 
+                sm="10" 
                 md="10" 
                 lg="8">
+
+                <v-row
+                  justify="center"
+                  >
+                  <v-col
+                    class=""
+                    cols="11"
+                    >
+                    <h3>Search Results</h3>
+                  </v-col>
+                  <v-col
+                    cols="1"
+                    justify="right"
+                    
+                    >
+                    <v-btn 
+                      icon
+                      title="save a shareable link to these results"
+                      @click="onSaveSearchResults"
+                      >
+                      <v-icon>mdi-floppy</v-icon>
+                      </v-btn>
+                  </v-col>
+                </v-row>
+                <v-row 
+                  class="my-0 py-0"
+                  v-if="showLink"
+                  justify="center">
+                  <ResultsLink :resultsUrl="resultsUrl" />
+                </v-row>
+
+        <v-row 
+            justify="center"
+            align="center"
+            class="my-0"
+            >
+            <v-col 
+                class="results-wrapper my-0"
+                justify="center"
+                align="center"
+                >
                 <v-card
                     class="d-flex align-content-start flex-wrap justify-center"
                     color="white"
@@ -51,32 +85,50 @@
                 </v-card>
             </v-col>    
         </v-row>
+        </v-col>
+        </v-row>
         </div>
     </v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import HoverTooltip from '@/components/HoverTooltip.vue';
-
+import ResultsLink from '@/components/ResultsLink.vue';
 export default {
     props: {
         searchResults: {
             type: Array,
             required: true
+        },
+        searchResultId: {
+            type: String,
+            required: false
         }
     },
     data() {
         return {
+          showLink: false
         }
     },
-    components:{ HoverTooltip
+    components:{ HoverTooltip, 
+                  ResultsLink
     },
     computed: {
-        ...mapGetters(['getIsLoading'])
+        ...mapGetters(['getIsLoading']),
+        resultsUrl(){
+          return process.env.VUE_APP_API_BASE_URL + '/search-results/'+ this.searchResultId
+        }
+    },
+    methods:{
+      ...mapActions(['saveSearchResults',]),
+      onSaveSearchResults() {
+        console.log('in saveSearchResults')
+        this.showLink = true
+        this.saveSearchResults()
+      }
     }
-
 }
 </script>
 

@@ -13,6 +13,7 @@ export default new Vuex.Store({
       resultsLoaded: false,
       isLoading: false,
       searchResults: [],
+      searchResultId: null,
       snackbar: {
         visible: false,
         timeout:10000,
@@ -33,8 +34,9 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
-    SET_SEARCH_RESULTS(state, searchResults) {
+    SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
       state.searchResults = searchResults
+      state.searchResultId = searchResultId
     },
     UPDATE_SELECTED_FILE(state, file) {
       state.selectedFile = file
@@ -66,8 +68,10 @@ export default new Vuex.Store({
       // console.log('in searchSimilarImages selectedImage', selectedImage)
       ImageSearchService.uploadImage(selectedImage)
         .then(response => {
-          // console.log("searchSimilarImages, response.data:", response.data)
-          commit('SET_SEARCH_RESULTS', response.data)
+          const searchResults = response.data.results
+          const searchResultId = response.data.result_id
+          const payload = {searchResults, searchResultId}
+          commit('SET_SEARCH_RESULTS', payload)
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
@@ -89,6 +93,34 @@ export default new Vuex.Store({
         })
         .finally(() => {
           dispatch('changeIsLoadingStatus',false)
+        })
+    },
+    saveSearchResults({dispatch, getters }, ) {
+      
+      ImageSearchService.saveSearchResults(getters.searchResultId)
+        .then(() => {
+          
+          console.log('successfully saved: ', getters.searchResultId)
+        })
+        .catch(error => {
+          console.log("in saveSearchResults, error: ", error)
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          if (error.code == "ECONNABORTED") {
+            dispatch('showSnackbar', 'Request timed out. Please try again')
+            console.log("Request timed out. Please try again")
+          } else {
+            console.log('error: ', error)
+            var snackbarSettings = {
+                text:'Encountered error with api service. \n Please try again or let us know if this is a recurring issue',
+                timeout:-1
+            }
+            dispatch('showSnackbar',snackbarSettings)
+            
+          }
+        })
+        .finally(() => {
+
         })
     },
     showSnackbar({ commit }, {text, timeout} ) {
@@ -125,6 +157,9 @@ export default new Vuex.Store({
     },
     snackbarState(state) {
       return state.snackbar
+    },
+    searchResultId(state) {
+      return state.searchResultId
     }
 
   },
