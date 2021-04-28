@@ -25,7 +25,7 @@ class SearchResult(models.Model):
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     keep = models.BooleanField("user has requested to save this link", default=False)
     results = models.JSONField("ids of images returned to the user")
-    image = models.ImageField('uploaded image', upload_to='uploaded_images',blank=True, null=True)
+    image = models.ImageField('uploaded image', upload_to='uploaded_images/tmp',blank=True, null=True)
 
     def __str__(self):
         return f"{self.created_date}: {self.id} (keep:{self.keep})"
