@@ -136,7 +136,6 @@ export default {
     methods:{
       ...mapActions(['saveSearchResults',]),
       onSaveSearchResults() {
-        console.log('in saveSearchResults')
         this.showLink = true
         this.saveSearchResults()
       },

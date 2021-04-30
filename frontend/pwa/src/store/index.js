@@ -72,7 +72,6 @@ export default new Vuex.Store({
       commit('CHANGE_ISLOADING_STATUS', status)
     },
     searchSimilarImages({ commit, dispatch }, selectedImage) {
-      // console.log('in searchSimilarImages selectedImage', selectedImage)
       ImageSearchService.uploadImage(selectedImage)
         .then(response => {
           const searchResults = response.data.results
@@ -107,7 +106,6 @@ export default new Vuex.Store({
       ImageSearchService.saveSearchResults(getters.searchResultId)
         .then(() => {
           
-          console.log('successfully saved: ', getters.searchResultId)
         })
         .catch(error => {
           console.log("in saveSearchResults, error: ", error)
@@ -133,7 +131,6 @@ export default new Vuex.Store({
     loadSearchResults({ commit, dispatch }, searchResultId) {
       ImageSearchService.getSearchResults(searchResultId)
         .then(response => {
-          console.log('loadSearchResults response: ', response)
           // get url for the original search image
           commit('UPDATE_SELECTED_FILE', response.data.image)
           const searchResults = response.data.results
@@ -143,7 +140,7 @@ export default new Vuex.Store({
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
-          console.log("in loadSearchResults error: ", error)
+          console.log("loadSearchResults error: ", error)
           console.log("axios error.code:", error.code)
           this.errored = true
           if (error.code == "ECONNABORTED") {

@@ -69,9 +69,8 @@ export default {
             try {
                 // Now that we've selected the text, execute the copy command
                 var successful = document.execCommand('copy')
-                console.log(`\n${resultsLink.innerHTML} \n was copied to clipboard, ${successful}`);
             } catch(err) {
-                console.log('Oops, unable to copy');
+                console.log('clipboard error: unable to copy');
             }
             window.getSelection().removeAllRanges()
         }
