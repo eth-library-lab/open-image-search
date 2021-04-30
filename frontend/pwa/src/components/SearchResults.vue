@@ -28,12 +28,21 @@
                     justify="right"
                     
                     >
-                    <v-btn 
+                    <v-btn
+                      v-if="!isSavedSearchResult"
                       icon
                       title="save a shareable link to these results"
                       @click="onSaveSearchResults"
                       >
                       <v-icon>mdi-floppy</v-icon>
+                      </v-btn>
+                    <v-btn
+                      v-if="isSavedSearchResult"
+                      icon
+                      title="show the shareable link for these results"
+                      @click="toggleLink"
+                      >
+                      <v-icon>mdi-link</v-icon>
                       </v-btn>
                   </v-col>
                 </v-row>
@@ -118,7 +127,10 @@ export default {
     computed: {
         ...mapGetters(['getIsLoading']),
         resultsUrl(){
-          return process.env.VUE_APP_API_BASE_URL + '/search-results/'+ this.searchResultId
+          return process.env.VUE_APP_BASE_URL + '/searchresult/'+ this.searchResultId
+        },
+        isSavedSearchResult() {
+          return this.$route.name == 'ViewSearchResult'
         }
     },
     methods:{
@@ -127,6 +139,9 @@ export default {
         console.log('in saveSearchResults')
         this.showLink = true
         this.saveSearchResults()
+      },
+      toggleLink() {
+        this.showLink = !this.showLink
       }
     }
 }

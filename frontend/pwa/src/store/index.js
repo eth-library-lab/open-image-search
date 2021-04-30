@@ -34,6 +34,9 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
+    SET_SEARCH_RESULT_ID(state, {searchResultId}) {
+      state.searchResultId = searchResultId
+    },
     SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
       state.searchResults = searchResults
       state.searchResultId = searchResultId
@@ -55,6 +58,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    changeSearchResultId( { commit }, searchResultId) {
+      commit('SET_SEARCH_RESULT_ID', searchResultId)
+    },
     changeFileSelectedStatus( { commit }, status) {
       commit('CHANGE_FILESELECTED_STATUS', status)
     },
@@ -123,6 +129,40 @@ export default new Vuex.Store({
 
         })
     },
+    loadSearchResults({ commit, dispatch }, searchResultId) {
+      // console.log('in searchSimilarImages selectedImage', selectedImage)
+      ImageSearchService.getSearchResults(searchResultId)
+        .then(response => {
+          console.log('loadSearchResults response: ', response)
+          // get url for the original search image
+          commit('UPDATE_SELECTED_FILE', response.data.image)
+          const searchResults = response.data.results
+          const searchResultId = searchResultId
+          const payload = {searchResults, searchResultId}
+          commit('SET_SEARCH_RESULTS', payload)
+          dispatch('changeResultsLoadedStatus', true)
+        })
+        .catch(error => {
+          console.log("in loadSearchResults error: ", error)
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          if (error.code == "ECONNABORTED") {
+            dispatch('showSnackbar', 'Request timed out. Please try again')
+            console.log("Request timed out. Please try again")
+          } else {
+            console.log('error: ', error)
+            var snackbarSettings = {
+                text:'Encountered error with search service. \n Please try again or let us know if this is a recurring issue',
+                timeout:-1
+            }
+            dispatch('showSnackbar',snackbarSettings)
+            
+          }
+        })
+        .finally(() => {
+          dispatch('changeIsLoadingStatus',false)
+        })
+    },
     showSnackbar({ commit }, {text, timeout} ) {
       let snackbarSettings = {
         visible: true,
@@ -145,6 +185,9 @@ export default new Vuex.Store({
   getters: {
     isFileSelected(state) {
       return state.fileSelected
+    },
+    getSelectedFile(state){
+      return state.selectedFile
     },
     getSearchResults(state) {
       return state.searchResults

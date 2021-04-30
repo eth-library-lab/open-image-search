@@ -30,5 +30,8 @@ export default {
                 }
             }
         return apiClient.post(`save-search-result`, formData, headers)
+    },
+    getSearchResults(searchResultID) {
+        return apiClient.get(`search-results/${searchResultID}`)
     }
 }
