@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*'] #os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localho
 #this sets the base url based on the request. otherwise urls returned would use the locally defined host e.g.: localhost:8000
 #note nginx also needs to be configured to forward the header
 USE_X_FORWARDED_HOST=True
-CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_ALLOWED_ORIGINS", 'http://127.0.0.1 http://localhost').split(" ")
+CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_ALLOWED_ORIGINS", 'http://localhost:8080').split(" ")
 
 # Application definition
 
