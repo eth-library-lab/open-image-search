@@ -1,7 +1,7 @@
 <template>
 <div>
     <ImageSelector class="mt-1" />  
-    <SearchResults 
+    <SearchResults
       v-if="resultsLoaded" 
       :searchResults="searchResults"
       :searchResultId="searchResultId" />

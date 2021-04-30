@@ -69,7 +69,7 @@
                     flat
                     over
                     >
-                    <div v-for="object in searchResults"
+                    <div v-for="(object, index) in searchResults"
                         :key="object.id">
                         <HoverTooltip
                             :object="object"
@@ -84,9 +84,30 @@
                                 justify="center"
                                 elevation="1"
                                 outlined>
-                                <div>
-                                    <p>{{ object.title }}</p>
-                                    <v-img v-bind:src="object.image_url" max-height="300" max-width="300" />
+                                <div>                        
+                                  <v-row 
+                                    class="ma-0 pa-0">
+                                    <v-col 
+                                      cols="1"
+                                      class="ma-0 pa-0"
+                                      >
+                                      <span class="caption">
+                                        {{index+1}}
+                                      </span>
+                                    </v-col>
+                                    <v-col 
+                                      cols="11"
+                                      class="ma-0 pa-0"
+                                      >
+                                      <span>
+                                        {{ object.title }}
+                                      </span>
+                                    </v-col>
+                                  </v-row>
+                                    <v-img 
+                                      v-bind:src="object.image_url" 
+                                      max-height="300" 
+                                      max-width="300" />
                                 </div>   
                             </v-card>
                         </HoverTooltip>

@@ -91,7 +91,7 @@ export default {
 
 <style scoped>
 .search-image-border {
-  border:1px solid black;;
+  border:1px solid slategray;;
 }
 .tight {
   padding:3px;
