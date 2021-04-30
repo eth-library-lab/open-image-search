@@ -7,26 +7,69 @@
         >
         <div >
         <v-row justify="center" >
-            <h3>Search Results</h3>
-        </v-row>
-        <v-row 
-            justify="center"
-            align="center">
             <v-col 
-                class="results-wrapper"
-                justify="center"
                 align="center"
                 xs="12" 
-                sm="11" 
+                sm="12" 
                 md="10" 
                 lg="8">
+
+                <v-row
+                  justify="center"
+                  >
+                  <v-col
+                    class=""
+                    cols="11"
+                    >
+                    <h3>Search Results</h3>
+                  </v-col>
+                  <v-col
+                    cols="1"
+                    justify="right"
+                    
+                    >
+                    <v-btn
+                      v-if="!isSavedSearchResult"
+                      icon
+                      title="save a shareable link to these results"
+                      @click="onSaveSearchResults"
+                      >
+                      <v-icon>mdi-floppy</v-icon>
+                      </v-btn>
+                    <v-btn
+                      v-if="isSavedSearchResult"
+                      icon
+                      title="show the shareable link for these results"
+                      @click="toggleLink"
+                      >
+                      <v-icon>mdi-link</v-icon>
+                      </v-btn>
+                  </v-col>
+                </v-row>
+                <v-row 
+                  class="my-0 py-0"
+                  v-if="showLink"
+                  justify="center">
+                  <ResultsLink :resultsUrl="resultsUrl" />
+                </v-row>
+
+        <v-row 
+            justify="center"
+            align="center"
+            class="my-0"
+            >
+            <v-col 
+                class="results-wrapper my-0"
+                justify="center"
+                align="center"
+                >
                 <v-card
                     class="d-flex align-content-start flex-wrap justify-center"
                     color="white"
                     flat
                     over
                     >
-                    <div v-for="object in searchResults"
+                    <div v-for="(object, index) in searchResults"
                         :key="object.id">
                         <HoverTooltip
                             :object="object"
@@ -36,14 +79,35 @@
                                 :href="object.record_url"
                                 target="_blank"
                                 class="pa-2 ma-1 justify-center"
-                                max-width="250"
+                                max-width="300"
                                 align="center" 
                                 justify="center"
                                 elevation="1"
                                 outlined>
-                                <div>
-                                    <p>{{ object.title }}</p>
-                                    <img v-bind:src="object.image_url" height="200" >
+                                <div>                        
+                                  <v-row 
+                                    class="ma-0 pa-0">
+                                    <v-col 
+                                      cols="1"
+                                      class="ma-0 pa-0"
+                                      >
+                                      <span class="caption">
+                                        {{index+1}}
+                                      </span>
+                                    </v-col>
+                                    <v-col 
+                                      cols="11"
+                                      class="ma-0 pa-0"
+                                      >
+                                      <span>
+                                        {{ object.title }}
+                                      </span>
+                                    </v-col>
+                                  </v-row>
+                                    <v-img 
+                                      v-bind:src="object.image_url" 
+                                      max-height="300" 
+                                      max-width="300" />
                                 </div>   
                             </v-card>
                         </HoverTooltip>
@@ -51,32 +115,55 @@
                 </v-card>
             </v-col>    
         </v-row>
+        </v-col>
+        </v-row>
         </div>
     </v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 import HoverTooltip from '@/components/HoverTooltip.vue';
-
+import ResultsLink from '@/components/ResultsLink.vue';
 export default {
     props: {
         searchResults: {
             type: Array,
             required: true
+        },
+        searchResultId: {
+            type: String,
+            required: false
         }
     },
     data() {
         return {
+          showLink: false
         }
     },
-    components:{ HoverTooltip
+    components:{ HoverTooltip, 
+                  ResultsLink
     },
     computed: {
-        ...mapGetters(['getIsLoading'])
+        ...mapGetters(['getIsLoading']),
+        resultsUrl(){
+          return process.env.VUE_APP_BASE_URL + '/searchresult/'+ this.searchResultId
+        },
+        isSavedSearchResult() {
+          return this.$route.name == 'ViewSearchResult'
+        }
+    },
+    methods:{
+      ...mapActions(['saveSearchResults',]),
+      onSaveSearchResults() {
+        this.showLink = true
+        this.saveSearchResults()
+      },
+      toggleLink() {
+        this.showLink = !this.showLink
+      }
     }
-
 }
 </script>
 

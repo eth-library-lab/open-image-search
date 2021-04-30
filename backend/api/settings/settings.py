@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ['*'] #os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localho
 #this sets the base url based on the request. otherwise urls returned would use the locally defined host e.g.: localhost:8000
 #note nginx also needs to be configured to forward the header
 USE_X_FORWARDED_HOST=True
-CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_ALLOWED_ORIGINS", 'http://127.0.0.1 http://localhost').split(" ")
+CORS_ALLOWED_ORIGINS = os.environ.get("DJANGO_ALLOWED_ORIGINS", 'http://localhost:8080').split(" ")
 
 # Application definition
 
@@ -99,6 +99,13 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
@@ -150,7 +157,7 @@ USE_TZ = True
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
-MEDIA_URL = os.environ.get("HOST_URL", "localhost:8000") + '/media/' 
+MEDIA_URL = '/media/' 
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 # settings related to tensorflow model / feature extraction

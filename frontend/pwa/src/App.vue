@@ -2,7 +2,7 @@
   <v-app>
     <NavBar />
     <div>
-    <v-main >
+    <v-main class="pt-2">
       <router-view class=""></router-view>
     </v-main>
     </div>

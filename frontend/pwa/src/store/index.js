@@ -7,20 +7,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      appVersion: version,
-      fileSelected: false,
-      selectedFile: null,
-      uploadReady: false,
-      resultsLoaded: false,
-      isLoading: false,
-      searchResults: [],
-      searchResultId: null,
-      snackbar: {
-        visible: false,
-        timeout:10000,
-        text: "an error occured",
-        multiline: false,
-      }
+    appVersion: version,
+    fileSelected: false,
+    selectedFile: null,
+    uploadReady: false,
+    resultsLoaded: false,
+    isLoading: false,
+    searchResults: [],
+    searchResultId: null,
+    snackbar: {
+      visible: false,
+      timeout:10000,
+      text: "an error occured",
+      multiline: false,
+    }
   },
   mutations: {
     CHANGE_UPLOAD_STATUS(state, status) {
@@ -35,8 +35,9 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
-    SET_SEARCH_RESULTS(state, searchResults) {
+    SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
       state.searchResults = searchResults
+      state.searchResultId = searchResultId
     },
     SET_SEARCH_RESULT_ID(state, results_id) {
       state.searchResultId = results_id
@@ -58,6 +59,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    changeSearchResultId( { commit }, searchResultId) {
+      commit('SET_SEARCH_RESULT_ID', searchResultId)
+    },
     changeFileSelectedStatus( { commit }, status) {
       commit('CHANGE_FILESELECTED_STATUS', status)
     },
@@ -68,12 +72,12 @@ export default new Vuex.Store({
       commit('CHANGE_ISLOADING_STATUS', status)
     },
     searchSimilarImages({ commit, dispatch }, selectedImage) {
-      // console.log('in searchSimilarImages selectedImage', selectedImage)
       ImageSearchService.uploadImage(selectedImage)
         .then(response => {
-          // console.log("searchSimilarImages, response.data:", response.data)
-          commit('SET_SEARCH_RESULTS', response.data.results)
-          commit('SET_SEARCH_RESULT_ID',response.data.result_id)
+          const searchResults = response.data.results
+          const searchResultId = response.data.result_id
+          const payload = {searchResults, searchResultId}
+          commit('SET_SEARCH_RESULTS', payload)
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
@@ -96,6 +100,73 @@ export default new Vuex.Store({
         .finally(() => {
           dispatch('changeIsLoadingStatus',false)
         })
+    },
+    saveSearchResults({dispatch, getters }, ) {
+      
+      ImageSearchService.saveSearchResults(getters.searchResultId)
+        .then(() => {
+          
+        })
+        .catch(error => {
+          console.log("in saveSearchResults, error: ", error)
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          if (error.code == "ECONNABORTED") {
+            dispatch('showSnackbar', 'Request timed out. Please try again')
+            console.log("Request timed out. Please try again")
+          } else {
+            console.log('error: ', error)
+            var snackbarSettings = {
+                text:'Encountered error with api service. \n Please try again or let us know if this is a recurring issue',
+                timeout:-1
+            }
+            dispatch('showSnackbar',snackbarSettings)
+            
+          }
+        })
+        .finally(() => {
+
+        })
+    },
+    loadSearchResults({ commit, dispatch }, searchResultId) {
+      ImageSearchService.getSearchResults(searchResultId)
+        .then(response => {
+          // get url for the original search image
+          commit('UPDATE_SELECTED_FILE', response.data.image)
+          const searchResults = response.data.results
+          const searchResultId = searchResultId
+          const payload = {searchResults, searchResultId}
+          commit('SET_SEARCH_RESULTS', payload)
+          dispatch('changeResultsLoadedStatus', true)
+        })
+        .catch(error => {
+          console.log("loadSearchResults error: ", error)
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          if (error.code == "ECONNABORTED") {
+            dispatch('showSnackbar', 'Request timed out. Please try again')
+            console.log("Request timed out. Please try again")
+          } else {
+            console.log('error: ', error)
+            var snackbarSettings = {
+                text:'Encountered error with search service. \n Please try again or let us know if this is a recurring issue',
+                timeout:-1
+            }
+            dispatch('showSnackbar',snackbarSettings)
+            
+          }
+        })
+        .finally(() => {
+          dispatch('changeIsLoadingStatus',false)
+        })
+    },
+    clearSearchResults({ commit }) {
+      let payload = { 
+        searchResults: [],
+        searchResultId: null,
+      }
+      commit('SET_SEARCH_RESULTS', payload),
+      commit('CHANGE_RESULTSLOADED_STATUS', false)
     },
     showSnackbar({ commit }, {text, timeout} ) {
       let snackbarSettings = {
@@ -125,6 +196,9 @@ export default new Vuex.Store({
     isFileSelected(state) {
       return state.fileSelected
     },
+    getSelectedFile(state){
+      return state.selectedFile
+    },
     getSearchResults(state) {
       return state.searchResults
     },
@@ -136,6 +210,9 @@ export default new Vuex.Store({
     },
     snackbarState(state) {
       return state.snackbar
+    },
+    searchResultId(state) {
+      return state.searchResultId
     }
 
   },

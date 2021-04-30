@@ -1,7 +1,10 @@
 <template>
 <div>
     <ImageSelector class="mt-1" />  
-    <SearchResults v-if="resultsLoaded" :searchResults="searchResults" />
+    <SearchResults
+      v-if="resultsLoaded" 
+      :searchResults="searchResults"
+      :searchResultId="searchResultId" />
 
     <Spinner
       v-if="getIsLoading" 
@@ -29,7 +32,10 @@ export default {
     Spinner
   },
   computed: {
-    ...mapGetters(['isFileSelected', 'resultsLoaded','getIsLoading',]),
+    ...mapGetters(['isFileSelected', 
+                    'resultsLoaded',
+                    'getIsLoading',
+                    'searchResultId']),
     searchResults() {
       return this.$store.getters.getSearchResults
     },

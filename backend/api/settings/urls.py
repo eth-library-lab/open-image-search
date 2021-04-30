@@ -16,14 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
-from ImageSearch.viewsets import ImageMetadataViewset, image_search
+from ImageSearch.viewsets import ImageMetadataViewset, image_search, SearchResultViewset, save_search_result
+
 
 router = routers.DefaultRouter()
 router.register(r'image-metadata', ImageMetadataViewset)
+router.register(r'search-results', SearchResultViewset)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'image-search', image_search, name='image-search')
+    path(r'image-search', image_search, name='image-search'),
+    path(r'save-search-result', save_search_result, name='save-search-result'),
     # path()
-] + router.urls
+] + router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

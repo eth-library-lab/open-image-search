@@ -14,9 +14,10 @@
     <v-btn
       v-if="this.$route.name !='Home'"
       icon
+      exact
       :to="{name:'Home'}"
       title="back to main page"
-    >
+      >
       <v-icon>mdi-home</v-icon>
     </v-btn>
     <v-btn
@@ -24,7 +25,7 @@
       icon
       :to="{name:'About'}"
       :title="`see more info\n (v${appVersion})`"
-    >
+      >
       <v-icon>mdi-information-outline</v-icon>
     </v-btn>  
   <!-- </v-toolbar> -->
@@ -52,8 +53,8 @@ export default {
           case 'xs': return 75
           case 'sm': return 85
           case 'md': return 90
-          case 'lg': return 95
-          case 'xl': return 95
+          case 'lg': return 90
+          case 'xl': return 90
         } return 100
       }
     }
