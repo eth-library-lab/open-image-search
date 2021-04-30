@@ -53,8 +53,8 @@ export default {
           case 'xs': return 75
           case 'sm': return 85
           case 'md': return 90
-          case 'lg': return 95
-          case 'xl': return 95
+          case 'lg': return 90
+          case 'xl': return 90
         } return 100
       }
     }

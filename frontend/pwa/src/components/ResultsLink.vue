@@ -68,7 +68,7 @@ export default {
             window.getSelection().addRange(range)
             try {
                 // Now that we've selected the text, execute the copy command
-                var successful = document.execCommand('copy')
+                document.execCommand('copy')
             } catch(err) {
                 console.log('clipboard error: unable to copy');
             }

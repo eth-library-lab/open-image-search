@@ -9,8 +9,8 @@
         <v-row justify="center" >
             <v-col 
                 align="center"
-                xs="11" 
-                sm="10" 
+                xs="12" 
+                sm="12" 
                 md="10" 
                 lg="8">
 
@@ -79,14 +79,14 @@
                                 :href="object.record_url"
                                 target="_blank"
                                 class="pa-2 ma-1 justify-center"
-                                max-width="250"
+                                max-width="300"
                                 align="center" 
                                 justify="center"
                                 elevation="1"
                                 outlined>
                                 <div>
                                     <p>{{ object.title }}</p>
-                                    <img v-bind:src="object.image_url" height="200" >
+                                    <v-img v-bind:src="object.image_url" max-height="300" max-width="300" />
                                 </div>   
                             </v-card>
                         </HoverTooltip>

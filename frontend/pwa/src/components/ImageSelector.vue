@@ -31,7 +31,6 @@
                         </div>
                     </v-col>
                     <v-col class="ma-0 py-0"
-                        
                         align-self="end">
                         <v-file-input
                             v-model="selectedFile"
@@ -60,17 +59,22 @@
                 </v-card>
             </v-col>
         </v-row>
-        <v-row v-if="isFileSelected & !(resultsLoaded | getIsLoading)" 
+        <!-- -->
+
+        <v-row
+            v-if="!(resultsLoaded | getIsLoading)"
             align="center"
             justify="center">
             <v-col cols="10" align="center">
-            <v-btn 
-                class="align-center"
-                color="primary"
-                elevation="2"
-                @click="uploadImage">
-                Upload
-            </v-btn>
+                <v-btn 
+                    :disabled="!isFileSelected"
+                    class="align-center"
+                    color="primary"
+                    elevation="2"
+                    ref="uploadImageBtn"
+                    @click="uploadImage">
+                    Upload
+                </v-btn>
             </v-col>
         </v-row>
     </v-container>
@@ -86,14 +90,6 @@ export default {
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
-        // selectedFile: {
-        //     get () {
-        //         return this.$store.state.selectedFile
-        //     },
-        //     set (value) {
-        //         this.$store.commit('UPDATE_SELECTED_FILE', value)
-        //     }
-        // }
     },
     methods: {
         ...mapActions(['changeFileSelectedStatus',
@@ -139,6 +135,8 @@ export default {
             //preview and set new file
             this.previewFile(imageFile)
             this.selectFile(imageFile)
+            console.log('refs: ', this.$refs.uploadImageBtn.$el)
+            this.$refs.uploadImageBtn.$el.focus()
         },
         uploadImage() {
             this.changeIsLoadingStatus(true)

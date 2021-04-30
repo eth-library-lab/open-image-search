@@ -18,11 +18,12 @@
                   <v-card-text>
                     Original Image
                   </v-card-text>
-                  <v-img 
-                    class="ma-1"
-                    max-height="300" 
-                    max-width="300" 
-                    :src="getSelectedFile"></v-img>
+                    <v-img 
+                      class="search-image-border"
+                      max-height="300" 
+                      max-width="300" 
+                      :src="getSelectedFile" 
+                      />
                 </v-card>
             </v-col>
         </v-row>
@@ -89,7 +90,9 @@ export default {
 </script>
 
 <style scoped>
-
+.search-image-border {
+  border:1px solid black;;
+}
 .tight {
   padding:3px;
   margin-bottom:3px;
