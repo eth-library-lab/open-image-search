@@ -1,6 +1,6 @@
 {
-  "name": "open-image-search",
-  "version": "0.1.0",
+  "name": "pwa",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

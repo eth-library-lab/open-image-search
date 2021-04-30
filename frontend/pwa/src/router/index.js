@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ViewSearchResult from '../views/ViewSearchResult.vue'
 
+import About from '../views/About.vue'
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,6 +18,11 @@ const routes = [
     path: '/searchresult/:id',
     name: 'ViewSearchResult',
     component: ViewSearchResult
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: About
   },
 
 ]

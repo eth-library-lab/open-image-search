@@ -7,7 +7,6 @@ FROM python:3.8-slim as build-stage
 WORKDIR /usr/src/app
 
 RUN pip install --upgrade pip
-COPY ./api .
 COPY ./requirements.txt .
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
 

@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   web:
-    image: barry8000/graph-samm:web-latest
+    image: barry8000/graph-samm:web-dev-latest
     build:
       context: ./frontend
       dockerfile: ./Dockerfile
@@ -23,7 +23,7 @@ services:
       - ./backend/.env.db
 
   api:
-    image: barry8000/graph-samm:latest
+    image: barry8000/graph-samm:api-dev-latest
     build:
       context: ./backend
       dockerfile: ./Dockerfile
@@ -37,7 +37,7 @@ services:
     restart: always
       
   tf:
-    image: barry8000/graph-samm:ftx-2021-04-05
+    image: barry8000/graph-samm:ftx-dev-latest
     build:
        context: ./search-model
        dockerfile: ./Dockerfile.model

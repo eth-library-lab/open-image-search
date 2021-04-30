@@ -1,5 +1,5 @@
 <template>
-    <a href="https://www.librarylab.ethz.ch/" target="_blank" >
+    <a :href="link" target="_blank" >
       <svg v-bind:style="svgSize" class=" " viewBox="0 0 187 67" xmlns="http://www.w3.org/2000/svg">
           <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <g id="ETH-Library-LAB_LOGO_negative" transform="translate(-2.000000, -7.000000)">
@@ -23,7 +23,12 @@ export default {
     color: {
         type: String,
         default: 'black',
-    }, 
+    },
+    link: {
+      type: URL,
+      required: false,
+      default: "https://www.librarylab.ethz.ch/"
+    }
   },
   computed: {
     svgSize () {

@@ -3,20 +3,30 @@
   flat
   tile
   dense
-  :height="height">
+  :height="height"
+  >
   <v-app-bar 
     app
     color="primary"
     dark>
     <GSLogo color="white" :size="height+15"/> 
     <v-spacer></v-spacer>
-
-    <!-- <v-btn
-        target="_blank"
-        text
+    <v-btn
+      v-if="this.$route.name !='Home'"
+      icon
+      :to="{name:'Home'}"
+      title="back to main page"
+    >
+      <v-icon>mdi-home</v-icon>
+    </v-btn>
+    <v-btn
+      v-if="this.$route.name !='About'"
+      icon
+      :to="{name:'About'}"
+      :title="`see more info\n (v${appVersion})`"
     >
       <v-icon>mdi-information-outline</v-icon>
-    </v-btn> -->
+    </v-btn>  
   <!-- </v-toolbar> -->
   </v-app-bar>
 </v-card>
@@ -24,12 +34,19 @@
 
 <script>
 import GSLogo from '@/components/GSLogo.vue';
+import { mapGetters }  from 'vuex';
 
 export default {
+  data() {
+    return{
+
+    }
+  },
     components: {
         GSLogo
     },
     computed: {
+      ...mapGetters(['appVersion',]),
       height() {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 75

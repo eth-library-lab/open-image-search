@@ -1,25 +1,22 @@
-# graph-samm
-#### _Under Development_
+<img src="./assets/grs-title-small.gif"/>
 
-Prototype reverse image-search app for finding digitized prints and paintings; made to support workflows at graphical collections.
-
-# Getting Started
-
-To run the project with the prebuilt images:
-
-```bash
-docker-compose up
-```
-
-The codebase is not yet optimised for reproducibility but the main steps involved are: 
-* Add the images & metadata to the search-model directory
-* Run all of the Jupyter notebooks
-* Copy the trained Nearest Neighbors Model & the database fixtures to the backend
+#  Reverse Image Search for Graphical Collections 
+_- in development_ -
 
 
-# Current Architecture
+Image Retrieval / Reverse Image Seach Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
 
-**Libraries/Frameworks** 
+The codebase and application will be publicly available Spring 2021. If you are interested in earlier access, we would love to hear from you. Please get in touch via the ETH Library Lab [contact form](https://www.librarylab.ethz.ch/contact/).
+
+
+
+<img src="./assets/graph-samm-example-search-cropped.gif" height="400px"/>
+
+
+## Current Architecture
+
+
+### Libraries/Frameworks
 
 * Tensorflow
 * Scikit-Learn
@@ -28,62 +25,64 @@ The codebase is not yet optimised for reproducibility but the main steps involve
 * Sqlite3
 * Nginx
 
-The application is currently in a prototype phase with the following simplified architecture.  
-Each service runs in a docker container.
+The application is currently in a prototype phase with the following simplified architecture. Each service runs in a docker container.
 
 <img src="./assets/Prototype-Architecture.png" width="400"/>
 
+<br/><br/>      
 
 ## Data Processing, Model Training & Evaluation
 
-Data processing & modelling is currently done in a set of sequential Jupyter Notebooks.
-As the project develops these notebooks will be converted into python scripts to enable better automation & testing.
+<img src="./assets/GraphischeSammlung-ReverseImageSearch-20210420_3_compressed.gif" width="600px"/>
 
-### Image Preprocessing
-_details to follow_
+Data processing & model training can be run end to end via python scripts (optionally in a container) or selectively run using individual jupyter notebooks. 
+
+_more details to follow_
 
 ### Feature Extraction
+Each image in our records is passed to a CNN, VGG16, and the features calculated in the final convoluational black are flattened, max pooled, and stored in the database. These act like a 'fingerprint' for each image which can be compared to the inpute query image.
 
-#### Build Docker Image for tensorflow model
-
-    search-model$ docker build -t feature-extractor:latest -t feature-extractor:202101182225 -f Dockerfile.model .
+```
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 224, 224, 3)]     0         
+_________________________________________________________________
+VGG16 until layer:
+block5_pool (MaxPooling2D)   (None, 7, 7, 512)         0         
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 1, 1, 512)         0         
+_________________________________________________________________
+flatten (Flatten)            (None, 512)               0         
+_________________________________________________________________
+layer_normalization          (None, 512)               1024      
+=================================================================
+Total params: 14,715,712
+Trainable params: 14,715,712
+Non-trainable params: 0
+_________________________________________________________________
+```
 
 ### Search Model Training
-_details to follow_
+The stored features are used to train a k-nearest neighbours model (KNN). (Currently a Sci-kit learn model but this will be replaced with Tensorflow's SCANN or Spotify's ANNOY in the future as the number of records grows.) 
 
-### Search Model Evaluation
-_details to follow_
-
-
-### Potential Improvements ###
-
-* use image's aspect ratio to improve search results (possibly by including it as an additional feature)
-* fine tune a model to classify artists, use these custom weights for better clustering  
-    * requests are most commonly related to an artist
-* Testing - develop metrics for evaluating different models
-* Testing - dimensionality reduction / determine optimal number of features
+_more details to follow_
 
 
 ## Frontend 
-The frontend is a web app made with Vue with the Vuex & Vuetify plugins.
-Care is taken for the layout and components to work well also on mobile devices. 
+The frontend is a web app made with Vue with the Vuex & Vuetify plugins. The interface is designed for the layouts and components to work just as well on mobile devices. This allows for search requests to be sent directly from the phone's camera. 
+
+<img src="./assets/mobile-view.png" height="300px"/>
 
 ## Backend
 
-The backend consists of a simple API built with Django REST Framework. 
+The backend consists of an API built with Django REST Framework. 
 Uploaded images are reformatted in memory and a request is sent to the feature extraction model.
-The features returned by the model are then passed to the KNN model.
-The KNN model contains the id's from the database to allow remapping in memory.
-These ids are used to query the Sqlite db to return the metadata for the top results.
+The features returned by the model are then passed to the KNN model.  
+The KNN model contains the id's from the database to allow remapping in memory. These ids are used to query the Database to return the metadata for the top results.
 
 # Project Vision
 The vision is to include more images from collections around Europe to enable better sharing of resources.
-
-
-## Research Working Doc
-
-https://docs.google.com/document/d/1wD1xoFACB7MkGiY1Hl3yUdr1wgoGNORlNu5KoZM2dWg
-
 
 ## Contact
 
