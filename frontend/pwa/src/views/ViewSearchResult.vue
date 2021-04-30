@@ -72,14 +72,18 @@ export default {
   methods: {
     ...mapActions(['showSnackbar',
                    'changeSearchResultId',
-                   'loadSearchResults']),
-
+                   'loadSearchResults',
+                   'clearSearchResults']),
   },
   mounted() {
-    console.log('in created')
     this.changeSearchResultId(this.$route.params.id)
     this.loadSearchResults(this.$route.params.id)
-  }
+  },
+  beforeRouteLeave(to, from, next){
+    this.clearSearchResults()
+    next()
+  },
+
 }
 
 </script>

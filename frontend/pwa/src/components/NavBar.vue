@@ -14,9 +14,10 @@
     <v-btn
       v-if="this.$route.name !='Home'"
       icon
+      exact
       :to="{name:'Home'}"
       title="back to main page"
-    >
+      >
       <v-icon>mdi-home</v-icon>
     </v-btn>
     <v-btn
@@ -24,7 +25,7 @@
       icon
       :to="{name:'About'}"
       :title="`see more info\n (v${appVersion})`"
-    >
+      >
       <v-icon>mdi-information-outline</v-icon>
     </v-btn>  
   <!-- </v-toolbar> -->

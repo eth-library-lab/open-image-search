@@ -7,20 +7,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-      appVersion: version,
-      fileSelected: false,
-      selectedFile: null,
-      uploadReady: false,
-      resultsLoaded: false,
-      isLoading: false,
-      searchResults: [],
-      searchResultId: null,
-      snackbar: {
-        visible: false,
-        timeout:10000,
-        text: "an error occured",
-        multiline: false,
-      }
+    appVersion: version,
+    fileSelected: false,
+    selectedFile: null,
+    uploadReady: false,
+    resultsLoaded: false,
+    isLoading: false,
+    searchResults: [],
+    searchResultId: null,
+    snackbar: {
+      visible: false,
+      timeout:10000,
+      text: "an error occured",
+      multiline: false,
+    }
   },
   mutations: {
     CHANGE_UPLOAD_STATUS(state, status) {
@@ -131,7 +131,6 @@ export default new Vuex.Store({
         })
     },
     loadSearchResults({ commit, dispatch }, searchResultId) {
-      // console.log('in searchSimilarImages selectedImage', selectedImage)
       ImageSearchService.getSearchResults(searchResultId)
         .then(response => {
           console.log('loadSearchResults response: ', response)
@@ -163,6 +162,14 @@ export default new Vuex.Store({
         .finally(() => {
           dispatch('changeIsLoadingStatus',false)
         })
+    },
+    clearSearchResults({ commit }) {
+      let payload = { 
+        searchResults: [],
+        searchResultId: null,
+      }
+      commit('SET_SEARCH_RESULTS', payload),
+      commit('CHANGE_RESULTSLOADED_STATUS', false)
     },
     showSnackbar({ commit }, {text, timeout} ) {
       let snackbarSettings = {
