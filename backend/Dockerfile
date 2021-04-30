@@ -26,6 +26,5 @@ ENV PYTHONUNBUFFERED 1
 COPY --from=build-stage $APP_HOME .
 RUN pip install --no-cache /usr/src/app/wheels/*
 
-RUN chmod +x /usr/src/app/entrypoint.sh
 # run entrypoint.prod.sh
 # ENTRYPOINT ["sh","entrypoint.sh"]
