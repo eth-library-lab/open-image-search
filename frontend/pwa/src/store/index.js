@@ -35,9 +35,6 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
-    SET_SEARCH_RESULT_ID(state, {searchResultId}) {
-      state.searchResultId = searchResultId
-    },
     SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
       state.searchResults = searchResults
       state.searchResultId = searchResultId
