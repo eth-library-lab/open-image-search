@@ -1,26 +1,16 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Export metadata to django fixture
-
-# In[7]:
-
+## Export metadata to django fixture
 
 import os, sys
 import pandas as pd
 import json
 from datetime import datetime as dt
 
-
-# In[8]:
-
-
 sys.path.append('../src')
 import utils
 import settings
-
-
-# In[9]:
 
 
 def create_django_datetimestamp(dt_object=None):
@@ -34,9 +24,6 @@ def create_django_datetimestamp(dt_object=None):
     created_time = created_time.strftime('%Y-%m-%dT%H:%M:%S+01:00')
     
     return created_time
-
-
-# In[10]:
 
 
 def df_to_json_fixture(df,
@@ -112,53 +99,58 @@ def df_to_json_fixture(df,
     return fixture_lst
 
 
-# In[30]:
+def get_list_of_metadata_csvs(metadata_dir):
+
+    fpaths = []
+
+    for fname in os.listdir(metadata_dir):
+        if fname.endswith('.csv'):
+            fpath = os.path.join(metadata_dir, fname)
+            fpaths.append(fpath)
+
+        return fpaths
+
+def load_csvs_into_df(fpaths):
+    """
+    fpaths: list of csv filepaths to concatenate into a single pd.DataFrame
+    """
+    df_list = []
+    for fpath in fpaths:
+
+        df = pd.read_csv(fpath, index_col='record_id')
+        df_list.append(df)
+
+    df = pd.concat(df_list)    
+    df = df.sort_values(by='record_id')
+    df = df.reset_index()
+
+    return df
 
 
-# list_of metadata files
+def main():
 
-df_list = []
-metadata_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
-fnames = [f for f in os.listdir(metadata_dir) if f.endswith('.csv')]
-for fname in fnames:
-    fpath = os.path.join(metadata_dir,fname)
+    metadata_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
 
-    df = pd.read_csv(fpath, index_col='record_id')
-    df_list.append(df)
+    fpaths = get_list_of_metadata_csvs(metadata_dir)
+    df = load_csvs_into_df(fpaths)
+ 
 
-df = pd.concat(df_list)    
+    fixture_dict = df_to_json_fixture(df,
+                    'ImageSearch',
+                    'ImageMetadata',
+                    file_name_modifier='',
+                    output_folder=None,
+                    use_df_index_as_pk=False,
+                    pk_start_num=1000,
+                    create_datetimefield_name='created_date',
+                    created_by_field_name=None,
+                    created_by_value=1)
 
-
-# In[ ]:
-
-
-
-
-
-# In[31]:
-
-
-df = df.sort_values(by='record_id')
-df = df.reset_index()
+    return fixture_dict
 
 
-# In[32]:
+if __name__ == '__main__':
 
-
-fixture_dict = df_to_json_fixture(df,
-                   'ImageSearch',
-                   'ImageMetadata',
-                   file_name_modifier='',
-                   output_folder=None,
-                   use_df_index_as_pk=False,
-                   pk_start_num=1000,
-                   create_datetimefield_name='created_date',
-                   created_by_field_name=None,
-                   created_by_value=1)
-
-
-# In[ ]:
-
-
+    fixture_dict = main()
 
 

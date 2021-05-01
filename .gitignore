@@ -2,6 +2,7 @@
 logs/
 plots/
 data/
+backend/api/fixtures/
 __pycache__/
 .ipynb_checkpoints
 models/
