@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
-
 
 import pandas as pd
 import os, sys
@@ -43,7 +41,7 @@ def process_eth_metada(df):
     df = df.rename(columns=col_dict)
     df = df.drop(columns=['timestamp'])
     # change url to lower resolution request (350x350px) 
-    df['image_url'] = df['image_url'].replace('resolution=superImageResolution','resolution=highImageResolution')
+    df['image_url'] = df['image_url'].str.replace('resolution=superImageResolution','resolution=highImageResolution')
     
     return df
 
