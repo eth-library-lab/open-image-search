@@ -157,8 +157,11 @@ USE_TZ = True
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
-MEDIA_URL = '/media/' 
-MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+MEDIA_URL =  '/mediafiles/'
+MEDIA_ROOT = '/mediafiles'
 
-# settings related to tensorflow model / feature extraction
-# TENSORFLOW_SERVING_BASE_URL = "http://localhost:8505/v1/models/{model_name}/versions/{model_version}:predict"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'assets/static'),
+]
+############################################################

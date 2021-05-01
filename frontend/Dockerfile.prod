@@ -3,13 +3,14 @@
 FROM node:12.2.0-alpine as build-stage
 WORKDIR /pwa
 ENV PATH /pwa/node_modules/.bin:$PATH
-COPY pwa/package.json /pwa/package.json
+COPY frontend/pwa/package.json /pwa/package.json
 RUN npm install --silent
 RUN npm install @vue/cli@4.5.6 -g
-COPY ./pwa /pwa
+COPY ./frontend/pwa /pwa
 RUN npm run build
 
 FROM nginx:1.19 as production-stage
 RUN mkdir /pwa
+COPY ./nginx/prod/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build-stage /pwa/dist /pwa
 EXPOSE 80
