@@ -2,13 +2,13 @@ version: '3.7'
 
 services:
   web:
-    image: barry8000/graph-samm:web-2021-04-23
+    image: barry8000/graph-samm:web-2021-05-01
     build:
-      context: ./frontend
-      dockerfile: ./Dockerfile.prod
+      context: ./
+      dockerfile: ./frontend/Dockerfile.prod
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
-      - ./nginx/prod:/etc/nginx/nginx.conf
+      - mediafiles:/data/mediafiles:ro
     env_file:
       - ./frontend/pwa/.env.production
     ports:
@@ -24,12 +24,14 @@ services:
       - ./backend/.env.db
 
   api:
-    image: barry8000/graph-samm:api-2021-04-23
+    image: barry8000/graph-samm:api-2021-05-01
     build:
       context: ./backend
       dockerfile: ./Dockerfile.prod
+    volumes:
+      - mediafiles:/mediafiles
     env_file:
-      - ./backend/api/.env
+      - ./backend/api/.env.prod
     command: "sh ./entrypoint.sh"
     restart: always
       
@@ -43,3 +45,4 @@ services:
     restart: always
 volumes:
   postgres_data:
+  mediafiles:

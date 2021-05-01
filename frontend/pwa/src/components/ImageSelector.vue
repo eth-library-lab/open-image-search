@@ -135,7 +135,6 @@ export default {
             //preview and set new file
             this.previewFile(imageFile)
             this.selectFile(imageFile)
-            console.log('refs: ', this.$refs.uploadImageBtn.$el)
             this.$refs.uploadImageBtn.$el.focus()
         },
         uploadImage() {
