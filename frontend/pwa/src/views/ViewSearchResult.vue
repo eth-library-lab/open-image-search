@@ -13,7 +13,7 @@
                 sm="10" 
                 md="10" 
                 lg="8">
-                <v-card 
+                <v-card
                   flat>
                   <v-card-text>
                     Original Image
@@ -30,7 +30,9 @@
       </v-container>
         <SearchResults
             :searchResults="searchResults"
-            :searchResultId="searchResultId" />
+            :searchResultId="routeSearchId"
+            showLink="True"
+             />
     </div>
     <Spinner
       v-if="getIsLoading"
@@ -58,7 +60,8 @@ export default {
   computed: {
     ...mapGetters(['resultsLoaded',
                     'getIsLoading',
-                    'getSelectedFile'
+                    'getSelectedFile',
+                    'searchResultId'
                     ]),
     searchResults() {
       return this.$store.getters.getSearchResults
