@@ -13,7 +13,6 @@
                 sm="12" 
                 md="10" 
                 lg="8">
-
                 <v-row
                   justify="center"
                   >
@@ -39,7 +38,7 @@
                     <v-btn
                       v-if="isSavedSearchResult"
                       icon
-                      title="show the shareable link for these results"
+                      :title="showLink ? 'hide link':'show the shareable link for these results'"
                       @click="toggleLink"
                       >
                       <v-icon>mdi-link</v-icon>
@@ -50,7 +49,11 @@
                   class="my-0 py-0"
                   v-if="showLink"
                   justify="center">
-                  <ResultsLink :resultsUrl="resultsUrl" />
+                  <v-col
+                    class="my-0 py-0"
+                    >
+                    <ResultsLink :resultsUrl="resultsUrl" />
+                  </v-col>
                 </v-row>
 
         <v-row 
@@ -135,11 +138,16 @@ export default {
         searchResultId: {
             type: String,
             required: false
+        },
+        showLink: {
+          type: Boolean,
+          required: false,
+          default: false
         }
     },
     data() {
         return {
-          showLink: false
+          // showLink: false
         }
     },
     components:{ HoverTooltip, 

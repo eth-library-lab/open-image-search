@@ -1,28 +1,16 @@
 <template>
 <div>
     <v-row>
-        <v-col
-            xs="9" 
-            sm="9" 
-            md="9" 
-            lg="9"
-            class="ma-0 px-1"
-            >
+            <v-spacer></v-spacer>
             <v-text-field 
                 v-model="this.resultsUrl"
                 readonly
-                class="results-link text-caption my-0 py-1" 
+                class="results-link text-caption my-0 py-1 mr-4" 
                 ref="resultsLinkRef">
                 {{ this.resultsUrl }}
             </v-text-field>
-        </v-col>
-        <v-col
-            class="ma-0"
-            xs="3" 
-            sm="3" 
-            md="3" 
-            lg="3"
-            ><v-btn
+            <v-spacer></v-spacer>
+            <v-btn
                 small
                 :disabled="copySnackbar"
                 color="primary"
@@ -31,7 +19,6 @@
                 >
                 {{ copySnackbar ? "copied" : "copy" }}
             </v-btn>
-        </v-col>
     </v-row>
 </div>
 </template>
@@ -79,4 +66,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
