@@ -140,20 +140,25 @@ export default new Vuex.Store({
           dispatch('changeResultsLoadedStatus', true)
         })
         .catch(error => {
-          console.log("loadSearchResults error: ", error)
+          console.log("loadSearchResults error: ", error.response )
           console.log("axios error.code:", error.code)
           this.errored = true
+          // generic error message
+          var snackbarSettings = {
+            text:'Encountered error with search service. \n Please try again or let us know if this is a recurring issue',
+            timeout:-1
+          }
           if (error.code == "ECONNABORTED") {
-            dispatch('showSnackbar', 'Request timed out. Please try again')
-            console.log("Request timed out. Please try again")
+            snackbarSettings.text='Request timed out. Please try again'
+            console.log(snackbarSettings.text)
+            dispatch('showSnackbar', snackbarSettings)
+          } else if (error.response.status == 404 ) {
+            snackbarSettings.text ='No search results were found this url. Please check the link and try again.'
+            dispatch('showSnackbar', snackbarSettings)
+            console.log('404: ', snackbarSettings.text)
           } else {
             console.log('error: ', error)
-            var snackbarSettings = {
-                text:'Encountered error with search service. \n Please try again or let us know if this is a recurring issue',
-                timeout:-1
-            }
             dispatch('showSnackbar',snackbarSettings)
-            
           }
         })
         .finally(() => {
