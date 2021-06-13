@@ -34,9 +34,10 @@
                         align-self="end">
                         <v-file-input
                             v-model="selectedFile"
+                            :rules="fileInputRules"
                             class="ma-0 py-0"
                             show-size
-                            accept="image/png, image/jpeg, image/bmp"
+                            accept="image/png, image/jpeg, image/jpg, image/bmp "
                             placeholder="Select a File"
                             prepend-icon="mdi-image"
                             color="primary"
@@ -86,7 +87,10 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data: () => ({
-        selectedFile: null
+        selectedFile: null,
+        fileInputRules: [
+            value => !value || value.size < 10000000 || 'Image size should be less than 10 MB!',
+        ],
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
@@ -98,7 +102,7 @@ export default {
                         'changeIsLoadingStatus']),
         removeExistingPreview() {
             var existingElement = document.getElementById('img-preview')
-            if (existingElement) {
+            if (existingElement) {  
             existingElement.remove()
             }
             this.changeFileSelectedStatus(false)
