@@ -1,17 +1,20 @@
-from rest_framework import viewsets, status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.decorators import api_view 
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 import numpy as np
 import os
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.decorators import api_view 
+from rest_framework.permissions import IsAdminUser
 
 from settings.settings import DEBUG, MEDIA_ROOT
 from ImageSearch.models import ImageMetadata, SearchResult
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
+
 
 def getMetadataForListOfIds(object_ids):
 
@@ -41,8 +44,7 @@ class ImageMetadataViewset(viewsets.ModelViewSet):
     change some of the fields for a specific image
     """    
     
-    # permission_classes = [custom_permissions.IsAdminUserOrReadOnly]
-
+    permission_classes = [IsAdminUser, ]
     queryset = ImageMetadata.objects.all()
     serializer_class = ImageMetadataSerializer
 
@@ -56,7 +58,7 @@ class SearchResultViewset(viewsets.ModelViewSet):
     retrieve:
     Return results for a specific search.
 
-    create: 
+    create:
     save a new record for a search
     (this will be done server side)
 
@@ -64,7 +66,8 @@ class SearchResultViewset(viewsets.ModelViewSet):
     (n/a)
     change some of the fields for a specific search
     """    
-
+    permission_classes = [IsAdminUser, ]
+    
     queryset = SearchResult.objects.all()
     serializer_class = SearchResultSerializer
 
@@ -83,6 +86,7 @@ class SearchResultViewset(viewsets.ModelViewSet):
             print('\napi response: ', resp, '\n\n')
 
         return Response(resp, status=200)
+
 
 
 
