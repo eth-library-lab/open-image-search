@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAdminUser
 
 from settings.settings import DEBUG, MEDIA_ROOT
+from settings.custom_permissions import IsAdminUserOrReadOnly
 from ImageSearch.models import ImageMetadata, SearchResult
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
@@ -66,7 +67,7 @@ class SearchResultViewset(viewsets.ModelViewSet):
     (n/a)
     change some of the fields for a specific search
     """    
-    permission_classes = [IsAdminUser, ]
+    permission_classes = [IsAdminUserOrReadOnly, ]
     
     queryset = SearchResult.objects.all()
     serializer_class = SearchResultSerializer
@@ -138,8 +139,7 @@ def save_search_result(request):
 
                 # return updated data
                 serializer = SearchResultSerializer(search_record)
-                
-                return Response(serializer.data)
+
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
