@@ -10,74 +10,72 @@
             </v-col>
         </v-container>
       <v-container class="my-0 py-0" >
-       <v-row class="mt-0 pt-0" align="center" justify="center">
-        <v-col 
-            class="mt-0 pt-0" 
-            xs="12" 
-            sm="11" 
-            md="10" 
-            lg="8" 
-            align="center">
-            <v-card >
-                <v-card-text class="font-weight-bold my-1 pb-1">Search Image</v-card-text>
-                <v-row align="center" justify="center">
-                    <v-col 
-                        v-show="isFileSelected" 
-                        align="center" 
-                        justify="center">
-                        <div 
-                            class="img-preview-container image-border" 
-                            id="img-preview-container">
-                        </div>
-                    </v-col>
-                    <v-col class="ma-0 py-0"
-                        align-self="end">
-                        <v-file-input
-                            v-model="selectedFile"
-                            :rules="fileInputRules"
-                            class="ma-0 py-0"
-                            show-size
-                            accept="image/png, image/jpeg, image/jpg, image/bmp "
-                            placeholder="Select a File"
-                            prepend-icon="mdi-image"
-                            color="primary"
-                            @change="previewAndSelectFile(selectedFile)"
-                            @click:clear="clearResults()"
-                        ></v-file-input>
-                    </v-col>
-                </v-row>
-                <!-- Disused Cancel button
-                    <v-row >
-                    <v-col justify="center" v-if="resultsLoaded" class="ma-0 pa-0">
-                        <v-icon
-                            @click="clearResults()"
-                            class="pa-4"
-                            title="clear results and search image">
-                            mdi-close-box
-                        </v-icon>
-                    </v-col>
-                </v-row> -->
-                </v-card>
-            </v-col>
-        </v-row>
-        <!-- -->
+        <v-form
+            v-model="valid"
+            >
+            <v-row class="mt-0 pt-0" align="center" justify="center">
+                <v-col 
+                    class="mt-0 pt-0" 
+                    xs="12" 
+                    sm="11" 
+                    md="10" 
+                    lg="8" 
+                    align="center">
+                    <v-card >
+                        <v-card-text 
+                            class="font-weight-bold my-1 pb-1"
+                            >
+                            Search Image
+                        </v-card-text>
+                        <v-row align="center" justify="center">
+                            <v-col 
+                                v-show="isFileSelected" 
+                                align="center" 
+                                justify="center">
+                                <div 
+                                    class="img-preview-container image-border" 
+                                    id="img-preview-container">
+                                </div>
+                            </v-col>
+                            <v-col class="ma-0 py-0"
+                                align-self="end">
+                                <v-file-input
+                                    v-model="selectedFile"
+                                    :rules="fileInputRules"
+                                    class="ma-0 py-0"
+                                    show-size
+                                    accept="image/png, image/jpeg, image/jpg, image/bmp, image/tiff, image/tif"
+                                    placeholder="Select a File"
+                                    prepend-icon="mdi-image"
+                                    color="primary"
+                                    @change="previewAndSelectFile(selectedFile)"
+                                    @click:clear="clearResults()"
+                                ></v-file-input>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
 
-        <v-row
-            v-if="!(resultsLoaded | getIsLoading)"
-            align="center"
-            justify="center">
-            <v-col cols="10" align="center">
-                <v-btn 
-                    :disabled="!isFileSelected"
-                    class="align-center"
-                    color="primary"
-                    elevation="2"
-                    ref="uploadImageBtn"
-                    @click="uploadImage">
-                    Upload
-                </v-btn>
-            </v-col>
-        </v-row>
+            <v-row
+                v-if="!(resultsLoaded | getIsLoading)"
+                align="center"
+                justify="center">
+                <v-col cols="10" align="center">
+                    <v-btn 
+                        :disabled="!isFileSelected || !valid"
+                        type="submit"
+                        class="align-center"
+                        color="primary"
+                        elevation="2"
+                        ref="uploadImageBtn"
+                        :title="!isFileSelected ? 'no file selected':'ok'"
+                        @click="uploadImage">
+                        Upload
+                    </v-btn>
+                </v-col>
+            </v-row>
+        </v-form>
     </v-container>
     </div>
 </template>
@@ -88,14 +86,16 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     data: () => ({
         selectedFile: null,
+        valid: true,
         fileInputRules: [
-            value => !value || value.size < 10000000 || 'Image size should be less than 10 MB!',
+            value => !value || value.size < 10000000 || 'Image size should be less than 10 MB',
         ],
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
     },
     methods: {
+        
         ...mapActions(['changeFileSelectedStatus',
                         'changeResultsLoadedStatus',
                         'searchSimilarImages',
@@ -110,15 +110,30 @@ export default {
         previewFile(imageFile) {
             
             let reader = new FileReader()
+
             reader.readAsDataURL(imageFile)
-            reader.onloadend = function() {
-                let img = document.createElement('img')
-                img.src = reader.result
-                img.class='img-preview'
-                img.id='img-preview'
-                img.style="max-height:30vh; max-width:75vw"
-                img.display='flex'
-                document.getElementById('img-preview-container').appendChild(img)
+            
+            if ( (imageFile.type == "image/tiff") || (imageFile.type == "image/tif") ) {
+                reader.onloadend = function() {
+                    let img = document.createElement('v-text')
+                    img.src = reader.result
+                    img.class='img-preview'
+                    img.id='img-preview'
+                    img.style="max-height:30vh; max-width:75vw; font-style: italic; font-size: 14px;"
+                    img.display='flex'
+                    img.innerHTML="<em>tiff file preview is not supported</em>"
+                    document.getElementById('img-preview-container').appendChild(img)
+                }
+            } else {
+                reader.onloadend = function() {
+                    let img = document.createElement('img')
+                    img.src = reader.result
+                    img.class='img-preview'
+                    img.id='img-preview'
+                    img.style="max-height:30vh; max-width:75vw"
+                    img.display='flex'
+                    document.getElementById('img-preview-container').appendChild(img)
+                }
             }
             this.changeFileSelectedStatus(true)
         },
