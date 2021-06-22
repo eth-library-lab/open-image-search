@@ -84,7 +84,7 @@ def hash_images_to_remove(removal_image_dir):
     if not os.path.exists(removal_image_dir):
         os.makedirs(removal_image_dir)
     if len(os.listdir(removal_image_dir)) == 0:
-        print("Please add images to remove in the folder")
+        print("Please add images to remove in the error_images folder")
     else: 
         for filename in os.scandir(removal_image_dir):
             if filename.path.endswith((".png", '.jpg', '.jpeg')) and filename.is_file():
