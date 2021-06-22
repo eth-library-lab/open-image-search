@@ -12,9 +12,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 preprocess_images = True
 # directory of images to resize and save to processed directory
-raw_image_dir=os.path.join(BASE_DIR, 'data','raw','eth_material_archive')
+#raw_image_dir=os.path.join(BASE_DIR, 'data','raw','eth_material_archive')
 # directory of images to use to calculate features
-processed_image_dir=os.path.join(BASE_DIR, 'data','processed','eth_material_archive')
+#processed_image_dir=os.path.join(BASE_DIR, 'data','processed','eth_material_archive')
+raw_image_dir=os.path.join(BASE_DIR, 'data_raw_ethz','images')
+# directory of images to use to calculate features
+processed_image_dir=os.path.join(BASE_DIR, 'data','processed','images')
+removal_image_dir = os.path.join(BASE_DIR, 'data_raw_ethz','error_images')
 
 files_csv_fpath=None
 filepath_col_name='img_path'
