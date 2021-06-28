@@ -7,12 +7,13 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ## Pull Request Process
 
-1. Please create a new branch that references the issue number that you are solving e.g.:  feat/restyle-submit-button-#24
-2. Update the README.md with details of changes to the interface, this includes new environment 
+1. _Branch naming:_  please create a new branch with a name that indicates what the branch is for. If the branch/PR is solving an issue, please reference the issue number at the end of the name.  
+e.g.:  __feat/restyle-submit-button-#24__
+3. _Update the README.md_ with details of changes to the interface, this includes new environment 
    variables, exposed ports, useful file locations and container parameters.
-3. Increase the version numbers in any examples files and the README.md to the new version that this
+3. _Increase the version numbers_ in any examples files and the README.md to the new version that this
    Pull Request would represent. The versioning scheme we use is [SemVer](http://semver.org/).
-5. You may merge the Pull Request in once you have the sign-off of another developer, or if you 
+5. You may _merge the Pull Request_ in once you have the sign-off of another developer, or if you 
    do not have permission to do that, you may request the reviewer to merge it for you.
 
 ## Code of Conduct
