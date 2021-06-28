@@ -6,6 +6,7 @@ import os
 import numpy as np
 import utils
 import settings
+import hashlib
 
 def calc_resize_with_apect(size, min_dimension):
     """calculate the dimensions needed to resize an image with the minimum dimension on one side
@@ -76,8 +77,26 @@ def print_status_if_at_inteval(num_images_to_proc, print_interval, current_step)
     
     return
 
-
-def process_dir_of_images(input_image_dir, output_image_dir):
+def hash_images_to_remove(removal_image_dir):
+    
+    hash_to_remove = []
+    
+    if not os.path.exists(removal_image_dir):
+        os.makedirs(removal_image_dir)
+    if len(os.listdir(removal_image_dir)) == 0:
+        print("Please add images to remove in the error_images folder")
+    else: 
+        for filename in os.scandir(removal_image_dir):
+            if filename.path.endswith((".png", '.jpg', '.jpeg')) and filename.is_file():
+                #print(filename.path)
+                with open(filename.path, 'rb') as f:
+                    filehash = hashlib.md5(f.read()).hexdigest()
+                    #print(filehash)
+                if filehash not in hash_to_remove:
+                    hash_to_remove.append(filehash)
+    return hash_to_remove
+     
+def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     """
     apply the processing pipeline to a directory of images and save them to the output_image_directory
     """
@@ -88,8 +107,24 @@ def process_dir_of_images(input_image_dir, output_image_dir):
     
     print_interval = calc_print_status_interval(num_images_to_proc)
     
+    # initalize for error images removal
+    duplicates=[]
+    duplicate_imgs = [] 
+    hash_keys=dict()
+    
+    hash_to_remove = hash_images_to_remove(removal_image_dir)
+    
+
     # loop over each file path and save the processed image output
     for i, input_img_path in enumerate(fpaths_to_process):
+        
+        # remove duplicate images 
+        with open(input_img_path, 'rb') as f:
+            filehash = hashlib.md5(f.read()).hexdigest()
+        if filehash in hash_to_remove: # check in hash match with images in error_images folder
+            duplicates.append(i)
+            print(input_img_path)
+            continue 
 
         # make_output_fpath
         output_subpath = input_img_path.replace(input_image_dir,'').strip('\\').strip('/')
@@ -114,7 +149,9 @@ def process_dir_of_images(input_image_dir, output_image_dir):
             print("    ", e)
         
         # print_status_if_at_inteval(num_images_to_proc, print_interval, i)
-        utils.print_dyn_progress_bar(num_images_to_proc, i)
+        utils.print_dyn_progress_bar(num_images_to_proc, i)  
+
+    #print(duplicates)
     return
 
 
@@ -122,10 +159,13 @@ def main():
 
     input_dir = settings.raw_image_dir 
     output_dir = settings.processed_image_dir
+    removal_image_dir = settings.removal_image_dir
+    
 
-    process_dir_of_images(input_dir, output_dir)
+    process_dir_of_images(input_dir, output_dir, removal_image_dir)
 
     return
+
 
 if __name__ == '__main__':
 
