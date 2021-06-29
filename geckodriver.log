@@ -1,0 +1,538 @@
+1624892336799	geckodriver	INFO	Listening on 127.0.0.1:54054
+1624892523253	geckodriver	INFO	Listening on 127.0.0.1:54133
+1624892524275	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofile6b2jcm"
+1624892524985	Marionette	INFO	Marionette enabled
+2021-06-28 17:02:05.791 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSButton: 0x125b76c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.791 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSButton: 0x1318a7400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.792 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSButton: 0x1318a8c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.792 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSButton: 0x1318a9000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.793 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSButton: 0x1318a7c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.793 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1318a9800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:05.794 firefox-bin[25661:1836973] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1318ae000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofile6b2jcm/search.json.mozlz4", (void 0)))
+1624892527009	Marionette	INFO	Listening on port 54148
+1624892527056	Marionette	WARN	TLS certificate errors will be ignored for this session
+1624892567956	geckodriver	INFO	Listening on 127.0.0.1:54213
+1624892567972	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileUpYGLB"
+1624892568522	Marionette	INFO	Marionette enabled
+2021-06-28 17:02:49.228 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSButton: 0x12bb53400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.229 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSButton: 0x137a06c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.229 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSButton: 0x137a07400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.230 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSButton: 0x137a04400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.230 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSButton: 0x137a03400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.231 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x137a04800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:02:49.231 firefox-bin[25678:1838339] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x123d16800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileUpYGLB/search.json.mozlz4", (void 0)))
+1624892570309	Marionette	INFO	Listening on port 54222
+1624892570349	Marionette	WARN	TLS certificate errors will be ignored for this session
+1624892827221	Marionette	INFO	Stopped listening on port 54148
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624892829520	Marionette	INFO	Stopped listening on port 54222
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624892847956	geckodriver	INFO	Listening on 127.0.0.1:54302
+1624892848978	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileHQAMME"
+1624892849582	Marionette	INFO	Marionette enabled
+2021-06-28 17:07:30.307 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x128b80800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.307 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x134635000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.308 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x134633000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.308 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x134631000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.309 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x134631400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.309 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134633400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:07:30.310 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134877c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileHQAMME/search.json.mozlz4", (void 0)))
+1624892851496	Marionette	INFO	Listening on port 54313
+1624892851571	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=358106915, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=358106915, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=358106915 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=358106915 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+1624892855933	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+2021-06-28 17:16:49.409 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x1159dbc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.410 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x1c4916000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.411 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x1c4b13c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.412 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x1c4b0e000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.412 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSButton: 0x1c4becc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.413 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1c4bed000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:16:49.414 firefox-bin[25718:1841325] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1c4cc8c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+1624893601294	geckodriver	INFO	Listening on 127.0.0.1:54855
+1624893601309	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofile2Wepmp"
+1624893601871	Marionette	INFO	Marionette enabled
+2021-06-28 17:20:02.547 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSButton: 0x134b2fc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.548 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSButton: 0x134d95c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.548 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSButton: 0x134d99400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.549 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSButton: 0x134d9c400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.549 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSButton: 0x134d98800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.550 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134d97c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:20:02.550 firefox-bin[25873:1850672] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134d9fc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofile2Wepmp/search.json.mozlz4", (void 0)))
+1624893603604	Marionette	INFO	Listening on port 54864
+1624893603693	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1506574289, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1506574289, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1506574289, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1506574289 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1506574289 line 1 > eval, line 1: unreachable code after return statement
+1624893775609	geckodriver	INFO	Listening on 127.0.0.1:55024
+1624893775619	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileraFpGb"
+1624893776031	Marionette	INFO	Marionette enabled
+2021-06-28 17:22:56.649 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSButton: 0x124457800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.650 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSButton: 0x13019a800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.650 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSButton: 0x13019ac00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.651 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSButton: 0x1301a1000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.652 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSButton: 0x13019b400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.652 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x13019fc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:22:56.653 firefox-bin[25904:1852661] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1301a9800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileraFpGb/search.json.mozlz4", (void 0)))
+1624893777522	Marionette	INFO	Listening on port 55033
+1624893777570	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=591624305, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=591624305, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=591624305, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=591624305 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=591624305 line 1 > eval, line 1: unreachable code after return statement
+1624893893833	geckodriver	INFO	Listening on 127.0.0.1:55191
+1624893893845	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileVAc78e"
+1624893894264	Marionette	INFO	Marionette enabled
+2021-06-28 17:24:54.882 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSButton: 0x12bf15000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.882 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSButton: 0x12bf12000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.883 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSButton: 0x12c1a6000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.883 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSButton: 0x12c1a4400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.884 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSButton: 0x12c1a5c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.884 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12c1a0400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:24:54.885 firefox-bin[25926:1854145] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12045c800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileVAc78e/search.json.mozlz4", (void 0)))
+1624893896053	Marionette	INFO	Listening on port 55200
+1624893896119	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1190088802, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1190088802, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1190088802 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1190088802 line 1 > eval, line 1: unreachable code after return statement
+1624894079991	geckodriver	INFO	Listening on 127.0.0.1:55344
+1624894080003	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilealfSj9"
+1624894080424	Marionette	INFO	Marionette enabled
+2021-06-28 17:28:01.045 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSButton: 0x11ed58000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.046 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSButton: 0x12a828800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.046 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSButton: 0x12aa97800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.047 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSButton: 0x12aa9b000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.047 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSButton: 0x12aa99c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.048 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12aa97c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:28:01.048 firefox-bin[25947:1856379] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12aaa3400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilealfSj9/search.json.mozlz4", (void 0)))
+1624894082200	Marionette	INFO	Listening on port 55353
+1624894082255	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=765465229, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=765465229, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=765465229, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=765465229 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=765465229 line 1 > eval, line 1: unreachable code after return statement
+1624894089799	Marionette	INFO	Stopped listening on port 54864
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624894091842	Marionette	INFO	Stopped listening on port 55033
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624894095198	Marionette	INFO	Stopped listening on port 55200
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624894097770	Marionette	INFO	Stopped listening on port 55353
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624894593492	geckodriver	INFO	Listening on 127.0.0.1:55508
+1624894593503	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileuAnTDM"
+1624894593914	Marionette	INFO	Marionette enabled
+2021-06-28 17:36:34.530 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSButton: 0x11e759800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.530 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSButton: 0x12a493800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.531 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSButton: 0x12a496800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.531 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSButton: 0x12a493c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.532 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSButton: 0x12a499000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.532 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12a498000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:36:34.533 firefox-bin[25998:1861120] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12a49a800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileuAnTDM/search.json.mozlz4", (void 0)))
+1624894595600	Marionette	INFO	Listening on port 55517
+1624894595663	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1170648357, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1170648357, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1170648357, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1170648357 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=1170648357 line 1 > eval, line 1: unreachable code after return statement
+1624894723192	geckodriver	INFO	Listening on 127.0.0.1:55644
+1624894723196	Marionette	INFO	Stopped listening on port 55517
+1624894723207	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileJ32ujS"
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624894723650	Marionette	INFO	Marionette enabled
+2021-06-28 17:38:44.301 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSButton: 0x12b137000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.302 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSButton: 0x137bf4c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.302 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSButton: 0x137bf4400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.303 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSButton: 0x137bf7800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.303 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSButton: 0x137bf5000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.304 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x137bf5400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-28 17:38:44.304 firefox-bin[26019:1862908] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x137f3c800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileJ32ujS/search.json.mozlz4", (void 0)))
+1624894725244	Marionette	INFO	Listening on port 55653
+1624894725294	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=594364359, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=594364359, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=594364359, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=594364359 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=594364359 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://www.metmuseum.org/Rodan/dist/hashed/turtles-gazing-at-clouds-e2a5f162e0.js, line 1: TypeError: i is null
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1624896128512	Marionette	INFO	Stopped listening on port 55653
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624976235934	geckodriver	INFO	Listening on 127.0.0.1:61785
+1624976236952	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilekRRkCi"
+1624976237606	Marionette	INFO	Marionette enabled
+2021-06-29 16:17:18.358 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSButton: 0x12544c800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.359 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSButton: 0x131f8e800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.359 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSButton: 0x131f8dc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.360 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSButton: 0x131f8c000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.360 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSButton: 0x131f8a400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.361 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x131f90c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:17:18.361 firefox-bin[29187:2159444] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1321b4000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilekRRkCi/search.json.mozlz4", (void 0)))
+1624976239359	Marionette	INFO	Listening on port 61796
+1624976239453	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=3&cb=1139895104, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=3&cb=1139895104, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=3&cb=1139895104, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=3&cb=1139895104 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=3&cb=1139895104 line 1 > eval, line 1: unreachable code after return statement
+1624976558857	geckodriver	INFO	Listening on 127.0.0.1:62001
+1624976559875	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileyJ2eRQ"
+1624976560532	Marionette	INFO	Marionette enabled
+2021-06-29 16:22:41.289 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSButton: 0x11f548400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.289 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSButton: 0x12c4db800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.290 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSButton: 0x12c4d5400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.290 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSButton: 0x12c4dc800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.291 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSButton: 0x12c4dcc00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.291 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12c4d7c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:22:41.292 firefox-bin[29367:2164468] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12ac46800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileyJ2eRQ/search.json.mozlz4", (void 0)))
+1624976562444	Marionette	INFO	Listening on port 62012
+1624976562547	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=77024238, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=77024238, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=77024238, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=77024238 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=77024238 line 1 > eval, line 1: unreachable code after return statement
+1624976575811	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1624976606599	Marionette	INFO	Stopped listening on port 62012
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624977077474	geckodriver	INFO	Listening on 127.0.0.1:62196
+1624977077484	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileife5m9"
+1624977077977	Marionette	INFO	Marionette enabled
+2021-06-29 16:31:18.585 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSButton: 0x130647400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.586 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSButton: 0x130648000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.586 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSButton: 0x130641400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.587 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSButton: 0x130645800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.587 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSButton: 0x130645c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.588 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x130649c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:18.588 firefox-bin[29420:2168668] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x1307d6c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileife5m9/search.json.mozlz4", (void 0)))
+1624977079800	Marionette	INFO	Listening on port 62205
+1624977079844	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1047349974, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1047349974, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1047349974, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1047349974 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1047349974 line 1 > eval, line 1: unreachable code after return statement
+1624977109194	geckodriver	INFO	Listening on 127.0.0.1:62321
+1624977109207	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilesRRoHy"
+1624977109720	Marionette	INFO	Marionette enabled
+2021-06-29 16:31:50.367 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSButton: 0x128238000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.368 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSButton: 0x134dce000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.368 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSButton: 0x11af93c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.369 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSButton: 0x134dce400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.369 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSButton: 0x134dd9800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.370 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134dd5800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:31:50.370 firefox-bin[29433:2169300] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x134fd9400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilesRRoHy/search.json.mozlz4", (void 0)))
+1624977111535	Marionette	INFO	Listening on port 62330
+1624977111574	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=528007997, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=528007997, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=528007997, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=528007997 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=528007997 line 1 > eval, line 1: unreachable code after return statement
+1624977115383	Marionette	INFO	Stopped listening on port 62205
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624977572801	geckodriver	INFO	Listening on 127.0.0.1:62647
+1624977572816	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilegZFWtZ"
+1624977573224	Marionette	INFO	Marionette enabled
+2021-06-29 16:39:33.985 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSButton: 0x121323c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.986 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSButton: 0x12e32a400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.987 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSButton: 0x12e32f800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.987 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSButton: 0x12e32f400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.988 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSButton: 0x12e328c00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.989 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12e32e800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:39:33.989 firefox-bin[29489:2173738] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x12e4e2800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofilegZFWtZ/search.json.mozlz4", (void 0)))
+1624977574943	Marionette	INFO	Listening on port 62656
+1624977574974	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=676377606, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=676377606, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=676377606, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=676377606 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=676377606 line 1 > eval, line 1: unreachable code after return statement
+1624977580394	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1624977943421	Marionette	INFO	Stopped listening on port 62330
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624977943622	geckodriver	INFO	Listening on 127.0.0.1:63022
+1624977944637	mozrunner::runner	INFO	Running command: "/Applications/Firefox.app/Contents/MacOS/firefox-bin" "--marionette" "-foreground" "-no-remote" "-profile" "/var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileeYXINL"
+1624977945246	Marionette	INFO	Marionette enabled
+2021-06-29 16:45:46.003 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSButton: 0x12376b400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.003 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSButton: 0x13030b000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.004 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSButton: 0x13030f800>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.004 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSButton: 0x13030ec00>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.005 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSButton: 0x130310400>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.005 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x13030c000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+2021-06-29 16:45:46.006 firefox-bin[29587:2179095] Warning: Expected min height of view: (<NSPopoverTouchBarItemButton: 0x13064a000>) to be less than or equal to 30 but got a height of 32.000000. This error will be logged once per view in violation.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /var/folders/zw/z4tdq_zd32d8syvq784mft9m0000gn/T/rust_mozprofileeYXINL/search.json.mozlz4", (void 0)))
+1624977946845	Marionette	INFO	Stopped listening on port 62656
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1624977947231	Marionette	INFO	Listening on port 63033
+1624977947309	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=734083462, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=734083462, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=734083462, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=734083462 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=734083462 line 1 > eval, line 1: unreachable code after return statement
+1624977951812	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1624977951812	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+JavaScript error: https://www.googletagmanager.com/gtm.js?id=GTM-MSDMZ4, line 4699: uncaught exception: [object Object]
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
