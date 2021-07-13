@@ -8,3 +8,4 @@ __pycache__/
 models/
 test_images/
 *.joblib]
+.coverage
