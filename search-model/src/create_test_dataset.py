@@ -88,4 +88,4 @@ def main(num_records=100):
 
 if __name__ == "__main__":
 
-    main(num_records=100)
+    main(num_records=50)
