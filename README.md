@@ -37,7 +37,37 @@ The application is currently in a prototype phase with the following simplified 
 
 Data processing & model training can be run end to end via python scripts (optionally in a container) or selectively run using individual jupyter notebooks. 
 
-_more details to follow_
+### Folder Structure for Data
+
+inside of the search-model module data is taken from raw input to processed outputs. The folder structure convention follows the [cookiecutter datascience](https://drivendata.github.io/cookiecutter-data-science/) format.  
+Raw input data is considered immutable and is saved in  
+**data/raw** 
+Final cleaned, processed and calculated data is saved in  
+**data/processed**  
+
+Inside each of these folders, data is grouped by **dataset_name**. This is typically the name of the institution, collection or archive that provides the data.
+Inside the institution's folder metadata and images are stored in seperate folders  
+ folder paths would look like:  
+data/raw/ethz/images
+data/raw/ethz/metadata
+
+├── data
+    ├── interim
+    ├── processed
+    └── raw
+        └── test_set
+            ├── images
+            │   ├── 11.png
+            │   ├── 18.png
+            │   ├── 19.png
+            │   └── 33.png
+            │       
+            ├── metadata
+            │   └── metadata_example.csv
+            │ 
+            └── images_to_remove
+                └── 11.png
+
 
 ### Feature Extraction
 Each image in our records is passed to a CNN, VGG16, and the features calculated in the final convoluational black are flattened, max pooled, and stored in the database. These act like a 'fingerprint' for each image which can be compared to the inpute query image.

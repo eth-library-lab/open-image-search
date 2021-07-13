@@ -138,7 +138,6 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
         # make the output folder if it does not already exist
         output_fldr_path = os.path.dirname(output_img_path)
         if not os.path.exists(output_fldr_path):
-            print('making output_fldr_path: ', output_fldr_path)
             os.makedirs(output_fldr_path)
 
         #load, process and save altered image
