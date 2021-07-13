@@ -32,8 +32,30 @@ def copy_selection_of_files(input_file_dir, output_file_dir, files_to_copy):
                 shutil.copy2(cur_fpath, dest)
     return
 
+
+def add_images_to_remove(input_file_dir, output_file_dir, num_images=3):
+    """
+    to test that image removal/filtering function works,
+    copy files to the the images_to_remove folder
+    """ 
+    i=0
+
+    for dirpath, dirnames, filenames in os.walk(input_file_dir):
+        for fname in filenames:
+            cur_fpath = os.path.join(dirpath, fname)
+            dest = os.path.join(output_file_dir, "images_to_remove", fname) 
+            utils.prep_dir(dest)
+            shutil.copy2(cur_fpath, dest)
+            i+=1
+            if i >= num_images:
+                return
+
+
 def main(num_records=100):
-    
+    """
+    create a randomly selected test dataset of the given size 
+    """
+
     # load metadata csv to sample from
     input_dir_path = "../data/raw/ethz"
     input_fpath = os.path.join(input_dir_path, "metadata/imageSearch_metadata_03.12.csv")
