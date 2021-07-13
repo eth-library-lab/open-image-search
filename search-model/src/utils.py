@@ -11,6 +11,16 @@ import csv
 import logging
 import urllib
 from io import BytesIO
+import re
+
+def is_snake_case(test_string):
+    """
+    test if a string is in 'snake_case'
+    """
+    ptrn = "(^[a-z])([a-z0-9]+_?[a-z0-9]?)+([a-z0-9]$)"
+    res = re.search(ptrn, test_string)
+    return bool(res)
+
 
 def init_logging(log_fpath=None):
 
@@ -364,6 +374,7 @@ def make_df_file_list(input_image_dir, keep_full_path=False, use_relative_path=T
     df['file_path'] = rel_path + df['file_path']
 
     return df
+
 
 def print_dyn_progress_bar(total, i):
     """print a progress bar in a single line to monitor a for loop """
