@@ -78,8 +78,10 @@ def main(num_records=100):
 
     # copy images into test folder
     test_image_dir = os.path.join(test_dirpath, "images")
-    copy_selection_of_files(input_dir_path, test_image_dir, images_to_copy)
+    copy_selection_of_files(input_dir_path, test_dirpath, images_to_copy)
     
+    add_images_to_remove(test_image_dir, test_dirpath, num_images=3)
+
     print(f"saved test dataset of {num_records} records from  {input_dir_path}  to  {test_dirpath}")
     return
 
