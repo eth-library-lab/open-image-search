@@ -20,11 +20,11 @@ raw_image_dir = os.path.join(BASE_DIR, raw_image_dir)
 
 #specify a csv file that has a list of file paths to the image files
 files_csv_fpath=None
-filepath_col_name='img_path'
-label_col_name='object_id'
+filepath_col_name='img_path' # name of the column in the csv with the image filepaths
+label_col_name='object_id' # name of the column in the csv with the unique id of the image
 
 # directory of images to use to calculate features
-processed_image_dir = os.environ.get("OUTPUT_IMAGE_DIR", f"data/processed/{dataset_name}")
+processed_image_dir = os.environ.get("OUTPUT_IMAGE_DIR", f"data/processed/{dataset_name}/images")
 processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 
 # directory of images to filter from the raw images set (e.g. if the image dataset contains a 'file not found' placeholder image)
