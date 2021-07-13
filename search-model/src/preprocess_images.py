@@ -60,23 +60,6 @@ def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fl
     return fpaths_to_process
 
 
-def calc_print_status_interval(num_images_to_proc):
-    """calculate number of iterations to run between printing a status output
-    at each 10% progress interval or every 1000 images
-    num_images_to_proc"""
-    
-    print_interval = min(max(1, int(num_images_to_proc/10)), 1000)    
-    return print_interval
-
-
-def print_status_if_at_inteval(num_images_to_proc, print_interval, current_step):
-    """print a status update at the calculated steps or when processing the last image"""
-
-    if (((current_step+1) % print_interval) == 0) or ((current_step+1) == num_images_to_proc):
-        print("finished processing {:,} of {:,} images".format(current_step+1, num_images_to_proc))
-    
-    return
-
 def hash_images_to_remove(removal_image_dir):
     
     hash_to_remove = []
@@ -103,9 +86,6 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     
     fpaths_to_process = get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fldr_path=True)
     num_images_to_proc = len(fpaths_to_process)
-    print('num images to process {:,}'.format(num_images_to_proc))
-    
-    print_interval = calc_print_status_interval(num_images_to_proc)
     
     # initalize for error images removal
     duplicates=[]
@@ -113,7 +93,6 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     hash_keys=dict()
     
     hash_to_remove = hash_images_to_remove(removal_image_dir)
-    
 
     # loop over each file path and save the processed image output
     for i, input_img_path in enumerate(fpaths_to_process):
@@ -123,7 +102,6 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
             filehash = hashlib.md5(f.read()).hexdigest()
         if filehash in hash_to_remove: # check in hash match with images in error_images folder
             duplicates.append(i)
-            print(input_img_path)
             continue 
 
         # make_output_fpath
@@ -147,7 +125,6 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
             print("    warning: could not preprocess image {}".format(input_img_path))
             print("    ", e)
         
-        # print_status_if_at_inteval(num_images_to_proc, print_interval, i)
         utils.print_dyn_progress_bar(num_images_to_proc, i)  
 
     #print(duplicates)
