@@ -23,7 +23,7 @@ def clean_df(df):
     return df    
 
 
-def process_eth_metada(df):
+def process_eth_metadata(df):
     
     df = clean_df(df)
     col_dict = { 'recordID': 'record_id',
@@ -40,6 +40,7 @@ def process_eth_metada(df):
                  'timestamp': 'timestamp'}
     df = df.rename(columns=col_dict)
     df = df.drop(columns=['timestamp'])
+    
     # change url to lower resolution request (350x350px) 
     df['image_url'] = df['image_url'].str.replace('resolution=superImageResolution','resolution=highImageResolution')
     
@@ -54,7 +55,7 @@ def main():
         df = pd.read_csv(fpath)
         print(f"loaded metadata file with {df.shape[0]} rows")
 
-        df = process_eth_metada(df)
+        df = process_eth_metadata(df)
         # save to folder for all institutions data
         output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
         fpath =  os.path.join(output_dir, os.path.basename(fsubpath))
@@ -68,4 +69,3 @@ def main():
 if __name__ == '__main__':
     
     main()
-
