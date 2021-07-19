@@ -16,10 +16,32 @@ from datetime import datetime as dt
 import utils
 import settings
 
-def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
+#def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
+def initialise_model(print_summary=True, model_name, weights='imagenet'):
     """initialise the model to be used for feature extraction"""
-    
-    model_backbone = tf.keras.applications.VGG16(include_top=False, weights=weights, input_shape=(224,224,3))
+    """
+    model_name:
+        #vgg16_imagenet
+        #vgg19_imagenet
+        #resnet50
+        #inception_resnet
+        #inception_v3
+        #xception
+    """
+    if model_name == "vgg16_imagenet":
+        model_backbone = tf.keras.applications.VGG16(include_top=False, weights=weights, input_shape=(224,224,3))
+    elif model_name == "vgg19_imagenet":
+        model_backbone = tf.keras.applications.VGG19(include_top=False, weights=weights, input_shape=(224,224,3))
+    elif model_name == "resnet50":
+        model_backbone = tf.keras.applications.resnet50(include_top=False, weights=weights, input_shape=(224,224,3))
+    elif model_name == "inception_resnet":
+        model_backbone = tf.keras.applications.inception_resnet_v2(include_top=False, weights=weights, input_shape=(224,224,3))
+    elif model_name == "inception_v3":
+        model_backbone = tf.keras.applications.inception_v3(include_top=False, weights=weights, input_shape=(224,224,3))
+    elif model_name == "xception":
+        model_backbone = tf.keras.applications.xception(include_top=False, weights=weights, input_shape=(224,224,3))
+    else:
+        print("Feature extraction model Unrecognised")
     backbone_output = model_backbone.layers[-1].output # drop the last max pooling layer from vgg
     
     pooling_lyr = tf.keras.layers.MaxPool2D(pool_size=(7,7))(backbone_output)
@@ -39,15 +61,21 @@ def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weig
 def save_feature_extractor_notes(fldr_path, model, weights):
     """
     """
-    # save model summary    
-    fname = 'feature_extractor_notes.txt'
+    
+    # save model summary
+    #fname = 'feature_extractor_notes.txt'
+    fname = 'feature_extractor_notes' + model.name + '.txt'
     fpath = os.path.join(fldr_path, fname)
-
+    
+    #if not os.path.exists(fpath):
+    #    os.makedirs(fldr_path)
+        
     with open(fpath,'w') as f:
         f.write("Model Name: {} \n".format(model.name))
         f.write("Model weights: {} \n".format(str(weights)))
         # Pass the file handle in as a lambda function to make it callable
         model.summary(print_fn=lambda x: f.write(x + '\n'))
+    
 
 
 def make_empty_features_csv(fpath):
@@ -162,7 +190,7 @@ def main():
                             conv_color='rgb')
 
     # load the model
-    model = initialise_model_vgg16(print_summary=False, 
+    model = initialise_model(print_summary=False, 
                                 model_name=settings.model_name,
                                 weights=settings.weights)
     model.compile()
@@ -184,7 +212,11 @@ def main():
 
     for i, (images, labels) in enumerate(iter(ds)):
         #extract features
-        features = model.predict(images)
+        try:
+            features = model.predict(images)
+        except:
+            logging.info('Error: Image %s' % filepath)
+            return
         append_tf_features_to_csv(features, labels, output_fpath)
         #update progress bar
         utils.print_dyn_progress_bar(total_steps,i)
