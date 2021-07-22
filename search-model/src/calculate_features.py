@@ -6,6 +6,7 @@
 # this script uses a CNN to extract features from the images in the directory. 
 # The results are saved to a csv.
 
+
 import tensorflow as tf
 import os, sys
 import csv
@@ -15,9 +16,11 @@ from datetime import datetime as dt
 
 import utils
 import settings
+from tensorflow.keras.layers import Input
+import logging
 
 #def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
-def initialise_model(print_summary=True, model_name, weights='imagenet'):
+def initialise_model(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
     """initialise the model to be used for feature extraction"""
     """
     model_name:
@@ -28,21 +31,25 @@ def initialise_model(print_summary=True, model_name, weights='imagenet'):
         #inception_v3
         #xception
     """
+    img_size = settings.img_min_dimension
     if model_name == "vgg16_imagenet":
-        model_backbone = tf.keras.applications.VGG16(include_top=False, weights=weights, input_shape=(224,224,3))
+        model_backbone = tf.keras.applications.VGG16(include_top=False, weights=weights, input_shape=(img_size,img_size,3))
     elif model_name == "vgg19_imagenet":
-        model_backbone = tf.keras.applications.VGG19(include_top=False, weights=weights, input_shape=(224,224,3))
+        model_backbone = tf.keras.applications.VGG19(include_top=False, weights=weights, input_shape=(img_size,img_size,3))
     elif model_name == "resnet50":
-        model_backbone = tf.keras.applications.resnet50(include_top=False, weights=weights, input_shape=(224,224,3))
+        model_backbone = tf.keras.applications.resnet50.ResNet50(include_top=False, weights=weights, input_shape=(img_size,img_size,3))
     elif model_name == "inception_resnet":
-        model_backbone = tf.keras.applications.inception_resnet_v2(include_top=False, weights=weights, input_shape=(224,224,3))
+        model_backbone = tf.keras.applications.inception_resnet_v2.InceptionResNetV2(include_top=False, weights=weights, input_shape=(img_size,img_size,3))
     elif model_name == "inception_v3":
-        model_backbone = tf.keras.applications.inception_v3(include_top=False, weights=weights, input_shape=(224,224,3))
+        input_tensor = Input(shape=(img_size, img_size, 3))
+        model_backbone = tf.keras.applications.inception_v3.InceptionV3(include_top=False, weights=weights, input_tensor=input_tensor)
     elif model_name == "xception":
-        model_backbone = tf.keras.applications.xception(include_top=False, weights=weights, input_shape=(224,224,3))
+        model_backbone = tf.keras.applications.xception.Xception(include_top=False, weights=weights, input_shape=(img_size,img_size,3))
     else:
         print("Feature extraction model Unrecognised")
-    backbone_output = model_backbone.layers[-1].output # drop the last max pooling layer from vgg
+    
+    
+    backbone_output = model_backbone.layers[-1].output # drop the last max pooling layer
     
     pooling_lyr = tf.keras.layers.MaxPool2D(pool_size=(7,7))(backbone_output)
     flatten_lyr = tf.keras.layers.Flatten()(pooling_lyr)
@@ -64,7 +71,7 @@ def save_feature_extractor_notes(fldr_path, model, weights):
     
     # save model summary
     #fname = 'feature_extractor_notes.txt'
-    fname = 'feature_extractor_notes' + model.name + '.txt'
+    fname = 'feature_extractor_notes_' + model.name + '.txt'
     fpath = os.path.join(fldr_path, fname)
     
     #if not os.path.exists(fpath):
@@ -72,6 +79,7 @@ def save_feature_extractor_notes(fldr_path, model, weights):
         
     with open(fpath,'w') as f:
         f.write("Model Name: {} \n".format(model.name))
+        f.write("Image Dimensions: {} \n".format((settings.img_min_dimension, settings.img_min_dimension, 3)))
         f.write("Model weights: {} \n".format(str(weights)))
         # Pass the file handle in as a lambda function to make it callable
         model.summary(print_fn=lambda x: f.write(x + '\n'))
@@ -215,7 +223,9 @@ def main():
         try:
             features = model.predict(images)
         except:
-            logging.info('Error: Image %s' % filepath)
+            #logging.info('Error: Image %s' % filepath)
+            print('image error: ', i)
+            logging.info('Error: Image %s' % labels)
             return
         append_tf_features_to_csv(features, labels, output_fpath)
         #update progress bar
