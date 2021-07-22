@@ -35,6 +35,16 @@ removal_image_dir = os.environ.get("REMOVAL_IMAGE_DIR", f"data/raw/{dataset_name
 removal_image_dir = os.path.join(BASE_DIR, removal_image_dir)
 
 ###################################################################################################
+#### Feature Extraction Model Parameters ####
+
+batch_size=32
+model_name='xception'
+model_version="2"
+weights='imagenet'
+model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_version)
+img_min_dimension=320
+
+###################################################################################################
 #### File Output Settings ####
 
 # directory of images to use to calculate features
@@ -42,16 +52,7 @@ processed_image_dir = os.environ.get("OUTPUT_IMAGE_DIR", f"data/processed/{datas
 processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 
 # output file for features
-features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'features.csv')
-
-###################################################################################################
-#### Feature Extraction Model Parameters ####
-
-batch_size=32
-model_name='vgg16_imagenet'
-model_version="2"
-weights='imagenet'
-model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_version)
+features_fpath = os.path.join(BASE_DIR, 'data','processed','features_'+model_name+'.csv')
 
 ###################################################################################################
 #### Search Model Parameters ####
