@@ -59,10 +59,18 @@
                 max-width="500px" />
             </p>
             <h2>Contact</h2>
-            <p class="mb-0" align="left">
+            <p class="mb-2" align="left">
               If you are interested in the project, or would like to join the network of 
-              collections participating in this project we would love to talk to you.
-              Please see the contact details on our parent sites:<br/>
+              collections participating in this project we would love to hear from you.
+              Please see our github page or the contact us through our parent sites:<br/>
+            </p>
+            <p class="ma-0">
+              <a
+              class="no-underline" 
+              href="https://github.com/eth-library-lab/open-image-search" target="_blank">
+              <v-icon large>mdi-github</v-icon>
+                <span class="underline-on-hover text-h6">open-image-search</span>
+              </a>
             </p>
             <p class="ma-0 pa-0">
               <v-btn
@@ -115,6 +123,13 @@ import LibLabLogo from '@/components/LibLabLogo.vue';
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
+.no-underline {
+  text-decoration:none; 
+}
+
+.underline-on-hover:hover {
+  text-decoration: underline;
+}
 </style>
