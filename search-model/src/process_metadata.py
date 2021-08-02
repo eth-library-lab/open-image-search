@@ -7,7 +7,7 @@ import os, sys
 
 sys.path.append('..')
 import settings
-
+import utils
 
 def clean_df(df):
     """drop duplicates and empty rows"""
@@ -49,7 +49,7 @@ def process_eth_metadata(df):
 
 def main():
 
-    for fsubpath in settings.metadata_csvs_list:
+    for fsubpath in settings.metadata_csvs:
 
         fpath = os.path.join(settings.BASE_DIR, 'data','raw', fsubpath)
         df = pd.read_csv(fpath)
@@ -59,6 +59,7 @@ def main():
         # save to folder for all institutions data
         output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
         fpath =  os.path.join(output_dir, os.path.basename(fsubpath))
+        utils.prep_dir(fpath)
         # write out csv
         df.to_csv(fpath, index=False)
         print(f'wrote metadata file to {fpath}')
