@@ -58,4 +58,4 @@ model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_versi
 
 search_model_version="2"
 search_model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', search_model_version)
-num_neighbours=os.environ.get("NUM_NEIGHBOURS", 10) # number of results the search model should return
+num_neighbours=int(os.environ.get("NUM_NEIGHBOURS", 10)) # number of results the search model should return
