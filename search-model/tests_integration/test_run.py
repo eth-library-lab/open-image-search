@@ -10,9 +10,9 @@ import settings
 
 class TestRun():
 
-    def test_end_to_end_runs_successfully(self):
+    def test_end_to_end(self):
         """
-        check that the whole processing and training process can run with the sample dataset
+        check that the whole data processing and training process can run end-to-end with the sample dataset
         """
 
         assert 1 == run.main()
