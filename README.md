@@ -51,6 +51,7 @@ Inside the institution's folder metadata and images are stored in seperate folde
 data/raw/ethz/images
 data/raw/ethz/metadata
 
+```
 ├── data
     ├── interim
     ├── processed
@@ -68,6 +69,7 @@ data/raw/ethz/metadata
             └── images_to_remove
                 └── 11.png
 
+```
 
 ### Feature Extraction
 Each image in our records is passed to a CNN, VGG16, and the features calculated in the final convoluational black are flattened, max pooled, and stored in the database. These act like a 'fingerprint' for each image which can be compared to the inpute query image.
