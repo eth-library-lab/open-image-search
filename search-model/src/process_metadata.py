@@ -49,21 +49,37 @@ def process_eth_metadata(df):
 
 def main():
 
-    for fsubpath in settings.metadata_csvs:
+    output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
 
-        fpath = os.path.join(settings.BASE_DIR, 'data','raw', fsubpath)
-        df = pd.read_csv(fpath)
-        print(f"loaded metadata file with {df.shape[0]} rows")
+    # if there is one or more metadata csvs process them, else create a csv with just the filenames
+    if settings.metadata_csvs:
+        for fsubpath in settings.metadata_csvs:
 
-        df = process_eth_metadata(df)
+            fpath = os.path.join(settings.BASE_DIR, 'data','raw', fsubpath)
+            df = pd.read_csv(fpath)
+            print(f"loaded metadata file with {df.shape[0]} rows")
+
+            df = process_eth_metadata(df)
+            # save to folder for all institutions data
+            fpath =  os.path.join(output_dir, os.path.basename(fsubpath))
+            utils.prep_dir(fpath)
+            # write out csv
+            df.to_csv(fpath, index=False)
+            print(f'wrote metadata file to {fpath}')
+
+    else:
+        #list images in the input directory and put them in a dataframe
+        img_list = utils.get_list_of_files_in_dir(settings.processed_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True)
+        df = pd.DataFrame({"image_url":img_list})
+        df["record_id"] = df.index.to_list()
         # save to folder for all institutions data
         output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
-        fpath =  os.path.join(output_dir, os.path.basename(fsubpath))
+        fpath =  os.path.join(output_dir, os.path.basename(settings.processed_image_dir) + ".csv")
         utils.prep_dir(fpath)
         # write out csv
         df.to_csv(fpath, index=False)
         print(f'wrote metadata file to {fpath}')
-    
+
     return
 
 
