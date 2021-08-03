@@ -5,6 +5,15 @@ import re
 import os, sys
 sys.path.append("../src")
 
+### cannot load field names from class due to error: Model class ImageSearch.models.ImageMetadata doesn't declare an explicit app_label and isn't in an application in INSTALLED_APPS
+# import django
+# sys.path.append("../../backend/api")
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+# django.setup()
+
+# from ImageSearch.models import ImageMetadata
+# print(ImageMetadata._meta)
+
 from process_metadata import clean_df, process_eth_metadata
 from utils import is_snake_case
 
