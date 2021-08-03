@@ -5,6 +5,15 @@ import re
 import os, sys
 sys.path.append("../src")
 
+### cannot load field names from class due to error: Model class ImageSearch.models.ImageMetadata doesn't declare an explicit app_label and isn't in an application in INSTALLED_APPS
+# import django
+# sys.path.append("../../backend/api")
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+# django.setup()
+
+# from ImageSearch.models import ImageMetadata
+# print(ImageMetadata._meta)
+
 from process_metadata import clean_df, process_eth_metadata
 from utils import is_snake_case
 
@@ -231,7 +240,7 @@ class TestCleanDf():
 
 
 class TestProcessEthMetadata():
-    
+
     def test_columns_are_snake_case(self, df_eth_raw):
         """
         check that all cleaned column names are in snake_case
@@ -243,4 +252,28 @@ class TestProcessEthMetadata():
             assert True == is_snake_case(col), "failed column: {}".format(col)
 
 
-    
+    def test_check_field_names_match_django(self, df_eth_raw):
+        """
+        test that columns are the same as the Django model class
+         in backend/api/ImageSearch/models
+        """
+
+        image_metadata_cols = ["record_id",
+            "created_date",
+            "title",
+            "image_url",
+            "record_url",
+            "inventory_number",
+            "person",
+            "date",
+            "classification",
+            "material_technique",
+            "institution_isil",
+            "image_licence"]
+
+        df = process_eth_metadata(df_eth_raw)
+        cols = df.columns
+
+        for col in cols:
+            assert col in image_metadata_cols, "failed column: {}".format(col)
+
