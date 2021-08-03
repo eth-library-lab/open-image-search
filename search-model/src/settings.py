@@ -1,5 +1,9 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+if os.environ.get("MODE") != "testing":
+    load_dotenv("../.env.settings")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,9 +29,10 @@ filepath_col_name='img_path' # name of the column in the csv with the image file
 label_col_name='object_id' # name of the column in the csv with the unique id of the image
 
 # specify the paths of metadata files separated by a space
-metadata_csvs = os.environ.get("METADATA_CSVS", f"data/raw/{dataset_name}/imageSearch_metadata_03.12.csv")
-metadata_csvs = metadata_csvs.split(" ")
-metadata_csvs = [os.path.join(BASE_DIR, fpath) for fpath in metadata_csvs]
+metadata_csvs = os.environ.get("METADATA_CSVS", None)
+if metadata_csvs:
+    metadata_csvs = metadata_csvs.split(" ")
+    metadata_csvs = [os.path.join(BASE_DIR, fpath) for fpath in metadata_csvs]
 
 # directory of images to filter from the raw images set 
 # (e.g. the image dataset contains a 'file not found' placeholder image)
@@ -43,6 +48,9 @@ processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 
 # output file for features
 features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'features.csv')
+
+# output directory for fixtures
+fixtures_dir = os.path.join(BASE_DIR, 'data','processed' )
 
 ###################################################################################################
 #### Feature Extraction Model Parameters ####
