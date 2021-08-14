@@ -45,20 +45,11 @@
                         ></v-file-input>
                     </v-col>
                 </v-row>
-                <!-- Disused Cancel button
-                    <v-row >
-                    <v-col justify="center" v-if="resultsLoaded" class="ma-0 pa-0">
-                        <v-icon
-                            @click="clearResults()"
-                            class="pa-4"
-                            title="clear results and search image">
-                            mdi-close-box
-                        </v-icon>
-                    </v-col>
-                </v-row> -->
+                    <QueryParameterBar />
                 </v-card>
             </v-col>
         </v-row>
+
         <!-- -->
 
         <v-row
@@ -82,9 +73,13 @@
 </template>
 
 <script>
+import QueryParameterBar from '@/components/QueryParameterBar.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+    components: {
+        QueryParameterBar,
+    },
     data: () => ({
         selectedFile: null
     }),
