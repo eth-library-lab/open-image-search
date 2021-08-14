@@ -51,24 +51,27 @@
                     ></v-text-field>
                   </template>
                 </v-range-slider>
-                <v-select
+                <v-combobox
                   v-model="materialTechnique"
                   :disabled="selectionsDisabled"
                   :items="materialTechniques"
+                  multiple
                   label="Material or Technique"
-                ></v-select>
-                <v-select
+                ></v-combobox>
+                <v-combobox
                   v-model="classification"
                   :disabled="selectionsDisabled"
                   :items="classifications"
+                  multiple
                   label="Classification"
-                ></v-select>
-                <v-select
+                ></v-combobox>
+                <v-combobox
                   v-model="collection"
                   :items="collections"
                   :disabled="true | selectionsDisabled"
+                  multiple
                   label="collection"
-                ></v-select>
+                ></v-combobox>
               </v-col>
             </v-row>
           </v-expansion-panel-content>
