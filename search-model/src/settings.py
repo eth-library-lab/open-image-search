@@ -1,9 +1,15 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import argparse
 
 if os.environ.get("MODE") != "testing":
     load_dotenv("../.env.settings")
+
+parser = argparse.ArgumentParser(description='settings file')
+parser.add_argument('--print', action='store_true',
+                    help='print out main settings')
+args = parser.parse_args()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,8 +55,11 @@ processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 # output file for features
 features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'features.csv')
 
+# interim output file for features
+interim_metadata_dir = os.path.join(BASE_DIR, 'data','interim', dataset_name, 'metadata')
+
 # output directory for fixtures
-fixtures_dir = os.path.join(BASE_DIR, 'data','processed' )
+fixtures_dir = os.path.join(BASE_DIR, 'data','processed', dataset_name,'fixtures')
 
 ###################################################################################################
 #### Feature Extraction Model Parameters ####
@@ -67,3 +76,16 @@ model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_versi
 search_model_version="2"
 search_model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', search_model_version)
 num_neighbours=int(os.environ.get("NUM_NEIGHBOURS", 10)) # number of results the search model should return
+
+if args.print:
+    print("open imageSearch - Current Settings\n")
+    print("BASE_DIR: ", BASE_DIR)
+    print("\n----inputs----")
+    print("dataset_name: ", dataset_name)
+    print("list of metadata csvs: ")
+    for metadata_csv in metadata_csvs:
+        print("    - ", metadata_csv)
+    print("removal_image_dir: ", removal_image_dir)
+    print("\n----outputs----")
+    print("interim metadata dir (for cleaned metadata): ", interim_metadata_dir)
+    print("fixtures output directory: ", fixtures_dir)
