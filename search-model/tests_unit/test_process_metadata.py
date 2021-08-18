@@ -258,7 +258,8 @@ class TestProcessEthMetadata():
          in backend/api/ImageSearch/models
         """
 
-        image_metadata_cols = ["record_id",
+        image_metadata_cols = [
+            "record_id",
             "created_date",
             "title",
             "image_url",
