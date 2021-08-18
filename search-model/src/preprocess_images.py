@@ -132,7 +132,7 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
 
 
 def main():
-
+    print("---Preprocessing Images---\n")
     input_dir = settings.raw_image_dir 
     output_dir = settings.processed_image_dir
     removal_image_dir = settings.removal_image_dir
