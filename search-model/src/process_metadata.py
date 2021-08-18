@@ -37,11 +37,13 @@ def process_eth_metadata(df):
                  'institutionIsil': 'institution_isil',
                  'recordURL': 'record_url',
                  'imageLicence': 'image_licence',
+                 'relations':'relations',
                  'timestamp': 'timestamp'}
     df = df.rename(columns=col_dict)
-    df = df.drop(columns=['timestamp'])
+    if 'timestamp' in df.columns:
+        df = df.drop(columns=['timestamp'])
     
-    # change url to lower resolution request (350x350px) 
+    # change url to lower resolution request (350x350px)
     df['image_url'] = df['image_url'].str.replace('resolution=superImageResolution','resolution=highImageResolution')
     
     return df
@@ -49,36 +51,37 @@ def process_eth_metadata(df):
 
 def main():
 
-    output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
+    output_dir = settings.interim_metadata_dir
 
     # if there is one or more metadata csvs process them, else create a csv with just the filenames
     if settings.metadata_csvs:
-        for fsubpath in settings.metadata_csvs:
-
-            fpath = os.path.join(settings.BASE_DIR, 'data','raw', fsubpath)
-            df = pd.read_csv(fpath)
+        for fpath_input in settings.metadata_csvs:
+            if fpath_input.endswith(".xlsx"):
+                df = pd.read_excel(fpath_input)
+            else:
+                df = pd.read_csv(fpath_input)
+            
             print(f"loaded metadata file with {df.shape[0]} rows")
 
             df = process_eth_metadata(df)
-            # save to folder for all institutions data
-            fpath =  os.path.join(output_dir, os.path.basename(fsubpath))
-            utils.prep_dir(fpath)
+            # save to interim folder for dataset
+            fpath_output =  os.path.join(output_dir, os.path.basename(fpath_input))
+            utils.prep_dir(fpath_output)
             # write out csv
-            df.to_csv(fpath, index=False)
-            print(f'wrote metadata file to {fpath}')
+            df.to_csv(fpath_output, index=False)
+            print(f'wrote metadata file to {fpath_output}')
 
     else:
         #list images in the input directory and put them in a dataframe
         img_list = utils.get_list_of_files_in_dir(settings.processed_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True)
         df = pd.DataFrame({"image_url":img_list})
         df["record_id"] = df.index.to_list()
-        # save to folder for all institutions data
-        output_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
-        fpath =  os.path.join(output_dir, os.path.basename(settings.processed_image_dir) + ".csv")
-        utils.prep_dir(fpath)
+        # save to interim folder for dataset
+        fpath_output =  os.path.join(output_dir, os.path.basename(settings.processed_image_dir) + ".csv")
+        utils.prep_dir(fpath_output)
         # write out csv
-        df.to_csv(fpath, index=False)
-        print(f'wrote metadata file to {fpath}')
+        df.to_csv(fpath_output, index=False)
+        print(f'wrote metadata file to {fpath_output}')
 
     return
 
