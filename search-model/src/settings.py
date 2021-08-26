@@ -6,11 +6,6 @@ import argparse
 if os.environ.get("MODE") != "testing":
     load_dotenv("../.env.settings")
 
-parser = argparse.ArgumentParser(description='settings file')
-parser.add_argument('--print', action='store_true',
-                    help='print out main settings')
-args = parser.parse_args()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -77,15 +72,23 @@ search_model_version="2"
 search_model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', search_model_version)
 num_neighbours=int(os.environ.get("NUM_NEIGHBOURS", 10)) # number of results the search model should return
 
-if args.print:
-    print("open imageSearch - Current Settings\n")
-    print("BASE_DIR: ", BASE_DIR)
-    print("\n----inputs----")
-    print("dataset_name: ", dataset_name)
-    print("list of metadata csvs: ")
-    for metadata_csv in metadata_csvs:
-        print("    - ", metadata_csv)
-    print("removal_image_dir: ", removal_image_dir)
-    print("\n----outputs----")
-    print("interim metadata dir (for cleaned metadata): ", interim_metadata_dir)
-    print("fixtures output directory: ", fixtures_dir)
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='settings file')
+    parser.add_argument('--print', action='store_true',
+                        help='print out main settings')
+    args = parser.parse_args()
+
+    if args.print:
+        print("open imageSearch - Current Settings\n")
+        print("BASE_DIR: ", BASE_DIR)
+        print("\n----inputs----")
+        print("dataset_name: ", dataset_name)
+        print("list of metadata csvs: ")
+        if metadata_csvs:
+            for metadata_csv in metadata_csvs:
+                print("    - ", metadata_csv)
+        print("removal_image_dir: ", removal_image_dir)
+        print("\n----outputs----")
+        print("interim metadata dir (for cleaned metadata): ", interim_metadata_dir)
+        print("fixtures output directory: ", fixtures_dir)
