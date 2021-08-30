@@ -139,6 +139,19 @@ def main(args=None):
         # min/max years
         df = insert_years_from_text(df)
 
+
+                
+        # create classification fixture
+        # encode classifications in df
+
+
+        # output material_technique
+        # encode material_technique in df
+
+
+        # output institution
+        # encode institution in df
+
         print(df.head())
         # df = process_eth_metadata(df)
         # # save to interim folder for dataset

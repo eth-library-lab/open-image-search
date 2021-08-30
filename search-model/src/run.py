@@ -2,8 +2,9 @@ import preprocess_images
 import calculate_features
 import train_similarity_search
 import settings
-import process_metadata
+import clean_metadata
 import export_metadata
+import process_metadata
 
 
 def main():
@@ -16,8 +17,11 @@ def main():
     calculate_features.main()
     # make KNN model
     train_similarity_search.main()
-    # process the csv of metadata
-    process_metadata.main()
+    # clean the csv of metadata
+    clean_metadata.main()
+    # process the metadata
+    # load from a folder of csv's
+    # process_metadata.main()
     # export the metadata to json fixtures for loading into django
     export_metadata.main()
 
