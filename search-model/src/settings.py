@@ -50,7 +50,7 @@ processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 # output file for features
 features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'features.csv')
 
-# interim output file for features
+# interim output folder for cleaned metadata files
 interim_metadata_dir = os.path.join(BASE_DIR, 'data','interim', dataset_name, 'metadata')
 
 # output directory for fixtures
