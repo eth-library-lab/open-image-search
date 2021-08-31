@@ -67,8 +67,10 @@ def main():
             print(f"loaded metadata file with {df.shape[0]} rows")
 
             df = process_eth_metadata(df)
+            fname_output = os.path.basename(fpath_input)
+            fname_output = fname_output.rsplit(".",maxsplit=1)[0] + ".csv"
             # save to interim folder for dataset
-            fpath_output =  os.path.join(output_dir, os.path.basename(fpath_input))
+            fpath_output =  os.path.join(output_dir, fname_output)
             utils.prep_dir(fpath_output)
             # write out csv
             df.to_csv(fpath_output, index=False)

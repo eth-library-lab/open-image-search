@@ -21,9 +21,7 @@ def main():
     clean_metadata.main()
     # process the metadata
     # load from a folder of csv's
-    # process_metadata.main()
-    # export the metadata to json fixtures for loading into django
-    export_metadata.main()
+    process_metadata.main()
 
     return 1
 

@@ -7,10 +7,13 @@ import numpy as np
 import re
 import os, sys
 import argparse
+from collections import defaultdict
 
 sys.path.append('..')
 import settings
 import utils
+import export_metadata
+
 
 def get_record_ids_from_features_df(df_feat):
     """
@@ -20,13 +23,13 @@ def get_record_ids_from_features_df(df_feat):
     """
     
     df_fpath = df_feat.iloc[:,[0]]
-    print("df_fpath: \n\n",df_fpath,"\n\n")
     df_fpath = df_fpath.rename(columns={0:"fpath"})
     df_fpath['record_id'] = df_fpath["fpath"].str.rsplit(pat="/", n=1, expand=True)[1]
     df_fpath['record_id'] = df_fpath['record_id'].str.split(pat=".", n=1, expand=True)[0]
     df_fpath.index.rename("model_id", inplace=True)
     
     return df_fpath
+
 
 def use_fpaths_to_insert_model_ids_into_df_meta(df_fpath, df_meta):
     """join metadata to fpaths and model ids"""
@@ -39,6 +42,59 @@ def use_fpaths_to_insert_model_ids_into_df_meta(df_fpath, df_meta):
     df.index.rename("model_id", inplace=True)
     
     return df
+
+
+def create_class_dict(ser):
+    
+    # use a default dict to return -1 in case key is not found
+    
+    class_dict = defaultdict(lambda: -1)
+    classes = np.unique(ser)
+    indices = np.arange(len(classes))
+    class_dict.update(dict(zip(classes, indices)))
+    
+    return classes, indices, class_dict
+
+
+def flatten_series_of_lists(ser:pd.Series):
+    """
+    flatten a series of lists where the relationship between the index and the values 
+    needs to be maintained
+    ser: pd.Series where the values are lists
+    """
+    
+    indices = []
+    keys = []
+    for index, row in ser.iteritems():
+        if type(row) != list:
+            pass
+
+        else:
+            for key in row:
+                indices.append(index)
+                keys.append(key)
+
+    return pd.Series(index=indices, data=keys, name=ser.name)
+
+
+def has_numbers(inputString):
+    return bool(re.search(r'\d', inputString))
+
+
+def split_and_flatten_series(ser, split_char=None):
+    
+    ser = ser.str.lower()
+    # split into series of lists strings based split_char
+    if split_char:
+        ser = ser.str.split(split_char)
+        # flatten series of lists
+        ser = flatten_series_of_lists(ser)
+    
+    # strip whitespace from strings
+    if ser.dtype == "O":
+        ser = ser.str.strip()
+    
+    return ser
 
 
 def series_of_lists_to_array(ser, fill_value_index=None):
@@ -106,11 +162,77 @@ def insert_years_from_text(df):
     return df
 
 
-def process_eth_metadata(df):
+def make_flat_relationships_table(df_meta):
+    """
+    flatten semi-colon separated lists of  relationships between works
+    """
     
-    
-    return df
+    tser = split_and_flatten_series(df_meta["relations"], split_char=";")
+    tdf = tser.str.split(",", n=1, expand=True)
+    tdf = tdf.rename(columns={0:"relationship_type",1:"inventory_number"})
+    fltr = tdf["relationship_type"].notna() & tdf["inventory_number"].isna() & tdf["relationship_type"].apply(has_numbers)
+    tdf.loc[fltr,"inventory_number"] = tdf.loc[fltr, "relationship_type"]
+    tdf.loc[fltr,"relationship_type"] = "undefined"
+    tdf["relationship_type"] = tdf["relationship_type"].str.replace("doublette","dublette")
+    tdf["inventory_number"]= tdf["inventory_number"].str.strip()
 
+    return tdf
+
+
+def make_df_of_relationship_types(ser):
+    """
+    ser: pd.Series, column of all relationship types (non unique)
+    return dataframe with unique values
+    """
+
+    # filter out na and undefined
+    fltr = ser != "undefined"
+    ser = ser.loc[fltr]
+    
+    classes, indices, class_dict = create_class_dict(ser)
+    df_relationship = pd.DataFrame(data={"name":classes}, index=indices)
+
+    return df_relationship
+
+
+def nest_relationship_type_ids(df_rel_types, df_relationships):
+    """
+    convert the flat table of relationship types as text, into lists of ids   
+
+    df_rel_types: pd.DataFrame, the table of unique relationship types. used to create the id dictionary
+    df_relationships: pd.DataFrame, the flat table of relationship types as text
+    """
+    # map ids into the flat list of relationship types
+    rel_types_dict = dict(zip(df_rel_types['name'].to_list(), df_rel_types.index.to_list()))
+    df_relationships['relationship_type_id'] = df_relationships['relationship_type'].map(rel_types_dict)
+    # create a series with lists of relationship ids (for Django manytomany field)
+    df_rel_types_list = df_relationships[['relationship_type_id']].sort_index()
+    df_rel_types_list = df_rel_types_list.reset_index().rename(columns={"index":"record_id"})
+    df_rel_types_list = df_rel_types_list.drop_duplicates()
+    df_rel_types_list = df_rel_types_list.groupby('record_id').agg({"relationship_type_id":lambda x: x.tolist()})
+
+    return df_rel_types_list
+
+
+def nest_class_ids(class_dict, ser_to_encode):
+    """
+    convert the flat table of relationship types as text, into lists of ids   
+
+    df_rel_types: pd.DataFrame, the table of unique relationship types. used to create the id dictionary
+    df_relationships: pd.DataFrame, the flat table of relationship types as text
+
+    returns: pd.DataFrame
+    """
+    ser_name = ser_to_encode.name
+    # map ids into the flat list of relationship types
+    ser = ser_to_encode.map(class_dict)
+    # create a series with lists of relationship ids (for Django manytomany field)
+    tdf = ser.sort_index().reset_index().rename(columns={"index":"record_id"})
+    tdf = tdf.drop_duplicates()
+    # nest encoded ids 
+    tdf = tdf.groupby('record_id').agg({ser_name:lambda x: x.tolist()})
+
+    return tdf
 
 
 def main(args=None):
@@ -132,34 +254,130 @@ def main(args=None):
         # join with id numbers from the calculated features
         df_feat = pd.read_csv(settings.features_fpath, usecols=[0,], header=None)
         df_fpath = get_record_ids_from_features_df(df_feat)
-        print("df_fpath: \n\n", df_fpath)
-        df = use_fpaths_to_insert_model_ids_into_df_meta(df_fpath, df_meta)
+        df_meta = use_fpaths_to_insert_model_ids_into_df_meta(df_fpath, df_meta)
 
         ## create new feature columns
         # min/max years
-        df = insert_years_from_text(df)
+        df_meta = insert_years_from_text(df_meta)
+
+        #### relationship types ####
+        
+        # extract information
+        df_relationships = make_flat_relationships_table(df_meta)
+        ser = df_relationships['relationship_type']
+        fltr = ser != "undefined"
+        ser = ser.loc[fltr]
+
+        classes, indices, class_dict = create_class_dict(ser)
+        df_rel_types = pd.DataFrame(data={"name":classes}, index=indices)
+        df_rel_types = make_df_of_relationship_types(ser)
+
+        # write relationship types fixture
+        model_name = 'Relationship'
+        fixture_lst = export_metadata.df_to_fixture_list(df_rel_types,
+                    app_name='ImageSearch',
+                    model_name=model_name,
+                    use_df_index_as_pk=True,
+                    create_datetimefield_name="created_date",
+                    created_by_field_name=None,
+                    )
+        export_metadata.write_fixture_list_to_json(fixture_lst,
+                                model_name,
+                                settings.fixtures_dir,
+                                file_name_modifier="")
+
+        # encode relationship types in main metadata df
+        df_relationships = df_relationships.loc[df_relationships['relationship_type'] != 'undefined',:]
+        
+        # df_rel_types_list = nest_relationship_type_ids(df_rel_types, df_relationships)
+        df_rel_types_list = nest_class_ids(class_dict, ser)
+        df_meta.merge(df_rel_types_list, how='left',left_index=True, right_index=True)
 
 
-                
-        # create classification fixture
+        #### classification types ####
+
+        col_name = 'classification'
+        ser = df_meta[col_name].dropna()
+        classes, indices, class_dict = create_class_dict(ser)
+
+        # write classification fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'Classification'
+        fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                    app_name='ImageSearch',
+                    model_name=model_name,
+                    use_df_index_as_pk=True,
+                    create_datetimefield_name="created_date",
+                    created_by_field_name=None,
+                    )
+        export_metadata.write_fixture_list_to_json(fixture_lst,
+                                model_name,
+                                settings.fixtures_dir,
+                                file_name_modifier="")
+
         # encode classifications in df
+        df_meta['classification_id'] = df_meta[col_name].map(class_dict)
 
 
-        # output material_technique
+        #### material_technique ####
+
+        col_name = 'material_technique'
+        ser = df_meta[col_name].dropna()
+        ser = split_and_flatten_series(ser, split_char=",")
+        classes, indices, class_dict = create_class_dict(ser)
+
+        # write fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'MaterialTechnique'
+        fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                    app_name='ImageSearch',
+                    model_name=model_name,
+                    use_df_index_as_pk=True,
+                    create_datetimefield_name="created_date",
+                    created_by_field_name=None,
+                    )
+        export_metadata.write_fixture_list_to_json(fixture_lst,
+                                model_name,
+                                settings.fixtures_dir,
+                                file_name_modifier="")
+
         # encode material_technique in df
+        ser.name = col_name + "_id"
+        tdf = nest_class_ids(class_dict, ser)
+        df_meta = df_meta.merge(tdf, how='left', left_index=True, right_index=True)
 
 
-        # output institution
-        # encode institution in df
+        #### Person types ####
+        # extract info
+        # create fixture
+        # encode in df
 
-        print(df.head())
+
+        #### institution ####
+
+        # extract info
+        # create fixture
+        # encode in df
+
         # df = process_eth_metadata(df)
-        # # save to interim folder for dataset
-        # fpath_output =  os.path.join(output_dir, os.path.basename(fpath_input))
-        # utils.prep_dir(fpath_output)
-        # # write out csv
-        # df.to_csv(fpath_output, index=False)
-        # print(f'wrote metadata file to {fpath_output}')
+
+        #### FINISH ####
+        # after all process/feature engineering is finished
+        # write out finshed metadata as json fixture and csv
+        df_meta.index.name ='index'
+        model_name='ImageMetadata'
+        fixture_lst = export_metadata.df_to_fixture_list(df_meta,
+                        app_name='ImageSearch',
+                        model_name=model_name,
+                        use_df_index_as_pk=False,
+                        pk_start_num=1000,
+                        create_datetimefield_name=None,
+                        created_by_field_name=None,
+                        created_by_value=1)
+        export_metadata.write_fixture_list_to_json(fixture_lst,
+                                model_name,
+                                settings.fixtures_dir,
+                                file_name_modifier="")
 
     return
 
@@ -169,7 +387,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='settings file')
     parser.add_argument('--metadata_dir',
                         type=str,
-                        default=None,
+                        default=settings.interim_metadata_dir,
                         help='print out main settings')
     args = parser.parse_args()
 

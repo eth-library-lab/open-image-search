@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-## Export metadata to django fixture
+## functions for Exporting dataframes to django fixtures
 
 import os, sys
 import pandas as pd
@@ -134,33 +134,33 @@ def load_csvs_into_df(fpaths):
     return df
 
 
-def main():
+# def main():
 
-    fpaths = get_list_of_metadata_csvs(settings.interim_metadata_dir)
-    output_dir = settings.fixtures_dir
-    df = load_csvs_into_df(fpaths)
+#     fpaths = get_list_of_metadata_csvs(settings.interim_metadata_dir)
+#     output_dir = settings.fixtures_dir
+#     df = load_csvs_into_df(fpaths)
 
-    model_name='ImageMetadata'
+#     model_name='ImageMetadata'
     
-    fixture_lst = df_to_fixture_list(df,
-                       app_name='ImageSearch',
-                       model_name=model_name,
-                       use_df_index_as_pk=False,
-                       pk_start_num=1000,
-                       create_datetimefield_name=None,
-                       created_by_field_name=None,
-                       created_by_value=1)
+#     fixture_lst = df_to_fixture_list(df,
+#                        app_name='ImageSearch',
+#                        model_name=model_name,
+#                        use_df_index_as_pk=False,
+#                        pk_start_num=1000,
+#                        create_datetimefield_name=None,
+#                        created_by_field_name=None,
+#                        created_by_value=1)
 
-    write_fixture_list_to_json(fixture_lst,
-                               model_name,
-                               output_dir,
-                               file_name_modifier="")
+#     write_fixture_list_to_json(fixture_lst,
+#                                model_name,
+#                                output_dir,
+#                                file_name_modifier="")
 
-    return fixture_lst
+#     return fixture_lst
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    fixture_lst = main()
+#     fixture_lst = main()
 
 
