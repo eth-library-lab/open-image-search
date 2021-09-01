@@ -355,9 +355,28 @@ def main(args=None):
 
         #### institution ####
 
-        # extract info
-        # create fixture
-        # encode in df
+        col_name = 'institution_isil'
+        ser = df_meta[col_name].dropna()
+        classes, indices, class_dict = create_class_dict(ser)
+
+        # write fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'Institution'
+        fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                    app_name='ImageSearch',
+                    model_name=model_name,
+                    use_df_index_as_pk=True,
+                    create_datetimefield_name="created_date",
+                    created_by_field_name=None,
+                    )
+        export_metadata.write_fixture_list_to_json(fixture_lst,
+                                model_name,
+                                settings.fixtures_dir,
+                                file_name_modifier="")
+
+        # encode material_technique in df
+        
+        df_meta[col_name + "_id"] = df_meta[col_name].map(class_dict)
 
         # df = process_eth_metadata(df)
 
