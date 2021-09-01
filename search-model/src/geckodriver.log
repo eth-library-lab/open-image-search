@@ -1,0 +1,463 @@
+1624982454478	geckodriver	INFO	Listening on 127.0.0.1:45219
+1624982454485	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile9Ba5PA"
+console.error: SearchCache: "_readCacheFile: Error reading cache file:" (new Error("", "(unknown module)"))
+1624982455761	Marionette	INFO	Listening on port 35719
+1624982455800	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1688740672, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1688740672, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1688740672, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1688740672 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1688740672 line 1 > eval, line 1: unreachable code after return statement
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.metmuseum.org/art/collection/search/36648, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36667, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36673, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36674, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36705, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36796, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/36920, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37013, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37015, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37048, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37263, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37327, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37330, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37331, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37332, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37347, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37359, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37366, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37367, line 642: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37370, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/37372, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/42563, line 639: SyntaxError: unexpected token: identifier
+1625042277206	Marionette	INFO	Stopped listening on port 35719
+1625046886960	geckodriver	INFO	Listening on 127.0.0.1:49407
+1625046886970	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileb1TyNl"
+1625046887456	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileb1TyNl/search.json.mozlz4", (void 0)))
+1625046888454	Marionette	INFO	Listening on port 39275
+1625046888484	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1642030064, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1642030064, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1642030064, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1642030064 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1642030064 line 1 > eval, line 1: unreachable code after return statement
+1625046907132	Marionette	INFO	Stopped listening on port 39275
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625047089916	geckodriver	INFO	Listening on 127.0.0.1:54983
+1625047089924	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileV5GbVo"
+1625047090360	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileV5GbVo/search.json.mozlz4", (void 0)))
+1625047091362	Marionette	INFO	Listening on port 43549
+1625047091438	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1361606005, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1361606005, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1361606005, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1361606005 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1361606005 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://secure.quantserve.com/quant.js, line 2: NS_ERROR_UNEXPECTED: 
+1625047099807	Marionette	INFO	Stopped listening on port 43549
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625047174579	geckodriver	INFO	Listening on 127.0.0.1:55437
+1625047174587	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileJzx0kz"
+1625047174956	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileJzx0kz/search.json.mozlz4", (void 0)))
+1625047175800	Marionette	INFO	Listening on port 35909
+1625047175909	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=262094966, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=262094966 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js, line 2: NS_ERROR_NOT_INITIALIZED: 
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'MarionetteEvents'
+1625047189041	Marionette	INFO	Stopped listening on port 35909
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625048177221	geckodriver	INFO	Listening on 127.0.0.1:52675
+1625048177229	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileN6stWQ"
+1625048177624	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileN6stWQ/search.json.mozlz4", (void 0)))
+1625048178658	Marionette	INFO	Listening on port 43049
+1625048178754	Marionette	WARN	TLS certificate errors will be ignored for this session
+1625048183311	Marionette	INFO	Stopped listening on port 43049
+1625048360565	geckodriver	INFO	Listening on 127.0.0.1:44057
+1625048360573	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilepk4CYB"
+1625048360974	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilepk4CYB/search.json.mozlz4", (void 0)))
+1625048362086	Marionette	INFO	Listening on port 46029
+1625048362224	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1208145940, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1208145940, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1208145940, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1208145940 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1208145940 line 1 > eval, line 1: unreachable code after return statement
+1625048372159	Marionette	INFO	Stopped listening on port 46029
+1625048751772	geckodriver	INFO	Listening on 127.0.0.1:37947
+1625048751779	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofiledD7VuA"
+1625048752237	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofiledD7VuA/search.json.mozlz4", (void 0)))
+1625048753276	Marionette	INFO	Listening on port 37733
+1625048753305	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=680542550, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=680542550, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=680542550, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=680542550 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=680542550 line 1 > eval, line 1: unreachable code after return statement
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1625049327752	geckodriver	INFO	Listening on 127.0.0.1:39677
+1625049327759	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileOyl4Lk"
+1625049328160	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileOyl4Lk/search.json.mozlz4", (void 0)))
+1625049329232	Marionette	INFO	Listening on port 46323
+1625049329277	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1796436702, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1796436702, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1796436702, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1796436702 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1796436702 line 1 > eval, line 1: unreachable code after return statement
+1625049339016	Marionette	INFO	Stopped listening on port 37733
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+1625049971269	geckodriver	INFO	Listening on 127.0.0.1:48851
+1625049971276	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileuROUtA"
+1625049971727	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileuROUtA/search.json.mozlz4", (void 0)))
+1625049972782	Marionette	INFO	Listening on port 43265
+1625049972894	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1601114040, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1601114040, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1601114040, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1601114040 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1601114040 line 1 > eval, line 1: unreachable code after return statement
+1625049984559	Marionette	INFO	Stopped listening on port 43265
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625050344569	geckodriver	INFO	Listening on 127.0.0.1:45619
+1625050344576	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileNTH13r"
+1625050345029	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileNTH13r/search.json.mozlz4", (void 0)))
+1625050346059	Marionette	INFO	Listening on port 44905
+1625050346089	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=848277623, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=848277623, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=848277623 line 1 > eval, line 1: unreachable code after return statement
+1625050354799	Marionette	INFO	Stopped listening on port 44905
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625050430047	geckodriver	INFO	Listening on 127.0.0.1:34517
+1625050430054	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileZ9rLb2"
+1625050430457	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileZ9rLb2/search.json.mozlz4", (void 0)))
+1625050431493	Marionette	INFO	Listening on port 41039
+1625050431569	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=663688933, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=663688933, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=663688933 line 1 > eval, line 1: unreachable code after return statement
+1625050454829	Marionette	INFO	Stopped listening on port 41039
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1625050793714	geckodriver	INFO	Listening on 127.0.0.1:35347
+1625050793722	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile0KNNcb"
+1625050794085	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile0KNNcb/search.json.mozlz4", (void 0)))
+1625050795288	Marionette	INFO	Listening on port 41069
+1625050795336	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=229776531, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=229776531, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=229776531 line 1 > eval, line 1: unreachable code after return statement
+1625050802275	Marionette	INFO	Stopped listening on port 41069
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+1625058050477	geckodriver	INFO	Listening on 127.0.0.1:46201
+1625058050484	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileMZSoso"
+1625058050897	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileMZSoso/search.json.mozlz4", (void 0)))
+1625058051824	Marionette	INFO	Listening on port 46063
+1625058051928	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=224236981, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=224236981, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=224236981 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=224236981 line 1 > eval, line 1: unreachable code after return statement
+1625058272096	geckodriver	INFO	Listening on 127.0.0.1:46833
+1625058272104	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilejowVBO"
+1625058272567	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilejowVBO/search.json.mozlz4", (void 0)))
+1625058273648	Marionette	INFO	Listening on port 32833
+1625058273721	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1689233436, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1689233436, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1689233436 line 1 > eval, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=1689233436 line 1 > eval, line 1: unreachable code after return statement
+1625058313591	Marionette	INFO	Stopped listening on port 46063
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+JavaScript error: https://www.metmuseum.org/art/collection/search/45037, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45040, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45043, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45054, line 641: SyntaxError: unexpected token: identifier
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.metmuseum.org/art/collection/search/45079, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45090, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45097, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45290, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45320, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/45494, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/48892, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/51086, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/53977, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54030, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54031, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54316, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54375, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54438, line 642: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54466, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54561, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54579, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54861, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/54862, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55375, line 639: SyntaxError: unexpected token: 'from'
+JavaScript error: https://www.metmuseum.org/art/collection/search/55496, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55595, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55723, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55767, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55930, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/55975, line 634: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/56050, line 639: SyntaxError: unexpected token: identifier
+1625481718450	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625490662856	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625568118432	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625577062838	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625654638490	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1625663582897	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+console.error: Region.jsm: "Error fetching region" (new TypeError("NetworkError when attempting to fetch resource.", ""))
+console.error: Region.jsm: "Failed to fetch region" (new Error("NO_RESULT", "resource://gre/modules/Region.jsm", 419))
+1625741037580	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625749983039	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625827437607	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625836383020	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625913837673	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1625922783073	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1626000237720	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+1626009183146	addons.xpi	ERROR	System addon update list error Error: Failed downloading XML, status: 0, reason: error
+Gdk-Message: 10:13:30.057: /usr/lib/firefox/firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Gdk-Message: 10:13:30.058: /usr/lib/firefox/firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Gdk-Message: 10:13:30.061: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Gdk-Message: 10:13:30.063: firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Gdk-Message: 10:13:30.063: /usr/lib/firefox/firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Gdk-Message: 10:13:30.063: /usr/lib/firefox/firefox: Fatal IO error 11 (Resource temporarily unavailable) on X server :1.
+
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1626078436707	geckodriver	INFO	Listening on 127.0.0.1:51801
+1626078437711	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofilek7OAGb"
+1626078438118	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilek7OAGb/search.json.mozlz4", (void 0)))
+1626078439127	Marionette	INFO	Listening on port 46273
+1626078439229	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=170331777, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=170331777, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=2&cb=170331777 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://www.metmuseum.org/art/collection/search/56603, line 639: SyntaxError: unexpected token: identifier
+console.log: WebExtensions: reset-default-search: starting.
+console.log: WebExtensions: reset-default-search: No addons in our list are installed.
+JavaScript error: https://www.metmuseum.org/art/collection/search/56689, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/56749, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/56827, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/56989, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/56992, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/63342, line 639: SyntaxError: unexpected token: identifier
+1626086570840	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+JavaScript error: https://www.metmuseum.org/art/collection/search/73533, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/77875, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/330120, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333819, line 716: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333859, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333974, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333975, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333976, line 685: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333977, line 781: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333978, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/333979, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/334109, line 685: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/334137, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/334192, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/334194, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/334388, line 639: SyntaxError: unexpected token: 'from'
+JavaScript error: https://www.metmuseum.org/art/collection/search/335313, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/335355, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/335356, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/335999, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336000, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336001, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336002, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336003, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336004, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336038, line 641: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336039, line 639: SyntaxError: unexpected token: identifier
+JavaScript error: https://www.metmuseum.org/art/collection/search/336740, line 639: SyntaxError: unexpected token: identifier
+console.error: "Could not write session state file " (new Error("", "(unknown module)")) ""
+console.error: "Could not write session state file " (new Error("", "(unknown module)")) ""
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=487174509, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=487174509, line 1: unreachable code after return statement
+JavaScript warning: https://www.metmuseum.org/_Incapsula_Resource?SWJIYLWA=719d34d31c8e3a6e6fffd425f7e032f3&ns=1&cb=487174509 line 1 > eval, line 1: unreachable code after return statement
+JavaScript error: https://creativecommons.org/includes/help.js, line 38: ReferenceError: YAHOO is not defined
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript error: resource://gre/actors/AutoCompleteChild.jsm, line 125: Error: Invalid autocomplete selectedIndex
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+JavaScript error: , line 0: TypeError: NetworkError when attempting to fetch resource.
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_onRequestHeader@resource://devtools/server/actors/network-monitor/network-observer.js:814:10
+NetworkObserver.prototype.observeActivity<@resource://devtools/server/actors/network-monitor/network-observer.js:699:12
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+Handler function _httpResponseExaminer threw an exception: TypeError: topFrame.browsingContext is null
+Stack: matchRequest@resource://devtools/server/actors/network-monitor/network-observer.js:126:9
+_httpResponseExaminer@resource://devtools/server/actors/network-monitor/network-observer.js:445:10
+exports.makeInfallible/<@resource://devtools/shared/ThreadSafeDevToolsUtils.js:103:22
+Line: 126, column: 9
+console.error: (new TypeError("topFrame.browsingContext is null", "resource://devtools/server/actors/network-monitor/network-observer.js", 126))
+JavaScript error: https://forums.linuxmint.com/viewtopic.php?t=107388, line 169: SyntaxError: expected expression, got end of script
+console.error: services.settings: 
+  Message: QuotaExceededError: IndexedDB: blocklists/addons-bloomfilters importChanges() IndexedDB:  importChanges() in blocklists/addons-bloomfilters The current transaction exceeded its quota limitations.
+console.error: services.settings: 
+  Message: InvalidStateError: IndexedDB: main/tippytop importChanges() IndexedDB: collections, timestamps, records importChanges() in main/tippytop A mutation operation was attempted on a database that did not allow mutations.
+  Stack:
+    importChanges/<@resource://services-settings/Database.jsm:116:27
+executeIDB/promise<@resource://services-settings/IDBHelpers.jsm:134:16
+executeIDB@resource://services-settings/IDBHelpers.jsm:98:17
+executeIDB@resource://services-settings/Database.jsm:366:45
+
+console.error: services.settings: 
+  Message: QuotaExceededError: IndexedDB: security-state/intermediates importChanges() IndexedDB:  importChanges() in security-state/intermediates The current transaction exceeded its quota limitations.
+console.error: se1626249792686	Marionette	INFO	Stopped listening on port 46273
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

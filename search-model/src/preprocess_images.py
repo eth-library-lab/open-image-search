@@ -37,7 +37,7 @@ def resize_image(pil_image, min_dimension=224):
 def preprocess_image(input_img_path, output_img_path, min_dimension=224): 
     """open an image from a file path, resize it and save"""
     img = Image.open(input_img_path)
-    img = resize_image(img, min_dimension)
+    img = resize_image(img, min_dimension=settings.img_min_dimension)
     img.save(output_img_path)
     
     return
@@ -50,11 +50,12 @@ def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fl
     """
 
     print('checking input directory: {}'.format(input_image_dir))
-    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=keep_fldr_path)
+    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png','bmp'], keep_fldr_path=keep_fldr_path)
     print('checking output directory: {}'.format(output_image_dir)) 
-    existing_fpaths_output = utils.get_list_of_files_in_dir(output_image_dir, file_types = ['jpg', 'jpeg','png'],keep_fldr_path=keep_fldr_path)
+    existing_fpaths_output = utils.get_list_of_files_in_dir(output_image_dir, file_types = ['jpg', 'jpeg','png','bmp'],keep_fldr_path=keep_fldr_path)
     
     existing_fnames_output = [os.path.split(f)[1] for f in existing_fpaths_output]
+    print(existing_fpaths_input)
     fpaths_to_process = [f for f in existing_fpaths_input if os.path.split(f)[1] not in existing_fnames_output]    
 
     return fpaths_to_process
@@ -107,24 +108,27 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     
     print_interval = calc_print_status_interval(num_images_to_proc)
     
+    '''
     # initalize for error images removal
     duplicates=[]
     duplicate_imgs = [] 
     hash_keys=dict()
     
     hash_to_remove = hash_images_to_remove(removal_image_dir)
-    
+    '''
 
     # loop over each file path and save the processed image output
     for i, input_img_path in enumerate(fpaths_to_process):
         
         # remove duplicate images 
+        '''
         with open(input_img_path, 'rb') as f:
             filehash = hashlib.md5(f.read()).hexdigest()
         if filehash in hash_to_remove: # check in hash match with images in error_images folder
             duplicates.append(i)
             print(input_img_path)
             continue 
+        '''
 
         # make_output_fpath
         output_subpath = input_img_path.replace(input_image_dir,'').strip('\\').strip('/')
@@ -143,7 +147,8 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
 
         #load, process and save altered image
         try:
-            preprocess_image(input_img_path, output_img_path, min_dimension=224)
+            #preprocess_image(input_img_path, output_img_path, min_dimension=224)
+            preprocess_image(input_img_path, output_img_path, min_dimension=settings.img_min_dimension)
         except FileNotFoundError as e:
             print("    warning: could not preprocess image {}".format(input_img_path))
             print("    ", e)

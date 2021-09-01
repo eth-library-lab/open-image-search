@@ -2,9 +2,14 @@
 logs/
 plots/
 data/
+search-model/data
 backend/api/fixtures/
 __pycache__/
 .ipynb_checkpoints
 models/
+local/
+heatmap/
+get-pip.py
+src/geckodriver.log
 test_images/
 *.joblib]

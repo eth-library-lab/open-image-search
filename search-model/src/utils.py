@@ -1,6 +1,7 @@
  ### IMAGE PROCESSING
 
 import os
+import shutil
 import numpy as np
 import pandas as pd
 from PIL import Image
@@ -11,6 +12,14 @@ import csv
 import logging
 import urllib
 from io import BytesIO
+import settings
+
+import matplotlib.pyplot as plt
+import matplotlib.style as style
+
+from tensorflow.python.client import device_lib
+import seaborn as sns
+from sklearn.preprocessing import MultiLabelBinarizer
 
 def init_logging(log_fpath=None):
 
@@ -138,9 +147,13 @@ def get_list_of_files_in_dir(fldr_path, file_types = ['jpg', 'jpeg','png'], keep
 
     existing_flist = []
 
+    #list_dir = [os.path.isfile(os.path.join('.', f)) for f in os.listdir(fldr_path)]
+    #print(all(list_dir))
+
     for dirpath, dirnames, filenames in os.walk(fldr_path):
         for fname in filenames:
             cur_fpath = os.path.join(dirpath,fname)
+            #print(fname)
             
             if keep_fldr_path == False:
                 cur_fpath = cur_fpath.replace(fldr_path, '').strip('/').strip('\\')
@@ -165,7 +178,8 @@ def parse_image_func(filepath, label):
     image = tf.image.decode_jpeg(image_string)
     image = tf.image.convert_image_dtype(image, tf.float32)
     #images normally have been resized to 224 in data cleaning/prep
-    image = tf.image.resize(image, [224, 224])
+    #images with size 320 are used for models like inception 
+    image = tf.image.resize(image, [settings.img_min_dimension, settings.img_min_dimension])
 
     return image, label
 
@@ -356,7 +370,7 @@ def make_df_file_list(input_image_dir, keep_full_path=False, use_relative_path=T
         rel_path=''
 
     lst_fpaths = get_list_of_files_in_dir(input_image_dir, 
-                                          file_types = ['jpg', 'jpeg','png'], 
+                                          file_types = ['jpg', 'jpeg','png','bmp'], 
                                           keep_fldr_path=keep_full_path )
 
 
@@ -433,3 +447,248 @@ def is_file_older_than(fpath, **timedelta_args):
     time_limit = time_limit.timestamp()
 
     return mod_time < time_limit
+
+
+@tf.function
+def macro_soft_f1(y, y_hat):
+    """Compute the macro soft F1-score as a cost (average 1 - soft-F1 across all labels).
+    Use probability values instead of binary predictions.
+    
+    Args:
+        y (int32 Tensor): targets array of shape (BATCH_SIZE, N_LABELS)
+        y_hat (float32 Tensor): probability matrix from forward propagation of shape (BATCH_SIZE, N_LABELS)
+        
+    Returns:
+        cost (scalar Tensor): value of the cost function for the batch
+    """
+    y = tf.cast(y, tf.float32)
+    y_hat = tf.cast(y_hat, tf.float32)
+    tp = tf.reduce_sum(y_hat * y, axis=0)
+    fp = tf.reduce_sum(y_hat * (1 - y), axis=0)
+    fn = tf.reduce_sum((1 - y_hat) * y, axis=0)
+    soft_f1 = 2*tp / (2*tp + fn + fp + 1e-16)
+    cost = 1 - soft_f1 # reduce 1 - soft-f1 in order to increase soft-f1
+    macro_cost = tf.reduce_mean(cost) # average on all labels
+    return macro_cost
+
+@tf.function
+def macro_f1(y, y_hat, thresh=0.5):
+    """Compute the macro F1-score on a batch of observations (average F1 across labels)
+    
+    Args:
+        y (int32 Tensor): labels array of shape (BATCH_SIZE, N_LABELS)
+        y_hat (float32 Tensor): probability matrix from forward propagation of shape (BATCH_SIZE, N_LABELS)
+        thresh: probability value above which we predict positive
+        
+    Returns:
+        macro_f1 (scalar Tensor): value of macro F1 for the batch
+    """
+    y_pred = tf.cast(tf.greater(y_hat, thresh), tf.float32)
+    tp = tf.cast(tf.math.count_nonzero(y_pred * y, axis=0), tf.float32)
+    fp = tf.cast(tf.math.count_nonzero(y_pred * (1 - y), axis=0), tf.float32)
+    fn = tf.cast(tf.math.count_nonzero((1 - y_pred) * y, axis=0), tf.float32)
+    f1 = 2*tp / (2*tp + fn + fp + 1e-16)
+    macro_f1 = tf.reduce_mean(f1)
+    return macro_f1
+
+
+def get_available_devices():
+    '''
+    check if GPU is ready for tensorflow
+    '''
+    local_device_protos = device_lib.list_local_devices()
+    # tf.debugging.set_log_device_placement(True)
+    return [x.name for x in local_device_protos]
+
+def show_img(X_train, y_train):
+    '''
+    display images in dataset with labels
+    '''
+    nobs = 4  # Maximum number of images to display
+    ncols = 4  # Number of columns in display
+    nrows = nobs//ncols  # Number of rows in display
+
+    style.use("default")
+    plt.figure(figsize=(12, 4*nrows))
+    for i in range(nrows*ncols):
+        ax = plt.subplot(nrows, ncols, i+1)
+        plt.imshow(Image.open(X_train[i]))
+        plt.title('\n{}\n{}\n'.format(X_train[i], y_train[i]), fontsize=10)
+        plt.axis('off')
+    plt.show()
+
+
+def process_metadata(fpath):
+    '''
+    read metadata csv file and group rare labels
+    '''
+    meta_df = pd.read_csv(fpath)
+
+    # Remove rows having missing Tags
+    meta_df.dropna(subset=['Tags'], inplace=True)
+    print("Total number of prints: ", meta_df.shape[0])
+
+    # Edit image path
+    meta_df['Image Location'] = meta_df['Image Location'].str.replace('images', settings.raw_image_dir)
+
+    # find all labels with freq less than threshold
+    label_freq_all = meta_df['Tags'].apply(lambda s: str(s).split(
+        '|')).explode().value_counts().sort_values(ascending=False)
+    #print("Total number of unqiue labeles: ", len(label_freq_all))
+    threshold = 30
+    rare = list(label_freq_all[label_freq_all < threshold].index)
+
+    # categrorize all rare labels into 'others'
+    meta_df['Tags'] = meta_df['Tags'].apply(
+        lambda s: [l if l not in rare else 'others' for l in str(s).split('|')])
+
+    return meta_df
+    #print("We will be ignoring ",len(rare)," rare labels that appears less than ",threshold, " times:", rare)
+    # print(label_freq_all[-300:])
+    # only plot the top 100 labels
+    #label_freq = label_freq_all[:100]
+
+
+def plot_labels(meta_df):
+    '''
+    plot histogram of top frequency labels
+    '''
+
+    label_freq_clean = meta_df['Tags'].explode().value_counts().sort_values(ascending=False)
+    print("Final number of unqiue labeles after cleaning: ", len(label_freq_clean))
+    # only plot the top 100 labels
+    label_freq = label_freq_clean[:100]
+
+    # Bar plot
+    style.use("fivethirtyeight")
+    plt.figure(figsize=(22, 20))
+    sns.barplot(y=label_freq.index.values,
+                x=label_freq, order=label_freq.index)
+    plt.title("Frequency of Top 100 Label", fontsize=14)
+    plt.xlabel("")
+    plt.xticks(fontsize=8)
+    plt.yticks(fontsize=8)
+    plt.show()
+
+
+def transform_labels(y_train, y_val):
+    '''
+    transform object labels into one-hot encoding format
+    '''
+    # Fit the multi-label binarizer on the training set
+    mlb = MultiLabelBinarizer()
+    mlb.fit(y_train)
+
+    N_LABELS = len(mlb.classes_)
+
+    '''# Loop over all labels and show them
+    print("Labels:")
+    N_LABELS = len(mlb.classes_)
+    for (i, label) in enumerate(mlb.classes_):
+        print("{}. {}".format(i, label))
+    '''
+
+    # transform the targets of the training and test sets
+    y_train_bin = mlb.transform(y_train)
+    y_val_bin = mlb.transform(y_val)
+
+    return y_train_bin, y_val_bin, N_LABELS, mlb
+
+
+
+def learning_curves(history):
+    """Plot the learning curves of loss and macro f1 score 
+    for the training and validation datasets.
+
+    Args:
+        history: history callback of fitting a tensorflow keras model 
+    """
+
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+
+    macro_f1 = history.history['macro_f1']
+    val_macro_f1 = history.history['val_macro_f1']
+
+    epochs = len(loss)
+
+    style.use("bmh")
+    plt.figure(figsize=(8, 8))
+
+    plt.subplot(2, 1, 1)
+    plt.plot(range(1, epochs+1), loss, label='Training Loss')
+    plt.plot(range(1, epochs+1), val_loss, label='Validation Loss')
+    plt.legend(loc='upper right')
+    plt.ylabel('Loss')
+    plt.title('Training and Validation Loss')
+
+    plt.subplot(2, 1, 2)
+    plt.plot(range(1, epochs+1), macro_f1, label='Training Macro F1-score')
+    plt.plot(range(1, epochs+1), val_macro_f1,
+             label='Validation Macro F1-score')
+    plt.legend(loc='lower right')
+    plt.ylabel('Macro F1-score')
+    plt.title('Training and Validation Macro F1-score')
+    plt.xlabel('epoch')
+
+    plt.show()
+
+    return loss, val_loss, macro_f1, val_macro_f1
+
+
+def print_time(t):
+    """Function that converts time period in seconds into %h:%m:%s expression.
+    Args:
+        t (int): time period in seconds
+    Returns:
+        s (string): time period formatted
+    """
+    h = t//3600
+    m = (t % 3600)//60
+    s = (t % 3600) % 60
+    return '%dh:%dm:%ds' % (h, m, s)
+
+
+def show_prediction_imgLoc(img_loc, meta_df, model, mlb, prob_thre):
+
+    # Get print info
+    img_path = img_loc
+    labels = meta_df.loc[meta_df['Image Location'] == img_loc]['Tags'].iloc[0]
+
+    # Read and prepare image
+    img = tf.keras.preprocessing.image.load_img(img_path)
+    img = tf.keras.preprocessing.image.img_to_array(img)
+    # Resize it to fixed shape
+    image_resized = tf.image.resize_with_pad(
+        img, settings.img_size, settings.img_size)
+    img = image_resized/255
+    img = np.expand_dims(img, axis=0)
+
+    # Generate prediction
+    prob = [prob for prob, prediction in sorted(
+        zip(model.predict(img)[0], mlb.classes_), reverse=True) if prob > prob_thre]
+    prediction = [prediction for prob, prediction in sorted(
+        zip(model.predict(img)[0], mlb.classes_), reverse=True) if prob > prob_thre]
+    pred_prob = [[prediction, prob] for prob, prediction in sorted(
+        zip(model.predict(img)[0], mlb.classes_), reverse=True) if prob > prob_thre]
+    print(pred_prob)
+
+
+    # Dispaly image with prediction
+    style.use('default')
+    #plt.subplot(1, 2, 1)
+    plt.figure(figsize=(8, 4))
+    plt.imshow(Image.open(img_path))
+    plt.title('\n\n{}\n\nGroundtruth\n{}\n\n'.format(
+        img_path, labels), fontsize=9)
+
+    #plt.subplot(1, 2, 2)
+    if prob != []:
+        plt.figure(figsize=(8, 4))
+        sns.barplot(y=prob,
+                    x=prediction)
+        plt.title("Prediction", fontsize=14)
+        plt.xlabel("")
+        plt.xticks(fontsize=8)
+        plt.yticks(fontsize=8)
+        plt.show()
