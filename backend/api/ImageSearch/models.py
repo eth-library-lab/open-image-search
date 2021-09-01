@@ -1,31 +1,9 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 
-class ImageMetadata(models.Model):
-    
-    record_id = models.IntegerField(blank=False, null=False)
-    created_date = models.DateTimeField("db_created_date", auto_now=True)
-    title = models.CharField(blank=True, null=True, max_length=300)
-    image_url = models.URLField(blank=False, null=False, max_length=300)
-    record_url = models.URLField(blank=False, null=False, max_length=300)
-    inventory_number = models.CharField(blank=True, null=True, max_length=50)
-    person = models.CharField("artist who produced work",blank=True, null=True, max_length=1500)
-    date = models.CharField("date of the work", blank=True, null=True, max_length=200)
-    classification =  models.CharField("type of work", blank=True, null=True, max_length=200)
-    classification_id = models.ManyToManyField(Classification, blank=True, null=True)
-    material_technique = models.CharField("techniques used", blank=True, null=True, max_length=200)
-    material_technique_id = models.ManyToManyField(MaterialTechnique)
-    institution_isil = models.CharField("credit line", blank=True, null=True, max_length=50)
-    institution_id = models.ForeignKey(Institution,blank=True, null=True, on_delete=models.SET_NULL) 
-    image_licence = models.CharField("image licence", blank=True, null=True, max_length=50)
-    year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)]))
-    year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)]))
-    person_id = models.ManyToManyField(Person)
-    relationship_type_id = models.ManyToManyField(RelationshipType)
-
-
 class Person(models.Model):
-    name = models.CharField(, max_length=200)
+    name = models.CharField(max_length=200)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
 
     def __str__(self):
@@ -58,7 +36,31 @@ class Relationship(models.Model):
 
 class Institution(models.Model):
     name = models.CharField("credit line", max_length=100)
-    created = models.DateTimeField("db_created_date", auto_now=True)
+    created_date = models.DateTimeField("db_created_date", auto_now=True)
+
+
+class ImageMetadata(models.Model):
+    
+    record_id = models.IntegerField(blank=False, null=False)
+    created_date = models.DateTimeField("db_created_date", auto_now=True)
+    title = models.CharField(blank=True, null=True, max_length=300)
+    image_url = models.URLField(blank=False, null=False, max_length=300)
+    record_url = models.URLField(blank=False, null=False, max_length=300)
+    inventory_number = models.CharField(blank=True, null=True, max_length=50)
+    person = models.CharField("artist who produced work",blank=True, null=True, max_length=1500)
+    person_id = models.ManyToManyField(Person)
+    date = models.CharField("date of the work", blank=True, null=True, max_length=200)
+    classification =  models.CharField("type of work", blank=True, null=True, max_length=200)
+    classification_id = models.ForeignKey(Classification, blank=True,null=True, on_delete=models.SET_NULL)
+    material_technique = models.CharField("techniques used", blank=True, null=True, max_length=200)
+    material_technique_id = models.ManyToManyField(MaterialTechnique)
+    institution_isil = models.CharField("credit line", blank=True, null=True, max_length=50)
+    institution_isil_id = models.ForeignKey(Institution, blank=True, null=True, on_delete=models.SET_NULL) 
+    image_licence = models.CharField("image licence", blank=True, null=True, max_length=50)
+    year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
+    year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
+    relationship_type_id = models.ManyToManyField(Relationship)
+
 
 
 class SearchResult(models.Model):

@@ -11,9 +11,10 @@ from rest_framework.permissions import IsAdminUser
 
 from settings.settings import DEBUG, MEDIA_ROOT
 from settings.custom_permissions import IsAdminUserOrReadOnly
-from ImageSearch.models import ImageMetadata, SearchResult
+from ImageSearch.models import ImageMetadata, SearchResult, Classification, MaterialTechnique, Relationship, Institution
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
+from ImageSearch.serializers import ClassificationSerializer, MaterialTechniqueSerializer, RelationshipSerializer, InstitutionSerializer
 from ImageSearch.feature_extraction import get_nearest_object_ids
 
 
@@ -89,6 +90,22 @@ class SearchResultViewset(viewsets.ModelViewSet):
         return Response(resp, status=200)
 
 
+@api_view(['GET',])
+def get_filter_options(request):
+    """return all the possible filter fields in one get request"""
+    class_serializer = ClassificationSerializer(Classification.objects.all(), many=True)
+    mat_serializer = MaterialTechniqueSerializer(MaterialTechnique.objects.all(), many=True)
+    rel_serializer = RelationshipSerializer(Relationship.objects.all(), many=True)
+    inst_serializer = InstitutionSerializer(Institution.objects.all(), many=True)
+
+    resp_data = {
+    "classification" : class_serializer.data,
+    "materialTechnique" : mat_serializer.data,
+    "relationship" : rel_serializer.data,
+    "institution" : inst_serializer.data,
+    }
+
+    return Response(resp_data)
 
 
 @api_view(['POST',])

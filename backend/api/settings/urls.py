@@ -19,7 +19,7 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 
-from ImageSearch.viewsets import ImageMetadataViewset, image_search, SearchResultViewset, save_search_result
+from ImageSearch.viewsets import ImageMetadataViewset, image_search, SearchResultViewset, save_search_result, get_filter_options
 
 
 router = routers.DefaultRouter()
@@ -31,6 +31,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'image-search', image_search, name='image-search'),
     path(r'save-search-result', save_search_result, name='save-search-result'),
+    path(r'filter-options', get_filter_options, name='get-filter-options'),
     # path()
 ] + router.urls + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
