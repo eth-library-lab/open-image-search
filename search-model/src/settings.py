@@ -48,7 +48,7 @@ processed_image_dir = os.environ.get("OUTPUT_IMAGE_DIR", f"data/processed/{datas
 processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 
 # output file for features
-features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'features.csv')
+features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name,'features','features.csv')
 
 # interim output folder for cleaned metadata files
 interim_metadata_dir = os.path.join(BASE_DIR, 'data','interim', dataset_name, 'metadata')
