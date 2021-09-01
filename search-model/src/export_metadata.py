@@ -68,6 +68,7 @@ def df_to_fixture_list(df,
         else:
             pk = i+pk_start_num
         
+        row = row.dropna()
         fields_dict = row.drop(['index']).to_dict()
         
         record = {'model':model, 

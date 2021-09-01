@@ -290,14 +290,19 @@ def main(args=None):
         df_relationships = df_relationships.loc[df_relationships['relationship_type'] != 'undefined',:]
         
         # df_rel_types_list = nest_relationship_type_ids(df_rel_types, df_relationships)
+        ser.name = "relationship_type_id"
         df_rel_types_list = nest_class_ids(class_dict, ser)
-        df_meta.merge(df_rel_types_list, how='left',left_index=True, right_index=True)
+        print(df_rel_types_list.head())
+        df_meta = df_meta.merge(df_rel_types_list, how='left',left_index=True, right_index=True)
 
 
         #### classification types ####
 
         col_name = 'classification'
-        ser = df_meta[col_name].dropna()
+        
+        ser = df_meta[col_name]
+        ser = ser.str.strip().replace("",np.nan).dropna() 
+        
         classes, indices, class_dict = create_class_dict(ser)
 
         # write classification fixture
@@ -316,7 +321,7 @@ def main(args=None):
                                 file_name_modifier="")
 
         # encode classifications in df
-        df_meta['classification_id'] = df_meta[col_name].map(class_dict)
+        df_meta[col_name + '_id'] = df_meta[col_name].map(class_dict)
 
 
         #### material_technique ####
@@ -384,13 +389,16 @@ def main(args=None):
         # after all process/feature engineering is finished
         # write out finshed metadata as json fixture and csv
         df_meta.index.name ='index'
+        df_meta = df_meta.drop(columns=["fpath","db_id","relations"])
+        fk_cols = ['relationship_type_id', 'classification_id', 'material_technique_id', 'institution_isil_id'] 
+        df_meta[fk_cols] = df_meta[fk_cols].replace(-1,np.nan) 
         model_name='ImageMetadata'
         fixture_lst = export_metadata.df_to_fixture_list(df_meta,
                         app_name='ImageSearch',
                         model_name=model_name,
                         use_df_index_as_pk=False,
                         pk_start_num=1000,
-                        create_datetimefield_name=None,
+                        create_datetimefield_name="created_date",
                         created_by_field_name=None,
                         created_by_value=1)
         export_metadata.write_fixture_list_to_json(fixture_lst,
