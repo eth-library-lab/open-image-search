@@ -142,13 +142,13 @@ def series_of_string_years_to_min_max_years(ser):
 
 def insert_min_max_years_into_df(df_meta, min_years, max_years, index):
     
-    df_meta.loc[index,"min_year"] = min_years
-    df_meta.loc[index,"max_year"] = max_years
+    df_meta.loc[index,"year_min"] = min_years
+    df_meta.loc[index,"year_max"] = max_years
     # convert from floats to pandas ints
-    df_meta.loc[:,["min_year","max_year"]] = df_meta.loc[:,["min_year","max_year"]].astype("Int64")
+    df_meta.loc[:,["year_min","year_max"]] = df_meta.loc[:,["year_min","year_max"]].astype("Int64")
     #fill in NaN's with -1 to still use numpy int comparisons
-    fltr = df_meta[["min_year","max_year"]].isna().any(axis=1)
-    df_meta.loc[fltr,["min_year","max_year"]] = -1
+    fltr = df_meta[["year_min","year_max"]].isna().any(axis=1)
+    df_meta.loc[fltr,["year_min","year_max"]] = -1
     
     return df_meta
 
