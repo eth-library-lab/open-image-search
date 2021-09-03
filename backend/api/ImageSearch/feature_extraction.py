@@ -5,6 +5,7 @@ from settings.settings import DEBUG
 
 import json
 import numpy as np
+import pandas as pd
 from PIL import Image
 import requests
 
@@ -12,13 +13,6 @@ import requests
 
 from settings.settings import BASE_DIR
 import os
-from sklearn.neighbors import NearestNeighbors
-from joblib import load
-
-# load scikit-learn search algorithm into memory
-models_fldr = os.path.join(BASE_DIR,"assets","search_models")
-clf_fpath = os.path.join(models_fldr,"NearestNeighbors.joblib")
-CLF = load(clf_fpath)
 
 def calc_resize_with_apect(size, min_dimension):
     
@@ -72,24 +66,10 @@ def format_model_request(preprocessed_img):
     if DEBUG:
         print("TENSORFLOW_SERVING_BASE_URL", model_url)
 
-    request_data = json.dumps({ "instances": [preprocessed_img, ]})
+    request_data = json.dumps({ "instances": [preprocessed_img, ]}) 
     headers = {"content-type": "application/json"}
 
     return model_url, request_data, headers
-
-
-def get_knearest_object_ids(image_features):
-    """
-    use scikit-learn classifier to return the closest results
-    """
-    distances, indices = CLF.kneighbors(image_features)
-    # .labels is not a standard attribute of NearestNeighbours. this was added during sklearn model training training for ease of future use
-    object_ids = CLF.labels[indices.tolist()[0]]
-
-    if DEBUG:
-        print("CLF labels: ", object_ids)
-
-    return object_ids
 
 
 def post_to_model(preprocessed_img):
@@ -112,14 +92,11 @@ def post_to_model(preprocessed_img):
     return model_api_response
 
 
-def get_nearest_object_ids(img_path_or_stream):
+def calculate_image_features(img_path_or_stream):
     """
-    loads a locally saved image and posts to the model server to get prediction results
-    image_localpath:
+    send a request to the feature extraction model and return the image feature vector"
     """
-
-    preprocessed_img = preprocess_img(img_path_or_stream)
-    
+    preprocessed_img = preprocess_img(img_path_or_stream)    
     model_response = post_to_model(preprocessed_img)
 
     if DEBUG:
@@ -133,12 +110,8 @@ def get_nearest_object_ids(img_path_or_stream):
     if DEBUG:
         print('model_response_dict', model_response_dict)
 
-    model_raw_values = model_response_dict['predictions'][0]  #these model values are known as logits
+    model_raw_values = model_response_dict['predictions'][0]
     image_features = np.array(model_raw_values).reshape(1, -1) # reshape for a single record
-    object_ids = get_knearest_object_ids(image_features)
+    
+    return image_features
 
-    if DEBUG:    
-        # print('model_raw_values: ', model_raw_values)
-        pass
-
-    return object_ids

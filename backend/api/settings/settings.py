@@ -158,8 +158,10 @@ STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
 MEDIA_URL =  '/mediafiles/'
-MEDIA_ROOT = '/mediafiles'
 
+MEDIA_ROOT = '/mediafiles'
+if DEBUG:
+    MEDIA_ROOT = './mediafiles'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets/static'),
