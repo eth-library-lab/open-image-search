@@ -1,5 +1,6 @@
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Max, Min
 import numpy as np
 import os
 
@@ -99,12 +100,20 @@ def get_filter_options(request):
     mat_serializer = MaterialTechniqueSerializer(MaterialTechnique.objects.all(), many=True)
     rel_serializer = RelationshipSerializer(Relationship.objects.all(), many=True)
     inst_serializer = InstitutionSerializer(Institution.objects.all(), many=True)
+    
+    year_qs = ImageMetadata.objects.exclude(year_min=-1).only('year_min','year_max')
+
+    years_min = year_qs.aggregate(Min('year_min'))
+    years_max = year_qs.aggregate(Max('year_max'))
 
     resp_data = {
-    "classification" : class_serializer.data,
-    "materialTechnique" : mat_serializer.data,
-    "relationship" : rel_serializer.data,
-    "institution" : inst_serializer.data,
+    "classifications" : class_serializer.data,
+    "materialTechniques" : mat_serializer.data,
+    "relationships" : rel_serializer.data,
+    "institutions" : inst_serializer.data,
+    "year_min": years_min["year_min__min"],
+    "year_max": years_max["year_max__max"]
+
     }
 
     return Response(resp_data)
