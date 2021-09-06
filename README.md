@@ -4,7 +4,7 @@
 _- in development_ -
 
 
-Image Retrieval / Reverse Image Seach Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
+Image Retrieval / Reverse Image Search Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
 
 The codebase and application will be publicly available Spring 2021. If you are interested in earlier access, we would love to hear from you. Please get in touch via the ETH Library Lab [contact form](https://www.librarylab.ethz.ch/contact/).
 
