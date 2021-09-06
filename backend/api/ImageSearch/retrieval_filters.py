@@ -33,7 +33,7 @@ def records_to_exclude_by_year(after_year=None, before_year=None, include_unknow
     
     # these are all the indices to remove from the results
     qs_to_exclude = qs_nan.union(qs_too_early, qs_too_late)
-    ids_to_exclude = set(qs_to_exclude.values_list(flat=True))
+    ids_to_exclude = set(qs_to_exclude.values_list('record_id',flat=True))
     
     return ids_to_exclude
 
@@ -45,7 +45,7 @@ def records_to_exclude_by_classification(classification_qry_names=[]):
     if classification_qry_names:
         res = ImageMetadata.objects.exclude(classification_id__name__in=classification_qry_names)
 
-    ids_to_exclude = res.values_list('id',flat=True)
+    ids_to_exclude = res.values_list('record_id',flat=True)
 
     return set(ids_to_exclude)
 
@@ -57,7 +57,7 @@ def records_to_exclude_by_material_technique(mat_tec_qry_names=[]):
     if mat_tec_qry_names:
         res = ImageMetadata.objects.exclude(material_technique_id__name__in=mat_tec_qry_names)
 
-        ids_to_exclude = res.values_list('id',flat=True)
+        ids_to_exclude = res.values_list('record_id',flat=True)
         set(ids_to_exclude)
 
     return ids_to_exclude
@@ -72,7 +72,7 @@ def records_to_exclude_by_relationship(relationship_qry_names=[]):
     if relationship_qry_names:
         res = ImageMetadata.objects.exclude(relationship_type_id__name__in=relationship_qry_names)
 
-        ids_to_exclude = res.values_list('id',flat=True)
+        ids_to_exclude = res.values_list('record_id',flat=True)
         set(ids_to_exclude)
 
     return ids_to_exclude
@@ -87,7 +87,7 @@ def records_to_exclude_by_institution(institution_qry_names=[]):
     if institution_qry_names:
         res = ImageMetadata.objects.exclude(institution_isil_id__name__in=institution_qry_names)
 
-        ids_to_exclude = res.values_list('id',flat=True)
+        ids_to_exclude = res.values_list('record_id',flat=True)
         set(ids_to_exclude)
 
     return ids_to_exclude
