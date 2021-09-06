@@ -48,7 +48,7 @@
                   </span>
                   <v-range-slider
                     v-model="range"
-                    @change="$emit('query-string', queryString)"
+                    @change="emitQueryString"
                     :disabled="selectionsDisabled"
                     :max="2020"
                     :min="1400"
@@ -91,7 +91,7 @@
                   ></v-combobox>
                   <v-combobox
                     v-model="classification"
-                      @change="emitQueryString"
+                    @change="emitQueryString"
                     :disabled="selectionsDisabled"
                     :items="classifications"
                     multiple
@@ -250,10 +250,9 @@ export default {
         // return []
       // }
     },
-    emitQueryString(){
-      console.log('emit queryString: ', this.queryString)
-      this.$emit('queryString',this.queryString)
-    }
+    emitQueryString() {
+      this.$emit('query-string', this.queryString)
+    },
   },
   mounted() {
   }
