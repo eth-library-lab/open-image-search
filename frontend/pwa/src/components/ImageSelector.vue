@@ -45,12 +45,10 @@
                         ></v-file-input>
                     </v-col>
                 </v-row>
-                    <QueryParameterBar />
+                    <QueryParameterBar @query-string="onQueryUpdate"/>
                 </v-card>
             </v-col>
         </v-row>
-
-        <!-- -->
 
         <v-row
             v-if="!(resultsLoaded | getIsLoading)"
@@ -66,6 +64,9 @@
                     @click="uploadImage">
                     Upload
                 </v-btn>
+                <p>
+                    parent queryString: {{this.queryString}}
+                </p>
             </v-col>
         </v-row>
     </v-container>
@@ -81,7 +82,8 @@ export default {
         QueryParameterBar,
     },
     data: () => ({
-        selectedFile: null
+        selectedFile: null,
+        queryString:null,
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
@@ -135,6 +137,9 @@ export default {
         uploadImage() {
             this.changeIsLoadingStatus(true)
             this.searchSimilarImages(this.selectedFile)
+        },
+        onQueryUpdate(queryString){
+            this.queryString = queryString
         },
     }
 }
