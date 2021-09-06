@@ -19,12 +19,30 @@ def load_model(path, print_summary=True):
 
     return trained_model
 
+def merge_model(pretrained_model, trained_model, print_summary=True):
+    
+    mergedOutput = tf.keras.layers.Concatenate()([pretrained_model.layers[-1].output, trained_model.layers[-1].output])
+    #dense_layer = tf.keras.layers.Dense(1024, activation='relu')(mergedOutput)
+    norm_layer = tf.keras.layers.LayerNormalization()(mergedOutput)
+    merged_model = tf.keras.Model(inputs= [pretrained_model.inputs, trained_model.inputs], outputs=norm_layer)#
+    
+    merged_model._name = 'merged_model'
+
+    if print_summary==True:
+        print(merged_model.summary())
+    
+    return merged_model
+
+
 def initialise_trained_model(model, print_summary=True):
     """initialise the model to be used for feature extraction"""
     
-    backbone_output = model.layers[-2].output # drop the last prediction layer
-
-    norm_lyr = tf.keras.layers.LayerNormalization()(backbone_output)
+    backbone_output = model.layers[-3].output # -2: drop the last prediction layer; -3: also drop the last pooling layer
+    #hidden_layer = tf.keras.layers.Dense(512, activation='relu')(backbone_output)
+    #pooling_lyr = tf.keras.layers.GlobalAveragePooling2D()(backbone_output)
+    flatten_lyr = tf.keras.layers.Flatten()(backbone_output)
+    norm_lyr = tf.keras.layers.LayerNormalization()(flatten_lyr)
+    #norm_lyr = tf.keras.layers.LayerNormalization()(backbone_output)
     model = tf.keras.Model(inputs=model.inputs, outputs=norm_lyr)
 
     model._name = settings.model_name
@@ -123,6 +141,7 @@ def append_tf_features_to_csv(features, labels, fpath):
     """
     #make sure labels are stings. e.g.: convert bytes to strings
     labels_column = np.expand_dims(labels.numpy().astype(str), axis=1)
+    #labels_column = np.expand_dims([labels], axis=0)
     lab_feat_arr = np.hstack((labels_column, features))
 
     with open(fpath, 'a', newline='') as csvfile:
@@ -199,6 +218,9 @@ def main():
 
     num_images = df.shape[0]
 
+    #file_list = df[filepath_col_name].to_list()
+    #label_list = df[label_col_name].to_list()
+
     ds = utils.make_tfdataset_from_df(df,
                             filepath_col_name,
                             label_col_name,
@@ -208,11 +230,13 @@ def main():
                             augment=False,
                             augment_func=None,
                             conv_color='rgb')
-
     # load the model
-    model = load_model(settings.trained_model_path, print_summary=True)
+    trained_model = load_model(settings.trained_model_path, print_summary=True)
     
-    model = initialise_trained_model(model, print_summary=True)
+    #vgg16_model = initialise_model(print_summary=True, model_name='vgg16_imagenet', weights='imagenet')
+    trained_model = initialise_trained_model(trained_model, print_summary=True)
+    #model = merge_model(vgg16_model, resnet50_model, print_summary=True)
+    model = trained_model
     model.compile()
     ''''''
     # save the model that will be used for feature extraction
@@ -228,10 +252,20 @@ def main():
     
     # print start up statuses
     total_steps = calculate_total_steps(num_images, settings.batch_size)
+    #total_steps = num_images
     print_startup_statuses(num_images, total_steps, output_fpath)
 
-    for i, (images, labels) in enumerate(iter(ds)):
+    for i, (images, labels) in enumerate(iter(ds)): 
+        '''    
+    for i, (img_path,labels) in enumerate(zip(file_list, label_list)):
+        img = tf.keras.preprocessing.image.load_img(img_path, target_size=(settings.img_min_dimension, settings.img_min_dimension))
+        x = tf.keras.preprocessing.image.img_to_array(img)
+        x = np.expand_dims(x, axis=0)
+        images = tf.keras.applications.resnet50.preprocess_input(x)
+        
         #extract features
+        #print(labels)
+        #print(images)
         try:
             features = model.predict(images)
         except:
@@ -239,10 +273,12 @@ def main():
             print('image error: ', i)
             logging.info('Error: Image %s' % labels)
             return
+        '''
+        #features = model.predict([images,images])
+        features = model.predict(images)
         append_tf_features_to_csv(features, labels, output_fpath)
         #update progress bar
-        utils.print_dyn_progress_bar(total_steps,i)
-    
+        utils.print_dyn_progress_bar(total_steps,i)   
     return
 
 if __name__ == '__main__':

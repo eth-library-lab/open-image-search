@@ -45,10 +45,10 @@ removal_image_dir = os.path.join(BASE_DIR, removal_image_dir)
 
 batch_size=32
 img_min_dimension = 224
-model_name='resnet50_trained'
-model_version="202109011036"
+model_name='xception_trained'
+model_version="202109061041"
 weights='imagenet'
-trained_model_path=os.path.join(BASE_DIR,'models','feature_extraction', 'trained', 'resnet50_lr0.0005_epoch50_batch164') 
+trained_model_path=os.path.join(BASE_DIR,'models','feature_extraction', 'trained', 'xception_lr0.0005_epoch50_batch96_512_labels50') 
 model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_version)
 
 ###################################################################################################
@@ -66,7 +66,8 @@ features_fpath = os.path.join(BASE_DIR,features_fpath)
 # output directory for fixtures
 fixtures_dir = os.path.join(BASE_DIR, 'data','processed' )
 
-
+# output directory for cluster evaluation
+cluster_fldr_path = os.environ.get('CLUSTER_FPATH')
 ###################################################################################################
 #### Search Model Parameters ####
 

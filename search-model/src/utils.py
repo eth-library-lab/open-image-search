@@ -342,12 +342,12 @@ def make_tfdataset_from_df(df,
     #perform data_augmentation
     if for_training and augment:
         dataset = dataset.map(augment_func, num_parallel_calls=32)
-
+    '''
     if normalize:
         im_normer = ImageNormalizer(mean_rgb_values=rgb_values[0], 
                                     stddev_rgb_values=rgb_values[1])
         dataset = dataset.map(im_normer.normalize_images, num_parallel_calls=32)
-    
+    '''
     if conv_color=='rgb':
         pass
 
