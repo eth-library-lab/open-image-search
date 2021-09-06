@@ -37,19 +37,19 @@ class SaveSearchResultSerializer(serializers.Serializer):
 class ClassificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Classification
-        fields = '__all__'
+        fields = ['id','name']
 
 class MaterialTechniqueSerializer(serializers.ModelSerializer):
     class Meta:
         model = MaterialTechnique
-        fields = '__all__'
+        fields = ['id','name']
 
 class RelationshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Relationship
-        fields = '__all__'
+        fields = ['id','name']
 
 class InstitutionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Institution
-        fields = '__all__'
+        fields = ['id','name']
