@@ -15,6 +15,8 @@ export default new Vuex.Store({
     isLoading: false,
     searchResults: [],
     searchResultId: null,
+    filterOptions: {},
+    filterOptionsLoading:false,
     snackbar: {
       visible: false,
       timeout:10000,
@@ -57,6 +59,12 @@ export default new Vuex.Store({
       state.snackbar.timeout = 3000
       state.snackbar.text = null
     },
+    UPDATE_FILTER_OPTIONS(state, filterOptions) {
+      state.filterOptions = filterOptions
+    },
+    CHANGE_FILTERS_LOADING_STATUS(state, filterStatus) {
+      state.filterOptionsLoading = filterStatus
+    }
   },
   actions: {
     changeSearchResultId( { commit }, searchResultId) {
@@ -70,6 +78,9 @@ export default new Vuex.Store({
     },
     changeIsLoadingStatus( { commit }, status) {
       commit('CHANGE_ISLOADING_STATUS', status)
+    },
+    changefiltersLoadingStatus( { commit }, status) {
+      commit('CHANGE_FILTERS_LOADING_STATUS', status)
     },
     searchSimilarImages({ commit, dispatch }, selectedImage) {
       ImageSearchService.uploadImage(selectedImage)
@@ -165,6 +176,35 @@ export default new Vuex.Store({
           dispatch('changeIsLoadingStatus',false)
         })
     },
+    getFilterOptions({ commit, dispatch }) {
+      dispatch('changefiltersLoadingStatus', true)
+      ImageSearchService.getFilterOptions()
+        .then(response => {
+          // get url for the original search image
+          commit('UPDATE_FILTER_OPTIONS', response.data)
+        })
+        .catch(error => {
+          console.log("getFilterOptions error: ", error.response )
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          // generic error message
+          var snackbarSettings = {
+            text:'Encountered error with filtered service. \n Please try again or try searching with less restrictive filters',
+            timeout:-1
+          }
+          if (error.code == "ECONNABORTED") {
+            snackbarSettings.text='Request timed out. Please try again'
+            console.log(snackbarSettings.text)
+            dispatch('showSnackbar', snackbarSettings)
+          } else {
+            console.log('error: ', error)
+            dispatch('showSnackbar',snackbarSettings)
+          }
+        })
+        .finally(() => {
+          dispatch('changefiltersLoadingStatus', false)
+        })
+    },
     clearSearchResults({ commit }) {
       let payload = { 
         searchResults: [],
@@ -218,6 +258,12 @@ export default new Vuex.Store({
     },
     searchResultId(state) {
       return state.searchResultId
+    },
+    filterOptions(state) {
+      return state.filterOptions
+    },
+    filterOptionsLoaded(state) {
+      return Object.keys(state.filterOptions).length > 0
     }
 
   },

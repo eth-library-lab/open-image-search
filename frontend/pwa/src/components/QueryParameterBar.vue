@@ -1,15 +1,27 @@
 <template>
     <div>
+      <div>
+        <!-- {{this.filterOptions}} -->
+        filterOptionsLoaded: {{this.filterOptionsLoaded}}
+        filterOptions: {{Object.keys(this.filterOptions)}}
+        materialTechniques: {{materialTechniques}}
+      </div>
+
         <v-expansion-panels flat>
           <v-expansion-panel
           flat
             >
-            <v-expansion-panel-header>
+            <v-expansion-panel-header
+              @click="loadFilterOptions"
+              >
                Additional Query Parameters
             </v-expansion-panel-header>
-            <v-expansion-panel-content>
+            <v-expansion-panel-content
+              >
               <v-row
-                align="center" justify="center">
+                align="center" justify="center"
+                v-if="filterOptionsLoaded"
+                >
               <v-col
                 align="center" justify="center"
                 class="px-4 mx-12"
@@ -68,7 +80,7 @@
                 <v-combobox
                   v-model="collection"
                   :items="collections"
-                  :disabled="true | selectionsDisabled"
+                  :disabled="selectionsDisabled"
                   multiple
                   label="collection"
                 ></v-combobox>
@@ -81,21 +93,75 @@
 </template>
 
 <script>
-    export default {
-      data() {
-        return {
-          selectionsDisabled:false,
-          min: 1400,
-          max: 2021,
-          range: [1400, 2021],
-          classification:null,
-          materialTechnique:null,
-          classifications:['Print', 'Book', 'Plate', 'Hand Drawing'],
-          materialTechniques:["lithographie", "radierung", "kupferstich"],
-          collections:["ETHZ Graphische Sammlung"]
-        }
-      }
+import { mapGetters, mapActions } from 'vuex'
+
+export default {
+
+  data() {
+    return {
+      selectionsDisabled:false,
+      min: 1400,
+      max: 2021,
+      range: [1400, 2021],
+      classification:null,
+      materialTechnique:null,
+      collection:null,
     }
+  },
+  computed: {
+    ...mapGetters(['filterOptions','filterOptionsLoaded']),
+    materialTechniques() {
+      if (this.filterOptionsLoaded) {
+        // let options = []
+        // this.filterOptions.materialTechniques.forEach(el => 
+        //   options.push(el.name)
+        // )
+        // return options
+        return this.filterOptions.materialTechniques
+      } else {
+        return []
+      }
+    },
+    classifications() {
+      if (this.filterOptionsLoaded) {
+        return this.filterForName('classifications')
+      } else {
+        return []
+      }
+    },
+    institutions() {
+      if (this.filterOptionsLoaded) {
+        return this.filterForName('institutions')
+      } else {
+        return []
+      }
+    },
+  },
+  methods: {
+    ...mapActions(['getFilterOptions']),
+    loadFilterOptions() {
+      console.log('loadFilterOptions ', this.loadFilterOptions)
+      if (!this.filterOptionsLoaded) {
+        console.log('this.getFilterOptions()')
+        this.getFilterOptions()
+        console.log(this.filterOptions)
+        console.log("this.optionsLoaded: ",this.filterOptionsLoaded)
+      }
+    },
+    filterForName(keyName) {
+        let options = []
+        this.filterOptions[keyName].forEach(el => 
+          options.push(el.name)
+        )
+        return options
+      // } else {
+        // return []
+      // }
+    }
+  },
+  mounted() {
+  }
+}
 </script>
 
 <style lang="css" scoped>

@@ -33,5 +33,8 @@ export default {
     },
     getSearchResults(searchResultID) {
         return apiClient.get(`search-results/${searchResultID}`)
+    },
+    getFilterOptions() {
+        return apiClient.get(`filter-options`)
     }
 }
