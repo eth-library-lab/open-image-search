@@ -231,9 +231,7 @@ export default {
   methods: {
     ...mapActions(['getFilterOptions']),
     async loadFilterOptions() {
-      console.log('loadFilterOptions ', this.loadFilterOptions)
       if (!this.filterOptionsLoaded) {
-        console.log('this.getFilterOptions()')
         this.getFilterOptions()
         this.yearMin = await this.filterOptions.yearMin
         this.yearMax = await this.filterOptions.yearMax

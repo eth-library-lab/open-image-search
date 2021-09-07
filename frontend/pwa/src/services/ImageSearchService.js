@@ -12,14 +12,20 @@ const apiClient = axios.create({
 })
 
 export default {
-    uploadImage(selectedImage) {
+    uploadImage(selectedImage, queryString) {
         let formData = new FormData()
-        formData.append('image', selectedImage)    
+        formData.append('image', selectedImage)
         let headers = { headers: {
-                'Content-Type': 'multipart/form-data'
-                }
+            'Content-Type': 'multipart/form-data'
             }
-        return apiClient.post('image-search', formData, headers)
+        }
+        if (!queryString) {
+            queryString= ''
+        } 
+
+        let url = 'image-search'
+        url = url + queryString
+        return apiClient.post(url, formData, headers)
     },
     saveSearchResults(searchResultID) {
         let formData = new FormData()

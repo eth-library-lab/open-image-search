@@ -82,8 +82,11 @@ export default new Vuex.Store({
     changefiltersLoadingStatus( { commit }, status) {
       commit('CHANGE_FILTERS_LOADING_STATUS', status)
     },
-    searchSimilarImages({ commit, dispatch }, selectedImage) {
-      ImageSearchService.uploadImage(selectedImage)
+    searchSimilarImages({ commit, dispatch }, payload) {
+    
+      var selectedImage = payload.selectedImage
+      var queryString = payload.queryString
+      ImageSearchService.uploadImage(selectedImage, queryString)
         .then(response => {
           const searchResults = response.data.results
           const searchResultId = response.data.result_id

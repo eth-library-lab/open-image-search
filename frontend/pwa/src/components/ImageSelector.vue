@@ -64,9 +64,6 @@
                     @click="uploadImage">
                     Upload
                 </v-btn>
-                <p>
-                    parent queryString: {{this.queryString}}
-                </p>
             </v-col>
         </v-row>
     </v-container>
@@ -136,7 +133,12 @@ export default {
         },
         uploadImage() {
             this.changeIsLoadingStatus(true)
-            this.searchSimilarImages(this.selectedFile)
+            this.searchSimilarImages(
+                {
+                "selectedImage":this.selectedFile,
+                "queryString": this.queryString
+                }
+            )
         },
         onQueryUpdate(queryString){
             this.queryString = queryString
