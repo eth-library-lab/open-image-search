@@ -100,7 +100,7 @@ def get_filter_options(request):
     mat_serializer = MaterialTechniqueSerializer(MaterialTechnique.objects.all(), many=True)
     rel_serializer = RelationshipSerializer(Relationship.objects.all(), many=True)
     inst_serializer = InstitutionSerializer(Institution.objects.all(), many=True)
-    
+
     year_qs = ImageMetadata.objects.exclude(year_min=-1).only('year_min','year_max')
 
     years_min = year_qs.aggregate(Min('year_min'))
@@ -111,8 +111,8 @@ def get_filter_options(request):
     "materialTechniques" : mat_serializer.data,
     "relationships" : rel_serializer.data,
     "institutions" : inst_serializer.data,
-    "year_min": years_min["year_min__min"],
-    "year_max": years_max["year_max__max"]
+    "yearMin": years_min["year_min__min"],
+    "yearMax": years_max["year_max__max"]
 
     }
 
@@ -194,11 +194,16 @@ def image_search(request):
     post an image and return a list of most similar images in the database
     """
 
+    print(request)
     if request.method == 'POST':
 
         serializer = ImageSearchSerializer(data=request.data)
+        serializer_is_valid = serializer.is_valid()
 
-        if serializer.is_valid():
+        if DEBUG:
+            print("serializer.errors: ", serializer.errors)
+
+        if serializer_is_valid:
             ### Calculate Features ###
             uploaded_image = request.data['image']
             img_stream = uploaded_image.open()
@@ -208,6 +213,7 @@ def image_search(request):
             image_features = image_features.reshape(1, -1)
 
             ### Get Nearest Neighbours ###
+            print("request.query_params: ",request.query_params)
             qry_params = request.query_params
             record_ids_to_exclude = combine_filters(**qry_params)
 
