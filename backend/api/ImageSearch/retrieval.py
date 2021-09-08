@@ -42,7 +42,13 @@ def record_to_model_ids(record_ids):
     """
     look up record ids from the given model indices
     """
-    return [MODEL_ID_DICT[record_id] for record_id in record_ids]
+    model_id_list = []
+    for record_id in record_ids:
+        i = MODEL_ID_DICT.get(record_id)
+        if i:
+            model_id_list.append(i)
+            
+    return model_id_list
 
 
 def knearest_ids(image_features, k=10):
