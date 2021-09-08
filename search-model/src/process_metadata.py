@@ -36,7 +36,7 @@ def create_class_dict(ser):
     
     class_dict = defaultdict(lambda: -1)
     classes = np.unique(ser)
-    indices = np.arange(len(classes))
+    indices = np.arange(1,len(classes)+1)
     class_dict.update(dict(zip(classes, indices)))
     
     return classes, indices, class_dict
@@ -356,7 +356,8 @@ def main(args=None):
     fixture_lst = export_metadata.df_to_fixture_list(tdf,
                 app_name='ImageSearch',
                 model_name=model_name,
-                use_df_index_as_pk=True,
+                pk_start_num=1,
+                use_df_index_as_pk=False,
                 create_datetimefield_name="created_date",
                 created_by_field_name=None,
                 )
