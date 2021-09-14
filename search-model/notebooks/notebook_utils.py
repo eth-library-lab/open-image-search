@@ -11,7 +11,7 @@ from textwrap import wrap
 def get_model_id_list(df, record_id_list):
     model_id_lst = []
     for record in record_id_list:
-        model_id_idx = df.loc[df['record_id']==record].index.tolist() #135484
+        model_id_idx = df.loc[df['record_id']==record].index.tolist()
         if len(model_id_idx) == 0:
             print('RecordID not found: ',record)
         model_id_lst = model_id_lst + model_id_idx
@@ -27,14 +27,6 @@ def plot_query_imgs(df, model_id_lst):
         plt.show()
 
 def clean_record_list(df, record_id_list):
-    #for record in record_id_list:
-        #result = df.loc[df['record_id']==record]
-        #if record in [282489,282491]:
-        #    print(result)
-        #if len(result) == 0:
-        #if record not in df['record_id']:
-        #    record_id_list.remove(record)
-    #print([int(x) in df['record_id'].values for x in record_id_list if x in [20655,17537,2453]])
     new_record_id_list = [x for x in record_id_list if x in df['record_id'].values]
     return new_record_id_list
         
@@ -194,10 +186,9 @@ def plot_similar_images_in_pairs(record_id, results1, results2, show_plots=True,
                             figsize=(8, int(num_plots*4)))
 
     # show similar images
-    #for i, (idx, row) in enumerate(results_list1.iterrows()):
     for i, ((_,row1),(_,row2)) in enumerate(zip(results1.iterrows(),results2.iterrows())):
 
-        axs[i,0].set_title("\n".join(wrap(str(i+1) + ': ' + row1['title'],35)))#, wrap=True
+        axs[i,0].set_title("\n".join(wrap(str(i+1) + ': ' + row1['title'],35)))
         axs[i,1].set_title("\n".join(wrap(str(i+1) + ': ' + row2['title'],45)))
 
         im1 = plt.imread(row1['fpath'])
@@ -229,8 +220,4 @@ def plot_similar_images_in_pairs(record_id, results1, results2, show_plots=True,
 
         fig_fname = '{}: {}.png'.format(record_id, results1['title'])
         fig_fpath = os.path.join(fldr, fig_fname)
-        fig.savefig(fig_fpath)
-    '''
-    _ = [print(str(i+1), ': ', row['recordURL'])
-         for i, (idx, row) in enumerate(results1.iterrows())]
-    '''    
+        fig.savefig(fig_fpath)  
