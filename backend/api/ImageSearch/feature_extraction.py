@@ -57,61 +57,60 @@ def preprocess_img(image_path_or_stream):
     return img
 
 
-def format_model_request(preprocessed_img):
-    TENSORFLOW_SERVING_BASE_URL = "http://tf:8501/v1/models/model/versions/{model_version}:predict"
-    model_url = TENSORFLOW_SERVING_BASE_URL.format(
-                        model_name='feature_extraction',
-                        model_version=202101182225,
+def format_model_request(preprocessed_img, model_name, function_name='predict'):
+    TENSORFLOW_SERVING_BASE_URL = "http://tf:8501/v1/models/{model_name}:{function_name}"
+    model_url = TENSORFLOW_SERVING_BASE_URL.format( 
+                        model_name=model_name,,
+                        function_name=function_name
                         )
-    if DEBUG:
-        print("TENSORFLOW_SERVING_BASE_URL", model_url)
-
     request_data = json.dumps({ "instances": [preprocessed_img, ]}) 
     headers = {"content-type": "application/json"}
 
     return model_url, request_data, headers
 
 
-def post_to_model(preprocessed_img):
-    
-    request_params = format_model_request(preprocessed_img)
-    model_url, request_data, headers = request_params
+def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=10):
 
-    if DEBUG:
-        print('model_url: ', model_url)
-        print('headers: ', headers)
-        print('request_data: ', str(request_data)[:100],' ...')
+    preprocessed_img = preprocess_img(img_path_or_stream)
 
+    if ids_to_exclude:
+        model_name='retrieval_exclusion'
+        model_url = f"http://tf:8501/v1/models/{model_name}:predict"
+        request_dict = {
+            "instances": [
+                {
+                    "queries": preprocessed_img,
+                    "exclusions": list(ids_to_excludes),
+                    "k":k
+                },
+            ]
+        }
+        
+    else:
+        model_name='retrieval'
+        model_url = f"http://tf:8501/v1/models/{model_name}:predict"
+        request_dict = {
+            "instances": [
+                {
+                    "queries": preprocessed_img,
+                    "k":k
+                },
+            ]
+        }
+
+    request_data = json.dumps(request_dict) 
+    headers = {"content-type": "application/json"}
     model_api_response = requests.post(model_url, 
                                         data=request_data, 
                                         headers=headers)
-
-    if DEBUG:
-        print('model_api_response: ', model_api_response)
-    
     return model_api_response
 
 
-def calculate_image_features(img_path_or_stream):
-    """
-    send a request to the feature extraction model and return the image feature vector"
-    """
-    preprocessed_img = preprocess_img(img_path_or_stream)    
-    model_response = post_to_model(preprocessed_img)
+# def calculate_image_features(img_path_or_stream):
+#     """
+#     send a request to the feature extraction model and return the image feature vector"
+#     """
+       
+#     model_response = post_to_model(preprocessed_img)
 
-    if DEBUG:
-        print('model_response: ', model_response.status_code)
-
-    if model_response.status_code != 200:
-        return Response(model_response.content, model_response.status_code)
-    
-    model_response_dict = json.loads(model_response.text)
-
-    if DEBUG:
-        print('model_response_dict', model_response_dict)
-
-    model_raw_values = model_response_dict['predictions'][0]
-    image_features = np.array(model_raw_values).reshape(1, -1) # reshape for a single record
-    
-    return image_features
 
