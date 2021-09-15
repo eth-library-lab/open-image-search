@@ -37,7 +37,7 @@ services:
     restart: always
       
   tf:
-    image: barry8000/graph-samm:ftx-dev-latest
+    image: barry8000/graph-samm:ret-latest
     build:
        context: ./search-model
        dockerfile: ./Dockerfile.model
