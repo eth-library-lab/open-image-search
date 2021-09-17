@@ -14,7 +14,7 @@ dataset_name = os.environ.get("DATASET_NAME","test_set")
 
 #### File Input and Output Settings ####
 # run the preprocessing images pipeline to reseize,filter and save the raw images
-preprocess_images = os.environ.get('PREPROCESS_IMAGES', True)
+preprocess_images = int(os.environ.get('PREPROCESS_IMAGES', 1))
 
 ###################################################################################################
 #### File Input Settings ####
@@ -47,12 +47,14 @@ removal_image_dir = os.path.join(BASE_DIR, removal_image_dir)
 processed_image_dir = os.environ.get("OUTPUT_IMAGE_DIR", f"data/processed/{dataset_name}/images")
 processed_image_dir = os.path.join(BASE_DIR, processed_image_dir)
 
+
 # output file for features
-features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name,'features','features.csv')
+interim_features_fpath = os.path.join(BASE_DIR, 'data','interim', dataset_name,'features','features.csv')
+processed_features_fpath = os.path.join(BASE_DIR, 'data','processed', dataset_name,'features','features.csv')
 
 # interim output folder for cleaned metadata files
 interim_metadata_dir = os.path.join(BASE_DIR, 'data','interim', dataset_name, 'metadata')
-
+processed_metadata_dir = os.path.join(BASE_DIR, 'data','processed', dataset_name, 'metadata')
 # output directory for fixtures
 fixtures_dir = os.path.join(BASE_DIR, 'data','processed', dataset_name,'fixtures')
 
@@ -64,6 +66,7 @@ model_name='vgg16_imagenet'
 model_version="2"
 weights='imagenet'
 model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_version)
+calculate_features = int(os.environ.get("CALCULATE_FEATURES", 1))
 
 ###################################################################################################
 #### Search Model Parameters ####
@@ -71,6 +74,7 @@ model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', model_versi
 search_model_version="2"
 search_model_fldr_path=os.path.join(BASE_DIR,'models','feature_extraction', search_model_version)
 num_neighbours=int(os.environ.get("NUM_NEIGHBOURS", 10)) # number of results the search model should return
+create_retrieval_model = int(os.environ.get("CREATE_RETRIEVAL_MODEL", 1))
 
 
 if __name__ == '__main__':
@@ -92,3 +96,9 @@ if __name__ == '__main__':
         print("\n----outputs----")
         print("interim metadata dir (for cleaned metadata): ", interim_metadata_dir)
         print("fixtures output directory: ", fixtures_dir)
+
+        print("\n---- Feature Extraction Model Parameters ----")
+        calculate_features = int(os.environ.get("CALCULATE_FEATURES", 1))
+        print("calculate_features: ", calculate_features)
+        print("\n---- Search Model Parameters ----")
+        print("create_retrieval_model", create_retrieval_model)

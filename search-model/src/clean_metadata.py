@@ -43,6 +43,7 @@ def process_eth_metadata(df):
                  'relations':'relations',
                  'timestamp': 'timestamp'}
     df = df.rename(columns=col_dict)
+
     if 'timestamp' in df.columns:
         df = df.drop(columns=['timestamp'])
     
@@ -52,9 +53,9 @@ def process_eth_metadata(df):
     return df
 
 
-def main():
+def main(output_dir=settings.interim_metadata_dir,  
+         processed_img_dir=settings.processed_image_dir):
 
-    output_dir = settings.interim_metadata_dir
 
     # if there is one or more metadata csvs process them, else create a csv with just the filenames
     if settings.metadata_csvs:
@@ -65,7 +66,6 @@ def main():
                 df = pd.read_csv(fpath_input)
             
             print(f"loaded metadata file with {df.shape[0]} rows")
-
             df = process_eth_metadata(df)
             fname_output = os.path.basename(fpath_input)
             fname_output = fname_output.rsplit(".",maxsplit=1)[0] + ".csv"
@@ -78,7 +78,7 @@ def main():
 
     else:
         #list images in the input directory and put them in a dataframe
-        img_list = utils.get_list_of_files_in_dir(settings.processed_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True)
+        img_list = utils.get_list_of_files_in_dir(processed_img_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=True)
         df = pd.DataFrame({"image_url":img_list})
         df["record_id"] = df.index.to_list()
         # save to interim folder for dataset
@@ -88,9 +88,12 @@ def main():
         df.to_csv(fpath_output, index=False)
         print(f'wrote metadata file to {fpath_output}')
 
-    return
+    return df
 
 
 if __name__ == '__main__':
     
-    main()
+    main(output_dir=settings.interim_metadata_dir,
+         processed_img_dir=settings.processed_image_dir
+         )
+         

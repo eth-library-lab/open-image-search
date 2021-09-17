@@ -131,7 +131,7 @@ def print_settings(sttngs):
 def main():
     
     print_settings(settings)
-    output_fldr_path = os.path.dirname(settings.features_fpath)
+    output_fldr_path = os.path.dirname(settings.interim_features_fpath)
 
     input_image_dir = settings.processed_image_dir
     input_image_csv = settings.files_csv_fpath
@@ -176,7 +176,7 @@ def main():
     save_feature_extractor_notes(output_fldr_path, model, settings.weights)
     
     # make an output csv file to store the features in 
-    output_fpath = make_empty_features_csv(settings.features_fpath)
+    output_fpath = make_empty_features_csv(settings.interim_features_fpath)
     
     # print start up statuses
     total_steps = calculate_total_steps(num_images, settings.batch_size)

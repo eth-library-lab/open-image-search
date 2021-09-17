@@ -78,7 +78,8 @@ def hash_images_to_remove(removal_image_dir):
                 if filehash not in hash_to_remove:
                     hash_to_remove.append(filehash)
     return hash_to_remove
-     
+
+
 def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     """
     apply the processing pipeline to a directory of images and save them to the output_image_directory
