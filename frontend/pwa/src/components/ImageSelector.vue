@@ -45,7 +45,10 @@
                         ></v-file-input>
                     </v-col>
                 </v-row>
+                <div
+                    v-if="!(resultsLoaded | getIsLoading)">
                     <QueryParameterBar @query-string="onQueryUpdate"/>
+                </div>
                 </v-card>
             </v-col>
         </v-row>
