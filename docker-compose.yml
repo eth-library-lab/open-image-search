@@ -44,5 +44,6 @@ services:
     ports:
       - 8501:8501
     restart: always
+    command: ["--model_config_file=/models/docker_models.config"]
 volumes:
   postgres_data:

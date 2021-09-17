@@ -5,3 +5,5 @@ LABEL maintainer="barry.sunderland@librarylab.ethz.ch"
 
 COPY ./models/retrieval/2 /models/retrieval/2
 COPY ./models/retrieval_exclusion/2 /models/retrieval_exclusion/2
+
+COPY ./docker_models.config /models/docker_models.config
