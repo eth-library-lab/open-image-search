@@ -50,8 +50,8 @@
                     v-model="range"
                     @change="emitQueryString"
                     :disabled="selectionsDisabled"
-                    :max="2020"
-                    :min="1400"
+                    max="2020"
+                    min="1400"
                     hide-details
                     class="align-center"
                   >
@@ -131,7 +131,7 @@ export default {
       selectionsDisabled:false,
       yearMin:1400,
       yearMax:2020,
-      range: [null,null],
+      range: [],
       classification:null,
       relationship:null,
       materialTechnique:null,
@@ -233,9 +233,9 @@ export default {
     async loadFilterOptions() {
       if (!this.filterOptionsLoaded) {
         this.getFilterOptions()
-        this.yearMin = await this.filterOptions.yearMin
-        this.yearMax = await this.filterOptions.yearMax
-        this.range = await [this.filterOptions.yearMin, this.filterOptions.yearMax]
+        // this.yearMin = await this.filterOptions.yearMin
+        // this.yearMax = await this.filterOptions.yearMax
+        // this.range = await [this.filterOptions.yearMin, this.filterOptions.yearMax]
       }
     },
     filterForName(keyName) {
@@ -253,6 +253,7 @@ export default {
     },
   },
   mounted() {
+    this.range = [this.yearMin, this.yearMax]
   }
 }
 </script>
