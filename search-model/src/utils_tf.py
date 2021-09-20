@@ -1,7 +1,7 @@
 # utils file fuctions that need, or are related to, tensorflow
 
 import tensorflow as tf
-
+from typing import Tuple,Text # Dict, Optional, 
 
 def parse_image_func(filepath, label):
     
@@ -85,7 +85,7 @@ def calc_image_means(image_paths):
 
 class ImageNormalizer():
     """
-    class based implenetation of tensorflow's image normalization function. 
+    class based implentation of tensorflow's image normalization function. 
     allows rgb mean and stddev parameters to be defined on a init, and then the normalize_images method 
     can be passed into tf.datasets.map
     """
@@ -102,8 +102,8 @@ class ImageNormalizer():
         self.num_channels = num_channels
         self.dtype = dtype
         self.data_format = data_format
-        
-        
+
+
     def normalize_images(self,
                          features: tf.Tensor, 
                          label) -> tf.Tensor:
