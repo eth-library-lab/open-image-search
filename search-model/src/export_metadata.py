@@ -61,10 +61,10 @@ def df_to_fixture_list(df,
     
     fixture_lst = []
     
-    for i, row in df.iterrows():
+    for i, (index, row) in enumerate(df.iterrows()):
         
         if use_df_index_as_pk==True:       
-            pk = i
+            pk = index
         
         else:
             pk = i+pk_start_num
