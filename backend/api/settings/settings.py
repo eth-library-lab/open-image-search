@@ -25,6 +25,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
+FAKE_MODEL_REPONSE = int(os.environ.get("FAKE_MODEL_REPONSE", default=0))
+if FAKE_MODEL_REPONSE:
+    print("WARNING: Model responses are being faked. Update environment variable to FAKE_MODEL_REPONSE=0")
 ALLOWED_HOSTS = ['*'] #os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localhost').split(" ")
 
 #this sets the base url based on the request. otherwise urls returned would use the locally defined host e.g.: localhost:8000

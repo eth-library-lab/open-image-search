@@ -61,6 +61,7 @@ class ImageMetadata(models.Model):
     year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
     year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
     relationship_type_id = models.ManyToManyField(Relationship)
+    image_fpath = models.CharField("local path to image",null=True, max_length=300)
 
 
 class SearchResult(models.Model):

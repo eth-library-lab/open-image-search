@@ -1,14 +1,14 @@
 from rest_framework import status
 from rest_framework.response import Response
 # from settings.settings import TENSORFLOW_SERVING_BASE_URL 
-from settings.settings import DEBUG
+from settings.settings import DEBUG, FAKE_MODEL_REPONSE
 
 import json
 import numpy as np
 import pandas as pd
 from PIL import Image
 import requests
-
+from requests.exceptions import ConnectionError
 ######################################
 
 from settings.settings import BASE_DIR
@@ -60,7 +60,7 @@ def preprocess_img(image_path_or_stream):
 def format_model_request(preprocessed_img, model_name, function_name='predict'):
     TENSORFLOW_SERVING_BASE_URL = "http://tf:8501/v1/models/{model_name}:{function_name}"
     model_url = TENSORFLOW_SERVING_BASE_URL.format( 
-                        model_name=model_name,,
+                        model_name=model_name,
                         function_name=function_name
                         )
     request_data = json.dumps({ "instances": [preprocessed_img, ]}) 
@@ -69,48 +69,58 @@ def format_model_request(preprocessed_img, model_name, function_name='predict'):
     return model_url, request_data, headers
 
 
-def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=10):
+def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=5):
 
+    """
+    img_path_or_stream: image bytestream or filepath
+    ids_to_exclude: identifiers to exclude from the top results
+    k:int, number of neighbours/results to return
+    """
     preprocessed_img = preprocess_img(img_path_or_stream)
 
+    # format request instance
     if ids_to_exclude:
+        print("ids_to_exclude:", ids_to_exclude)
         model_name='retrieval_exclusion'
-        model_url = f"http://tf:8501/v1/models/{model_name}:predict"
-        request_dict = {
-            "instances": [
-                {
-                    "queries": preprocessed_img,
-                    "exclusions": list(ids_to_excludes),
-                    "k":k
-                },
-            ]
-        }
-        
+        input = {"args_0": [preprocessed_img,],
+                 "args_1": [list(ids_to_exclude),],
+                 "args_2":[k,],}
     else:
         model_name='retrieval'
-        model_url = f"http://tf:8501/v1/models/{model_name}:predict"
-        request_dict = {
-            "instances": [
-                {
-                    "queries": preprocessed_img,
-                    "k":k
-                },
-            ]
-        }
+        input = {"input_1": [preprocessed_img,],
+                 "input_2":[k,],}
+
+    
+    # format full request
+    request_dict = {"inputs": input}
+    model_url = f"http://tf:8501/v1/models/{model_name}:predict"
+    
+    if DEBUG:
+        print(f'sending request to model: {model_name}')
 
     request_data = json.dumps(request_dict) 
     headers = {"content-type": "application/json"}
-    model_api_response = requests.post(model_url, 
-                                        data=request_data, 
-                                        headers=headers)
+
+    if FAKE_MODEL_REPONSE and DEBUG:
+        fake_resp = json.dumps({"predictions":[[4002, 4004, 4006, 4016, 4034],]})
+        model_api_response = Response(status=200)
+        model_api_response.text = fake_resp
+
+    else:
+        try:
+            model_api_response = requests.post(model_url, 
+                                                data=request_data, 
+                                                headers=headers)
+        except ConnectionError as err:
+            err_message = "feature extraction model ConnectionError"
+            model_api_response = Response({"error": err_message}, status=500)
+            model_api_response.text = err_message
+
+        except Exception as err:
+            err_message = "feature extraction model error"
+            model_api_response = Response({"error": err_message}, status=500)
+            model_api_response.text = err_message
+
     return model_api_response
-
-
-# def calculate_image_features(img_path_or_stream):
-#     """
-#     send a request to the feature extraction model and return the image feature vector"
-#     """
-       
-#     model_response = post_to_model(preprocessed_img)
 
 

@@ -17,17 +17,19 @@ from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.serializers import ClassificationSerializer, MaterialTechniqueSerializer, RelationshipSerializer, InstitutionSerializer
 from ImageSearch.feature_extraction import request_top_ids
-from ImageSearch.retrieval import knearest_ids, model_to_record_ids,record_to_model_ids, top_k_with_exclusions
 from ImageSearch.retrieval_filters import combine_filters
 
 # for loop could be replaced with qry_set.filter(record_id__in=object_ids)
-def getMetadataForListOfIds(object_ids):
+def get_metadata_for_list_of_ids(object_ids):
 
     qry_set = ImageMetadata.objects.all()
     results_metadata = []
 
     for obj_id in object_ids:
-        results_metadata.append(qry_set.filter(record_id=obj_id).values().first())
+        metadata = qry_set.filter(id=obj_id).values().first()
+        if DEBUG:
+            print("metadata: ", metadata)
+        results_metadata.append(metadata)
 
     return results_metadata
 
@@ -188,7 +190,7 @@ def save_search_result(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def lookup_metadata_from_records_ids(record_ids):
+def lookup_metadata_from_ids(_ids):
 
     qry_set = ImageMetadata.objects.all()
     if DEBUG:
@@ -196,8 +198,10 @@ def lookup_metadata_from_records_ids(record_ids):
     
     metadata = []
     
-    for record_id in record_ids:
-        metadata.append(qry_set.filter(record_id=record_id).values()[0])
+    for _id in _ids:
+        record_metadata = qry_set.filter(id=_id).values()
+        if len(record_metadata)>0:        
+            metadata.append(record_metadata[0])
 
     if DEBUG:
         print("results_metadata: ", metadata)
@@ -205,7 +209,7 @@ def lookup_metadata_from_records_ids(record_ids):
     return metadata
 
 
-def save_search_result(record_ids, uploaded_image, request):
+def create_search_result_record(record_ids, uploaded_image, request):
 
     search_result_list = np.array(record_ids,'int32').tolist()
     search_result_id=None
@@ -249,16 +253,18 @@ def image_search(request):
                 print("request.query_params: ",request.query_params)
             
             qry_params = request.query_params
-            records_to_exclude=None
+            ids_to_exclude=None
 
             if len(qry_params)>0:
-                records_to_exclude = combine_filters(**qry_params)
+                ids_to_exclude = combine_filters(**qry_params)
+                if DEBUG:
+                    print("num records to exclude: ", len(ids_to_exclude))
 
             ### Get Nearest Neighbour Ids ###
 
-            if records_to_exclude:
-                # post to retrieval_exclusion                
-                model_response = request_top_ids(img_stream, ids_to_exclude=records_to_exclude, k=10)
+            if ids_to_exclude:
+                # post to retrieval_exclusion
+                model_response = request_top_ids(img_stream, ids_to_exclude=ids_to_exclude)
 
             else:
                 # post to retrieval
@@ -266,25 +272,25 @@ def image_search(request):
 
             ### handle model response ###
             if DEBUG:
-                print('model_response: ', model_response.status_code)
+                print('model_response: ', model_response.text)
 
             if model_response.status_code != 200:
-                return Response(model_response.content, model_response.status_code)
+                return model_response
 
             model_response_dict = json.loads(model_response.text)
 
             if DEBUG:
                 print('model_response_dict', model_response_dict)
 
-            model_values = model_response_dict['predictions'][0]
-            top_records = np.array(model_values).reshape(1, -1) # reshape for a single record        
-            top_records = top_records.reshape(1, -1)
+            _ids = model_response_dict["outputs"]["output_2"][0]
+            print("top_results:", _ids)
+             # reshape for a single record        
 
             ### lookup Metadata ###
-            results_metadata = lookup_metadata_from_records_ids(top_records)
+            results_metadata = get_metadata_for_list_of_ids(_ids)
 
             ### Save Result to reproduce results if needed (e.g. for shareable link) ###
-            search_result_id = save_search_result(record_ids, uploaded_image, request)
+            search_result_id = create_search_result_record(_ids, img_stream, request)
 
             ### format response ###
             result = {
