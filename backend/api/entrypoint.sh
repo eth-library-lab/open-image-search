@@ -1,7 +1,7 @@
 echo "wait 10s to allow DB to start"
 sleep 10
 python3 manage.py makemigrations ImageSearch # add each app here to ensure Django sees migrations
-python3 manage.py migrate
+python3 manage.py migrate ImageSearch
 
 python manage.py loaddata ./fixtures/Relationship.json
 python manage.py loaddata ./fixtures/Classification.json
