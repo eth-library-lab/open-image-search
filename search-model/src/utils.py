@@ -12,6 +12,18 @@ import urllib
 from io import BytesIO
 import re
 
+
+def make_fpath_from_id(_id, image_fldr="../data/processed/ethz/images"):
+    
+    res_id = str(_id)
+
+    subfldr = "0"
+    if len(res_id)> 3:
+        subfldr = res_id[:-3]
+
+    return f"{image_fldr}/{subfldr}/{res_id}.jpeg"
+    
+
 def is_snake_case(test_string):
     """
     test if a string is in 'snake_case'
