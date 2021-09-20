@@ -14,6 +14,7 @@ import numpy as np
 from datetime import datetime as dt
 
 import utils
+import utils_tf
 import settings
 
 def initialise_model_vgg16(print_summary=True, model_name='vgg16_imagenet', weights='imagenet'):
@@ -42,6 +43,7 @@ def save_feature_extractor_notes(fldr_path, model, weights):
     # save model summary    
     fname = 'feature_extractor_notes.txt'
     fpath = os.path.join(fldr_path, fname)
+    utils.prep_dir(fpath)
 
     with open(fpath,'w') as f:
         f.write("Model Name: {} \n".format(model.name))
@@ -55,9 +57,6 @@ def make_empty_features_csv(fpath):
     creates an empty csv file to hold extracted features
     returns fpath to the file
     """
-
-    # make sure the file does already exist
-    assert os.path.exists(fpath)==False, "file {} already exists, rename or delete before running ".format(fpath)
 
     # save empty csv to hold features
     with open(fpath, 'w', newline='') as csvfile:
@@ -83,27 +82,27 @@ def append_tf_features_to_csv(features, labels, fpath):
     return    
 
 
-def create_tf_dataset(batch_size):
-    """
+# def create_tf_dataset(batch_size):
+#     """
     
-    """
+#     """
 
-    csv_fname = '../data/raw/prints.csv'
-    df = pd.read_csv(csv_fname, index_col=0)
-    num_images = df.shape[0]
+#     csv_fname = '../data/raw/prints.csv'
+#     df = pd.read_csv(csv_fname, index_col=0)
+#     num_images = df.shape[0]
 
-    ds = utils.make_tfdataset_from_df(df,
-                            'img_path',
-                            'object_id',
-                            batch_size=batch_size,
-                            for_training=False,
-                            normalize=False,
-                            augment=False,
-                            augment_func=None,
-                            rgb_values=([0,0,0],[1,1,1]),
-                            conv_color='rgb')
+#     ds = utils_tf.make_tfdataset_from_df(df,
+#                             'img_path',
+#                             'object_id',
+#                             batch_size=batch_size,
+#                             for_training=False,
+#                             normalize=False,
+#                             augment=False,
+#                             augment_func=None,
+#                             rgb_values=([0,0,0],[1,1,1]),
+#                             conv_color='rgb')
 
-    return ds, num_images
+#     return ds, num_images
 
 
 def calculate_total_steps(num_images, batch_size):
@@ -131,10 +130,10 @@ def print_settings(sttngs):
 def main():
     
     print_settings(settings)
-    output_fldr_path = os.path.dirname(settings.interim_features_fpath)
+    features_output_fldr_path = os.path.dirname(settings.interim_features_fpath)
 
     input_image_dir = settings.processed_image_dir
-    input_image_csv = settings.files_csv_fpath
+    input_image_csv = None
 
     # load csv and make tensorflow dataset
     if input_image_csv:
@@ -147,11 +146,15 @@ def main():
         print('using files in directory: ', input_image_dir)
         df = utils.make_df_file_list(input_image_dir)
         filepath_col_name='file_path'
-        label_col_name='file_path'
+        label_col_name='identifier'
 
-    num_images = df.shape[0]
+        df[label_col_name] = df[filepath_col_name].apply(
+            lambda fpath: os.path.basename(fpath).split(".")[0] 
+        )
 
-    ds = utils.make_tfdataset_from_df(df,
+    num_images = df.shape[0]    
+
+    ds = utils_tf.make_tfdataset_from_df(df, 
                             filepath_col_name,
                             label_col_name,
                             batch_size=settings.batch_size,
@@ -173,11 +176,19 @@ def main():
         model.save(settings.model_fldr_path, save_format='tf')
 
     #save model summary text file in the features file folder
-    save_feature_extractor_notes(output_fldr_path, model, settings.weights)
+    save_feature_extractor_notes(features_output_fldr_path, model, settings.weights)
     
-    # make an output csv file to store the features in 
-    output_fpath = make_empty_features_csv(settings.interim_features_fpath)
-    
+    # make an output csv file to store the features in
+    exists = os.path.exists(settings.interim_features_fpath) == True
+    if exists:
+        overwrite = utils.check_overwrite(settings.interim_features_fpath)
+        if overwrite == False:
+            print("skipping feature extraction")
+            return
+        else: 
+            output_fpath = make_empty_features_csv(settings.interim_features_fpath)
+    else: 
+        output_fpath = make_empty_features_csv(settings.interim_features_fpath)
     # print start up statuses
     total_steps = calculate_total_steps(num_images, settings.batch_size)
     print_startup_statuses(num_images, total_steps, output_fpath)
@@ -189,6 +200,7 @@ def main():
         #update progress bar
         utils.print_dyn_progress_bar(total_steps,i)
 
+    print("\n")
     return
 
 if __name__ == '__main__':

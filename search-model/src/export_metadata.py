@@ -60,16 +60,17 @@ def df_to_fixture_list(df,
         df[created_by_field_name] = created_by_value
     
     fixture_lst = []
-    for i, row in df.reset_index().iterrows():
+    
+    for i, row in df.iterrows():
         
         if use_df_index_as_pk==True:       
-            pk = row['index']
+            pk = i
         
         else:
             pk = i+pk_start_num
         
         row = row.dropna()
-        fields_dict = row.drop(['index']).to_dict()
+        fields_dict = row.to_dict()
         
         record = {'model':model, 
                'pk':pk,
@@ -92,7 +93,11 @@ def write_fixture_list_to_json(fixture_lst,
     fpath = os.path.join(output_dir, fname)
     
     if os.path.exists(fpath):
-        raise Exception('did not save, file already exists: {}'.format(fpath))
+        overwrite = utils.check_overwrite(fpath)
+        if overwrite == False:
+            print(f"skipping writing file: {fpath}")
+            return fixture_lst
+        # raise Exception('did not save, file already exists: {}'.format(fpath))
 
     with open(fpath, 'w') as f:
         json.dump(fixture_lst, 

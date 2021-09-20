@@ -15,26 +15,28 @@ import utils
 import export_metadata
 
 
-def get_record_ids_from_fpaths(ser_fpaths):
-    """
-    using the df from the calculated features csv
-    add a column with record ids
-    return df
-    """
+# def get_record_ids_from_fpaths(ser_fpaths):
+#     """
+#     using the df from the calculated features csv
+#     add a column with record ids
+#     return df
+#     """
 
-    ser = ser_fpaths.str.rsplit(pat="/", n=1, expand=True)[1]
-    ser = ser.str.split(pat=".", n=1, expand=True)[0]
-    ser = ser.astype(int)
-    ser.name = 'record_id'
-    ser.index.rename("model_id", inplace=True)
-    
-    return ser
+#     ser = ser_fpaths.str.rsplit(pat="/", n=1, expand=True)[1]
+#     ser = ser.str.split(pat=".", n=1, expand=True)[0]
+#     ser = ser.astype(int)
+#     ser.name = 'record_id'
+#     ser.index.rename("model_id", inplace=True)
+
+#     return ser
+
+
 
 
 def create_class_dict(ser):
     
     # use a default dict to return -1 in case key is not found
-    
+
     class_dict = defaultdict(lambda: -1)
     classes = np.unique(ser)
     indices = np.arange(1,len(classes)+1)
@@ -226,12 +228,13 @@ def main(args=None):
 
 
     input_dir = settings.interim_metadata_dir
+    write_fixtures=1
     if args:
         input_dir = args.metadata_dir
         write_fixtures = args.write_fixtures
 
     # if there is one or more metadata csvs process them, else create a csv with just the filenames
-    flist = utils.get_list_of_files_in_dir(input_dir,file_types=['csv'])
+    flist = utils.get_list_of_files_in_dir(input_dir, file_types=['csv'])
 
     if flist:
         # load metadata interim file
@@ -239,100 +242,114 @@ def main(args=None):
         df_meta = pd.concat(df_list)
         print(f"loaded metadata file with {df_meta.shape[0]} rows")
 
+        # check if the images for this metadata have been processed
+    df_feat = pd.read_csv(settings.interim_features_fpath, usecols=[0,], header=None)
+    fltr = df_meta['id'].isin(df_feat.iloc[:,0])
+    df_meta = df_meta.loc[fltr,:]
+
+
+    if 'image_fpath' not in df_meta.columns:
+        df_meta['image_fpath'] = df_meta['id'].apply(utils.make_fpath_from_id, 
+                                                            args=("../data/processed/ethz/images",))
+
     ## create new feature columns
     # min/max years
-    df_meta = insert_years_from_text(df_meta)
+    if 'date' in df_meta.columns:
+        df_meta = insert_years_from_text(df_meta)
 
     #### relationship types ####
     
     # extract information
-    df_relationships = make_flat_relationships_table(df_meta)
-    ser = df_relationships['relationship_type']
-    fltr = ser != "undefined"
-    ser = ser.loc[fltr]
+    if 'relations' in df_meta.columns:
+        df_relationships = make_flat_relationships_table(df_meta)
+        ser = df_relationships['relationship_type']
+        fltr = ser != "undefined"
+        ser = ser.loc[fltr]
 
-    classes, indices, class_dict = create_class_dict(ser)
-    df_rel_types = pd.DataFrame(data={"name":classes}, index=indices)
-    df_rel_types = make_df_of_relationship_types(ser)
+        classes, indices, class_dict = create_class_dict(ser)
+        df_rel_types = pd.DataFrame(data={"name":classes}, index=indices)
+        df_rel_types = make_df_of_relationship_types(ser)
 
-    # write relationship types fixture
-    model_name = 'Relationship'
-    if write_fixtures:
-        fixture_lst = export_metadata.df_to_fixture_list(df_rel_types,
-                    app_name='ImageSearch',
-                    model_name=model_name,
-                    use_df_index_as_pk=True,
-                    create_datetimefield_name="created_date",
-                    created_by_field_name=None,
-                    )
-        export_metadata.write_fixture_list_to_json(fixture_lst,
-                                model_name,
-                                settings.fixtures_dir,
-                                file_name_modifier="")
+        # write relationship types fixture
+        model_name = 'Relationship'
+        if write_fixtures:
+            fixture_lst = export_metadata.df_to_fixture_list(df_rel_types,
+                        app_name='ImageSearch',
+                        model_name=model_name,
+                        use_df_index_as_pk=True,
+                        create_datetimefield_name="created_date",
+                        created_by_field_name=None,
+                        )
+            export_metadata.write_fixture_list_to_json(fixture_lst,
+                                    model_name,
+                                    settings.fixtures_dir,
+                                    file_name_modifier="")
 
-    # encode relationship types in main metadata df
-    df_relationships = df_relationships.loc[df_relationships['relationship_type'] != 'undefined',:]
-    
-    # df_rel_types_list = nest_relationship_type_ids(df_rel_types, df_relationships)
-    ser.name = "relationship_type_id"
-    df_rel_types_list = nest_class_ids(class_dict, ser)
-    df_meta = df_meta.merge(df_rel_types_list, how='left',left_index=True, right_index=True)
-
+        # encode relationship types in main metadata df
+        df_relationships = df_relationships.loc[df_relationships['relationship_type'] != 'undefined',:]
+        
+        # df_rel_types_list = nest_relationship_type_ids(df_rel_types, df_relationships)
+        ser.name = "relationship_type_id"
+        df_rel_types_list = nest_class_ids(class_dict, ser)
+        df_meta = df_meta.merge(df_rel_types_list, how='left',left_index=True, right_index=True)
+        df_meta = df_meta.drop(columns=["relations"])
 
     #### classification types ####
     col_name = 'classification'
-    ser = df_meta[col_name]
-    ser = ser.str.strip().replace("",np.nan).dropna() 
-    
-    classes, indices, class_dict = create_class_dict(ser)
+    if col_name in df_meta.columns:
+        ser = df_meta[col_name]
+        ser = ser.str.strip().replace("",np.nan).dropna() 
+        
+        classes, indices, class_dict = create_class_dict(ser)
 
-    # write classification fixture
-    tdf = pd.DataFrame(data={"name":classes}, index=indices)
-    model_name = 'Classification'
-    if write_fixtures:
-        fixture_lst = export_metadata.df_to_fixture_list(tdf,
-                    app_name='ImageSearch',
-                    model_name=model_name,
-                    use_df_index_as_pk=True,
-                    create_datetimefield_name="created_date",
-                    created_by_field_name=None,
-                    )
-        export_metadata.write_fixture_list_to_json(fixture_lst,
-                                model_name,
-                                settings.fixtures_dir,
-                                file_name_modifier="")
+        # write classification fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'Classification'
+        if write_fixtures:
+            fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                        app_name='ImageSearch',
+                        model_name=model_name,
+                        use_df_index_as_pk=True,
+                        create_datetimefield_name="created_date",
+                        created_by_field_name=None,
+                        )
+            export_metadata.write_fixture_list_to_json(fixture_lst,
+                                    model_name,
+                                    settings.fixtures_dir,
+                                    file_name_modifier="")
 
-    # encode classifications in df
-    df_meta[col_name + '_id'] = df_meta[col_name].map(class_dict)
+        # encode classifications in df
+        df_meta[col_name + '_id'] = df_meta[col_name].map(class_dict)
 
 
     #### material_technique ####
 
     col_name = 'material_technique'
-    ser = df_meta[col_name].dropna()
-    ser = split_and_flatten_series(ser, split_char=",")
-    classes, indices, class_dict = create_class_dict(ser)
+    if col_name in df_meta.columns:
+        ser = df_meta[col_name].dropna()
+        ser = split_and_flatten_series(ser, split_char=",")
+        classes, indices, class_dict = create_class_dict(ser)
 
-    # write fixture
-    tdf = pd.DataFrame(data={"name":classes}, index=indices)
-    model_name = 'MaterialTechnique'
-    if write_fixtures:
-        fixture_lst = export_metadata.df_to_fixture_list(tdf,
-                    app_name='ImageSearch',
-                    model_name=model_name,
-                    use_df_index_as_pk=True,
-                    create_datetimefield_name="created_date",
-                    created_by_field_name=None,
-                    )
-        export_metadata.write_fixture_list_to_json(fixture_lst,
-                                model_name,
-                                settings.fixtures_dir,
-                                file_name_modifier="")
+        # write fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'MaterialTechnique'
+        if write_fixtures:
+            fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                        app_name='ImageSearch',
+                        model_name=model_name,
+                        use_df_index_as_pk=True,
+                        create_datetimefield_name="created_date",
+                        created_by_field_name=None,
+                        )
+            export_metadata.write_fixture_list_to_json(fixture_lst,
+                                    model_name,
+                                    settings.fixtures_dir,
+                                    file_name_modifier="")
 
-    # encode material_technique in df
-    ser.name = col_name + "_id"
-    tdf = nest_class_ids(class_dict, ser)
-    df_meta = df_meta.merge(tdf, how='left', left_index=True, right_index=True)
+        # encode material_technique in df
+        ser.name = col_name + "_id"
+        tdf = nest_class_ids(class_dict, ser)
+        df_meta = df_meta.merge(tdf, how='left', left_index=True, right_index=True)
 
 
     #### Person types ####
@@ -344,44 +361,51 @@ def main(args=None):
     #### institution ####
 
     col_name = 'institution_isil'
-    ser = df_meta[col_name].dropna()
-    classes, indices, class_dict = create_class_dict(ser)
+    if col_name in df_meta.columns:
+        ser = df_meta[col_name].dropna()
+        classes, indices, class_dict = create_class_dict(ser)
 
-    # write fixture
-    tdf = pd.DataFrame(data={"name":classes}, index=indices)
-    model_name = 'Institution'
-    if write_fixtures:
-        fixture_lst = export_metadata.df_to_fixture_list(tdf,
-                    app_name='ImageSearch',
-                    model_name=model_name,
-                    pk_start_num=1,
-                    use_df_index_as_pk=False,
-                    create_datetimefield_name="created_date",
-                    created_by_field_name=None,
-                    )
-        export_metadata.write_fixture_list_to_json(fixture_lst,
-                                model_name,
-                                settings.fixtures_dir,
-                                file_name_modifier="")
+        # write fixture
+        tdf = pd.DataFrame(data={"name":classes}, index=indices)
+        model_name = 'Institution'
+        if write_fixtures:
+            fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                        app_name='ImageSearch',
+                        model_name=model_name,
+                        pk_start_num=1,
+                        use_df_index_as_pk=False,
+                        create_datetimefield_name="created_date",
+                        created_by_field_name=None,
+                        )
+            export_metadata.write_fixture_list_to_json(fixture_lst,
+                                    model_name,
+                                    settings.fixtures_dir,
+                                    file_name_modifier="")
 
-    # encode material_technique in df
-    
-    df_meta[col_name + "_id"] = df_meta[col_name].map(class_dict)
+        # encode material_technique in df
+        
+        df_meta[col_name + "_id"] = df_meta[col_name].map(class_dict)
 
     # df = process_eth_metadata(df)
 
     #### FINISH ####
+    
     # after all process/feature engineering is finished
     # write out finshed metadata as json fixture and csv
-    df_meta.index =df_meta.index.rename(name='index')
-    df_meta = df_meta.drop(columns=["relations"])
+    df_meta.index.name = 'id'
+
     #foreign key cols
     fk_cols = ['relationship_type_id', 'classification_id', 'material_technique_id', 'institution_isil_id']
-    df_meta[fk_cols] = df_meta[fk_cols].replace(-1,np.nan) 
+
+    # have to replace NaN's to create json fixtures
+    for col in fk_cols:
+        if col in df_meta.columns: 
+            df_meta[col] = df_meta[col].replace(-1,np.nan) 
+
     #write out json fixture
     model_name='ImageMetadata'
-    start_index = 1000
-    df_meta.index = np.arange(start_index, start_index+len(df_meta.index))
+    df_meta = df_meta.set_index('id')
+
     if write_fixtures:
         fixture_lst = export_metadata.df_to_fixture_list(df_meta,
                         app_name='ImageSearch',
@@ -395,33 +419,31 @@ def main(args=None):
                                 settings.fixtures_dir,
                                 file_name_modifier="")
 
-    #write out csv for convenience
+
+
+    # write out finished metadata csv for convenience
     output_dir=settings.processed_metadata_dir
     fpath = os.path.join(output_dir, "metadata.csv")
     
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
-
-    df_meta.to_csv(fpath)
-
-    # join with id numbers from the calculated features
-    df_feat = pd.read_csv(settings.interim_features_fpath, header=None)
-    # replace fpaths with _ids 
-    feat_record_ids = get_record_ids_from_fpaths(df_feat.iloc[:,0])
-    id_map = dict(zip(df_meta['record_id'].tolist(), df_meta.index.tolist()))
-    # print("id_map: ", id_map)
-    feature_index = feat_record_ids.map(id_map)
-    # print("new feature_index: ", feature_index)
-    df_feat.iloc[:,0] = feature_index
     
-    rows_before = df_feat.shape[0]
-    df_feat = df_feat.dropna(how='any')
-    rows_dropped = rows_before - df_feat.shape[0]
-    print(f"dropped {rows_dropped} feature records due to not matching record_ids")
-    df_feat.iloc[:,0] = df_feat.iloc[:,0].astype(int)
-    df_feat.to_csv(settings.processed_features_fpath,
-                   index=False,
-                   header=False)
+    df_meta.to_csv(fpath, index=True, index_label='id')
+
+    
+    # replace fpaths with _ids in feature file
+    # id_map = dict(zip(df_meta['record_id'].tolist(), df_meta.index.tolist()))
+    # feature_index = feat_record_ids.map(id_map)
+    # df_feat.iloc[:,0] = feature_index
+    
+    # rows_before = df_feat.shape[0]
+    # df_feat = df_feat.dropna(how='any')
+    # rows_dropped = rows_before - df_feat.shape[0]
+    # print(f"dropped {rows_dropped} feature records due to not matching record_ids")
+    # df_feat.iloc[:,0] = df_feat.iloc[:,0].astype(int)
+    # df_feat.to_csv(settings.processed_features_fpath,
+    #                index=False,
+    #                header=False)
 
     return
 

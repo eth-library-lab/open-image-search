@@ -22,7 +22,15 @@ def make_fpath_from_id(_id, image_fldr="../data/processed/ethz/images"):
         subfldr = res_id[:-3]
 
     return f"{image_fldr}/{subfldr}/{res_id}.jpeg"
+
     
+def check_overwrite(fpath):
+    # make sure the file does already exist    
+
+    print(f"\nfound existing file: {fpath}")
+    user_input = input("Overwrite this file? (Yes / n)")
+    return user_input=="Yes"
+
 
 def is_snake_case(test_string):
     """

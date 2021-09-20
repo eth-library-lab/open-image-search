@@ -3,8 +3,9 @@ import os
 from dotenv import load_dotenv
 import argparse
 
-if os.environ.get("MODE") != "testing":
-    load_dotenv("../.env.settings")
+if os.environ.get("MODE") == "testing":
+    load_dotenv("../.env.testing")
+    
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +25,10 @@ preprocess_images = int(os.environ.get('PREPROCESS_IMAGES', 1))
 raw_image_dir = os.environ.get('INPUT_IMAGE_DIR', f"data/raw/{dataset_name}/images")
 raw_image_dir = os.path.join(BASE_DIR, raw_image_dir)
 
-#    (alternative) csv file that has a list of file paths to the image files
+# (alternative) csv file that has a list of file paths to the image files
 files_csv_fpath=None
 filepath_col_name='img_path' # name of the column in the csv with the image filepaths
-label_col_name='object_id' # name of the column in the csv with the unique id of the image
+label_col_name='id' # name of the column in the csv with the unique id of the image
 
 # specify the paths of metadata files separated by a space
 metadata_csvs = os.environ.get("METADATA_CSVS", None)
@@ -85,9 +86,9 @@ if __name__ == '__main__':
 
     if args.print:
         print("open imageSearch - Current Settings\n")
+        print("DATASET NAME: ", dataset_name)
         print("BASE_DIR: ", BASE_DIR)
         print("\n----inputs----")
-        print("dataset_name: ", dataset_name)
         print("list of metadata csvs: ")
         if metadata_csvs:
             for metadata_csv in metadata_csvs:
@@ -99,6 +100,6 @@ if __name__ == '__main__':
 
         print("\n---- Feature Extraction Model Parameters ----")
         calculate_features = int(os.environ.get("CALCULATE_FEATURES", 1))
-        print("calculate_features: ", calculate_features)
+        print("calculate_features: ", bool(calculate_features))
         print("\n---- Search Model Parameters ----")
-        print("create_retrieval_model", create_retrieval_model)
+        print("create_retrieval_model", bool(create_retrieval_model))
