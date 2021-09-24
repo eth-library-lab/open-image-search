@@ -55,6 +55,7 @@ def create_retrieval_model(query_model, features, indentifiers, verbose=1):
     
     return retrieval_model
 
+
 class RetrievalExclusionModel(tf.keras.Model):
     
     def __init__(self, retrieval_model):
@@ -64,7 +65,7 @@ class RetrievalExclusionModel(tf.keras.Model):
     def call(self,
              queries: Union[tf.Tensor, Dict[Text, tf.Tensor]],
              exclusions: tf.Tensor,
-             k: Optional[int] = None
+             k: Optional[int] = 25
             ) -> Tuple[tf.Tensor, tf.Tensor]:
 
         return self.model.query_with_exclusions(
@@ -83,7 +84,7 @@ def plot_image_from_fpath(fpath):
     
     return
 
-def print_list_of_ids(list_of_ids, max_to_print=10):
+def print_list_of_ids(list_of_ids, image_fldr, max_to_print=10):
     
     for _id in list_of_ids[:max_to_print]:
         image_path= utils.make_fpath_from_id(_id, image_fldr)
@@ -113,7 +114,7 @@ def create_image_query_from_fpath(image_path):
     return x
 
 
-def test_an_id(test_id, image_fldr, retrieval_model, retrieval_exclusion_model):
+def test_an_id(test_id, image_fldr, retrieval_model, retrieval_exclusion_model, verbose=False):
       
     image_path = utils.make_fpath_from_id(test_id, image_fldr)
         
@@ -121,19 +122,24 @@ def test_an_id(test_id, image_fldr, retrieval_model, retrieval_exclusion_model):
     plot_image_from_fpath(image_path)
 
     x = create_image_query_from_fpath(image_path)
-    scores, identifiers = retrieval_model(x,k=10)
+    scores, identifiers = retrieval_model(x,k=15)
     id_list = identifiers.numpy()[0][:10]
     
-    # print("retrieval_model results: ")
-    # print_list_of_ids(id_list)
+    if verbose:
+        print("retrieval_model results: ")
+        print_list_of_ids(id_list, image_fldr)
+
     assert id_list[0] == test_id, "first returned result should be the query image's id"
 
-    scores, identifiers = retrieval_exclusion_model(x,exclusions=identifiers,k=10)
-    id_list = identifiers.numpy()[0][:10]
-    # print("retrieval_model_exclusion results: ")
-    # print_list_of_ids(id_list)
-    assert test_id not in id_list, "test_id should not be in returned list when calling retrieval with exclusions" 
-    return
+    scores, identifiers = retrieval_exclusion_model(x,exclusions=identifiers,k=20)
+    id_list_exc = identifiers.numpy()[0][:10]
+    
+    if verbose:
+        print("retrieval_model_exclusion results: ")
+        print_list_of_ids(id_list_exc, image_fldr)
+
+    assert test_id not in id_list_exc, "test_id should not be in returned list when calling retrieval with exclusions" 
+    return (id_list, id_list_exc)
 
 
 def main():
@@ -156,6 +162,7 @@ def main():
                                             
     # create the retireval exclusion model
     retrieval_exclusion_model = RetrievalExclusionModel(retrieval_model)
+    retrieval_exclusion_model.compile()
 
     # test the models are basically functional (does not automatically check that they better!)
 
@@ -170,8 +177,7 @@ def main():
     print(f"passed basic functionality test using images: {test_ids}")
     # save the retrieval model
     save_options = tf.saved_model.SaveOptions(namespace_whitelist=["Scann",])
-    retrieval_model.save("../models/retrieval/2",options=save_options)
-
+    tf.saved_model.save(retrieval_model,"../models/retrieval/2", options=save_options)
     # save the retrieval exclusion model
     # if using scann, a custom op needs to be whitelisted
     save_options = tf.saved_model.SaveOptions(namespace_whitelist=["Scann",])

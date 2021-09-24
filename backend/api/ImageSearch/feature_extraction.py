@@ -69,7 +69,7 @@ def format_model_request(preprocessed_img, model_name, function_name='predict'):
     return model_url, request_data, headers
 
 
-def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=5):
+def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=10):
 
     """
     img_path_or_stream: image bytestream or filepath
