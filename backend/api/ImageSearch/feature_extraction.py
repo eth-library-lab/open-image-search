@@ -1,18 +1,42 @@
 from rest_framework import status
 from rest_framework.response import Response
-# from settings.settings import TENSORFLOW_SERVING_BASE_URL 
-from settings.settings import DEBUG, FAKE_MODEL_REPONSE
-
 import json
 import numpy as np
 import pandas as pd
 from PIL import Image
 import requests
 from requests.exceptions import ConnectionError
-######################################
 
-from settings.settings import BASE_DIR
-import os
+from settings.settings import DEBUG, FAKE_MODEL_REPONSE
+from ImageSearch.query_to_vector import load_filter_lookup, make_meta_vec, make_year_vec
+
+FILTER_LOOKUP = load_filter_lookup()
+
+class NumpyEncoder(json.JSONEncoder):
+    """ Custom encoder for numpy data types """
+    def default(self, obj):
+        if isinstance(obj, (np.int_, np.intc, np.intp, np.int8,
+                            np.int16, np.int32, np.int64, np.uint8,
+                            np.uint16, np.uint32, np.uint64)):
+
+            return int(obj)
+
+        elif isinstance(obj, (np.float_, np.float16, np.float32, np.float64)):
+            return float(obj)
+
+        elif isinstance(obj, (np.complex_, np.complex64, np.complex128)):
+            return {'real': obj.real, 'imag': obj.imag}
+
+        elif isinstance(obj, (np.ndarray,)):
+            return obj.tolist()
+
+        elif isinstance(obj, (np.bool_)):
+            return bool(obj)
+
+        elif isinstance(obj, (np.void)): 
+            return None
+
+        return json.JSONEncoder.default(self, obj)
 
 def calc_resize_with_apect(size, min_dimension):
     
@@ -56,49 +80,54 @@ def preprocess_img(image_path_or_stream):
 
     return img
 
-
-def format_model_request(preprocessed_img, model_name, function_name='predict'):
-    TENSORFLOW_SERVING_BASE_URL = "http://tf:8501/v1/models/{model_name}:{function_name}"
-    model_url = TENSORFLOW_SERVING_BASE_URL.format( 
-                        model_name=model_name,
-                        function_name=function_name
-                        )
-    request_data = json.dumps({ "instances": [preprocessed_img, ]}) 
-    headers = {"content-type": "application/json"}
-
-    return model_url, request_data, headers
-
-
-def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=10):
+ 
+def retrieve_top_ids(img_path_or_stream, qry_params):
 
     """
+    send a request to the tensorflow serving container
+
     img_path_or_stream: image bytestream or filepath
     ids_to_exclude: identifiers to exclude from the top results
-    k:int, number of neighbours/results to return
+    k: int, number of neighbours/results to return
     """
-    preprocessed_img = preprocess_img(img_path_or_stream)
+    qry_img = preprocess_img(img_path_or_stream)
+    
+    if len(qry_params)==0:
+        meta_vec = None
+        years_vec = None
 
+    else:
+        # look up using metadata and year vectors
+        # create vectors from string query params
+        meta_vec = make_meta_vec(FILTER_LOOKUP, **qry_params)
+        years_vec = make_year_vec(**qry_params)
+        print("meta_vec: ", meta_vec)
+        print("years_vec: ", years_vec)
+        # send to model
+    
     # format request instance
-    if ids_to_exclude:
-        print("ids_to_exclude:", ids_to_exclude)
+    if (meta_vec is not None) and (years_vec is not None):
         model_name='retrieval_exclusion'
-        input = {"args_0": [preprocessed_img,],
-                 "args_1": [list(ids_to_exclude),],
-                 "args_2":[k,],}
+        request_dict = {"instances": [
+                                {
+                                "input_1":qry_img,
+                                "input_2":meta_vec.tolist(),
+                                "input_3":years_vec.tolist()
+                                },
+                            ]
+                        }        
+
     else:
         model_name='retrieval'
-        input = {"input_1": [preprocessed_img,],
-                 "input_2":[k,],}
-
-    
+        request_dict = {"instances":[
+                                {
+                                "input_1": qry_img,
+                                },
+                            ]
+                        }
     # format full request
-    request_dict = {"inputs": input}
     model_url = f"http://tf:8501/v1/models/{model_name}:predict"
-    
-    if DEBUG:
-        print(f'sending request to model: {model_name}')
-
-    request_data = json.dumps(request_dict) 
+    request_data = json.dumps(request_dict, cls=NumpyEncoder) 
     headers = {"content-type": "application/json"}
 
     if FAKE_MODEL_REPONSE and DEBUG:
@@ -108,9 +137,15 @@ def request_top_ids(img_path_or_stream, ids_to_exclude=None, k=10):
 
     else:
         try:
+            if DEBUG:
+                print(f'sending request to model: {model_name}')
+
             model_api_response = requests.post(model_url, 
                                                 data=request_data, 
                                                 headers=headers)
+            if DEBUG:
+                print("model_api_response: ", model_api_response)
+
         except ConnectionError as err:
             err_message = "feature extraction model ConnectionError"
             model_api_response = Response({"error": err_message}, status=500)

@@ -34,8 +34,8 @@ def create_retrieval_model(query_model, features, indentifiers, verbose=1):
     # newModel = Model(newInput,newOutputs)
     
     # Create a model that takes in raw query features and returns ids
-    retrieval_model = tfrs.layers.factorized_top_k.BruteForce(query_model=query_model)
-    # retrieval_model = tfrs.layers.factorized_top_k.ScaNN(query_model=ftx_model)  
+    # retrieval_model = tfrs.layers.factorized_top_k.BruteForce(query_model=query_model)
+    retrieval_model = tfrs.layers.factorized_top_k.ScaNN(query_model=ftx_model)
 
     # create the retrieval index
     candidates = tf.constant(features, dtype=tf.float32)
@@ -177,7 +177,7 @@ def main():
     print(f"passed basic functionality test using images: {test_ids}")
     # save the retrieval model
     save_options = tf.saved_model.SaveOptions(namespace_whitelist=["Scann",])
-    tf.saved_model.save(retrieval_model,"../models/retrieval/2", options=save_options)
+    tf.saved_model.save(retrieval_model,"../models/retrieval/3", options=save_options)
     # save the retrieval exclusion model
     # if using scann, a custom op needs to be whitelisted
     save_options = tf.saved_model.SaveOptions(namespace_whitelist=["Scann",])

@@ -16,16 +16,32 @@ from ImageSearch.models import ImageMetadata, SearchResult, Classification, Mate
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.serializers import ClassificationSerializer, MaterialTechniqueSerializer, RelationshipSerializer, InstitutionSerializer
-from ImageSearch.feature_extraction import request_top_ids
+from ImageSearch.feature_extraction import retrieve_top_ids
 from ImageSearch.retrieval_filters import combine_filters
 
+
+def get_ids_from_model_response(model_response):
+    
+    # if DEBUG:
+        # print('model_response: ', model_response.text)
+
+    model_response_dict = json.loads(model_response.text)
+
+    if DEBUG:
+        # print('model_response_dict', model_response_dict)
+        _ids = model_response_dict["predictions"][0]["output_2"]
+        # print("top_results:", _ids)
+
+    return _ids
+
+
 # for loop could be replaced with qry_set.filter(record_id__in=object_ids)
-def get_metadata_for_list_of_ids(object_ids):
+def get_metadata_for_list_of_ids(_ids):
 
     qry_set = ImageMetadata.objects.all()
     results_metadata = []
 
-    for obj_id in object_ids:
+    for obj_id in _ids:
         metadata = qry_set.filter(id=obj_id).values().first()
         if DEBUG:
             print("metadata: ", metadata)
@@ -122,6 +138,31 @@ def get_filter_options(request):
 
 
 @api_view(['GET',])
+def get_num_ids_remaining(request):
+    """
+    get a count of how many records are left after applying filters
+    """
+    
+    print("request.query_params: ", request.query_params)
+    qry_params = request.query_params
+
+    
+    total_num_records = ImageMetadata.objects.all().count()
+    
+
+    ids_to_exclude = combine_filters(**qry_params)
+    num_to_exclude = len(ids_to_exclude)
+
+    num_remaining = total_num_records - num_to_exclude
+
+    resp_data = {"idsToExclude": ids_to_exclude,
+                "num_records":num_remaining,
+                }
+    
+    return Response(resp_data)
+
+
+@api_view(['GET',])
 def get_ids_to_exclude(request):
     """
     
@@ -130,8 +171,18 @@ def get_ids_to_exclude(request):
     print("request.query_params: ", request.query_params)
     qry_params = request.query_params
 
+    
+    total_num_records = ImageMetadata.objects.all().count()
+    
+
     ids_to_exclude = combine_filters(**qry_params)
-    resp_data = {"idsToExclude": ids_to_exclude
+    num_to_exclude = len(ids_to_exclude)
+
+    num_remaining = total_num_records - num_to_exclude
+
+    resp_data = {
+                "idsToExclude": ids_to_exclude,
+                "num_records":num_remaining,
                 }
     
     return Response(resp_data)
@@ -247,55 +298,28 @@ def image_search(request):
         if serializer_is_valid:
             ### read image ###
             img_stream = request.data['image'].open()
-
-            ### get query params ###
-            if DEBUG:
-                print("request.query_params: ",request.query_params)
             
-            qry_params = request.query_params
-            ids_to_exclude=None
-
-            if len(qry_params)>0:
-                ids_to_exclude = combine_filters(**qry_params)
-                if DEBUG:
-                    print("num records to exclude: ", len(ids_to_exclude))
-
-            ### Get Nearest Neighbour Ids ###
-
-            if ids_to_exclude:
-                # post to retrieval_exclusion
-                model_response = request_top_ids(img_stream, ids_to_exclude=ids_to_exclude)
-
-            else:
-                # post to retrieval
-                model_response = request_top_ids(img_stream)
-
+            if DEBUG:
+                print("request.query_params: ", request.query_params)
+            ### send image and query params to model ###
+            model_response = retrieve_top_ids(img_stream,
+                                              request.query_params)
             ### handle model response ###
-            if DEBUG:
-                print('model_response: ', model_response.text)
-
             if model_response.status_code != 200:
-                return model_response
+                return Response(model_response.text, status=status.HTTP_400_BAD_REQUEST)           
 
-            model_response_dict = json.loads(model_response.text)
+            _ids = get_ids_from_model_response(model_response)
+            _ids=_ids[:10]
+            results_metadata = get_metadata_for_list_of_ids(_ids)           
 
-            if DEBUG:
-                print('model_response_dict', model_response_dict)
-
-            _ids = model_response_dict["outputs"]["output_2"][0]
-            print("top_results:", _ids)
-             # reshape for a single record        
-
-            ### lookup Metadata ###
-            results_metadata = get_metadata_for_list_of_ids(_ids)
-
-            ### Save Result to reproduce results if needed (e.g. for shareable link) ###
+            ### Save Result ### to reproduce results if needed (e.g. for shareable link)
             search_result_id = create_search_result_record(_ids, img_stream, request)
 
-            ### format response ###
+            ### Format & Return Response ###
             result = {
                 'results':results_metadata,
-                'result_id':search_result_id
+                'resultId':search_result_id,
+                'numPossibleResults':0,
                 }
 
             if DEBUG:

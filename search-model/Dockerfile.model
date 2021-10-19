@@ -3,7 +3,7 @@ FROM google/tf-serving-scann
 # Identify the maintainer of an image
 LABEL maintainer="barry.sunderland@librarylab.ethz.ch"
 
-COPY ./models/retrieval/2 /models/retrieval/2
-COPY ./models/retrieval_exclusion/2 /models/retrieval_exclusion/2
+COPY ./models/retrieval/3 /models/retrieval/3
+COPY ./models/retrieval_exclusion/6 /models/retrieval_exclusion/6
 
 COPY ./docker_models.config /models/docker_models.config
