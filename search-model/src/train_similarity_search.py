@@ -114,7 +114,7 @@ def init_and_fit_nearest_neighbours(features_list,
 
 def main():
 
-    labels, features_list  = utils.load_features(fpath=settings.features_fpath)
+    labels, features_list  = utils.load_features(fpath=settings.processed_features_fpath)
 
     # # Train Classifier
     clf = init_and_fit_nearest_neighbours(features_list, 
