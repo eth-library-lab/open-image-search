@@ -309,17 +309,17 @@ def image_search(request):
                 return Response(model_response.text, status=status.HTTP_400_BAD_REQUEST)           
 
             _ids = get_ids_from_model_response(model_response)
-            _ids=_ids[:10]
             results_metadata = get_metadata_for_list_of_ids(_ids)           
 
             ### Save Result ### to reproduce results if needed (e.g. for shareable link)
             search_result_id = create_search_result_record(_ids, img_stream, request)
 
             ### Format & Return Response ###
+            total_num_records = ImageMetadata.objects.all().count()
             result = {
                 'results':results_metadata,
                 'resultId':search_result_id,
-                'numPossibleResults':0,
+                'numPossibleResults':total_num_records,
                 }
 
             if DEBUG:
