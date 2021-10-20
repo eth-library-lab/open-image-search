@@ -15,6 +15,7 @@ export default new Vuex.Store({
     isLoading: false,
     searchResults: [],
     searchResultId: null,
+    numPossibleResults:null,
     filterOptions: {},
     filterOptionsLoading:false,
     snackbar: {
@@ -37,9 +38,10 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
-    SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
+    SET_SEARCH_RESULTS(state, {searchResults, searchResultId, numPossibleResults}) {
       state.searchResults = searchResults
       state.searchResultId = searchResultId
+      state.numPossibleResults = numPossibleResults
     },
     SET_SEARCH_RESULT_ID(state, results_id) {
       state.searchResultId = results_id
@@ -89,8 +91,10 @@ export default new Vuex.Store({
       ImageSearchService.uploadImage(selectedImage, queryString)
         .then(response => {
           const searchResults = response.data.results
-          const searchResultId = response.data.result_id
-          const payload = {searchResults, searchResultId}
+          const searchResultId = response.data.resultId
+          const numPossibleResults = response.data.numPossibleResults
+          console.log("numPossibleResults: ",numPossibleResults)
+          const payload = {searchResults, searchResultId, numPossibleResults}
           commit('SET_SEARCH_RESULTS', payload)
           dispatch('changeResultsLoadedStatus', true)
         })
@@ -249,6 +253,9 @@ export default new Vuex.Store({
     },
     getSearchResults(state) {
       return state.searchResults
+    },
+    getNumPossibleResults(state){
+      return state.numPossibleResults
     },
     resultsLoaded(state) {
       return state.resultsLoaded

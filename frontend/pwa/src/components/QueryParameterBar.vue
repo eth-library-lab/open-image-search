@@ -128,7 +128,6 @@ export default {
 
   data() {
     return {
-      selectionsDisabled:false,
       yearMin:1400,
       yearMax:2020,
       range: [],
@@ -137,6 +136,12 @@ export default {
       materialTechnique:null,
       institution:null,
     }
+  },
+  props:{
+    selectionsDisabled: { 
+      default:false, 
+      required: false
+    } 
   },
   computed: {
     ...mapGetters(['filterOptions','filterOptionsLoaded']),

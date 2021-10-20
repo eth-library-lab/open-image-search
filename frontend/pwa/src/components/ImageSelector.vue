@@ -46,8 +46,9 @@
                     </v-col>
                 </v-row>
                 <div
-                    v-if="!(resultsLoaded | getIsLoading)">
-                    <QueryParameterBar @query-string="onQueryUpdate"/>
+                    >
+                    <!-- v-if="!(resultsLoaded | getIsLoading)" -->
+                    <QueryParameterBar :selectionsDisabled='resultsLoaded' @query-string="onQueryUpdate"/>
                 </div>
                 </v-card>
             </v-col>
