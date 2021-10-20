@@ -8,7 +8,7 @@ from pprint import pprint
 
 api_host = "http://localhost:8000/api"
 
-img_path = "../../search-model/data/processed/ethz/images/220/220526.png"
+img_path = "../../search-model/data/processed/ethz/images/0/3.png"
 img = Image.open(img_path)
 # x = image.img_to_array(img)
 # x = np.expand_dims(x, axis=0)
@@ -17,13 +17,13 @@ img = Image.open(img_path)
 # headers = {"content-type": "multipart/form-data"}
 # data = json.dumps({"image": img})
 url = "http://127.0.0.1:8000/api/image-search"
-qry= "?" 
-qry += "&" + "afterYear=1750"
-qry += "&" + "beforeYear=1770"
+# qry= "?"
+# qry += "&" + "afterYear=1800"
+# qry += "&" + "beforeYear=1500"
 # qry += "&" + "classification=Buch"
-# qry += "&" + "classification=Buch"
-# qry += "&" + "materialTechnique=radierung"
-url = url + qry
+# # qry += "&" + "classification=Buch"
+# qry += "&" + "materialTechnique=velin"
+# url += qry
 with open(img_path, 'rb') as img:
     files = {
             'image': (os.path.basename(img_path), img),
