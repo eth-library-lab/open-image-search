@@ -16,8 +16,8 @@ from ImageSearch.models import ImageMetadata, SearchResult, Classification, Mate
 from ImageSearch.serializers import ImageMetadataSerializer
 from ImageSearch.serializers import ImageSearchSerializer, ImageSearchResultSerializer, SearchResultSerializer, SaveSearchResultSerializer
 from ImageSearch.serializers import ClassificationSerializer, MaterialTechniqueSerializer, RelationshipSerializer, InstitutionSerializer
-from ImageSearch.feature_extraction import retrieve_top_ids
-from ImageSearch.retrieval_filters import combine_filters
+from ImageSearch.retrieval import retrieve_top_ids
+from ImageSearch.model_filters import combine_filters
 
 
 def get_ids_from_model_response(model_response):
@@ -146,9 +146,7 @@ def get_num_ids_remaining(request):
     print("request.query_params: ", request.query_params)
     qry_params = request.query_params
 
-    
-    total_num_records = ImageMetadata.objects.all().count()
-    
+    total_num_records = ImageMetadata.objects.all().count()    
 
     ids_to_exclude = combine_filters(**qry_params)
     num_to_exclude = len(ids_to_exclude)
