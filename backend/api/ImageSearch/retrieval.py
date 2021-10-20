@@ -87,7 +87,6 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
     send a request to the tensorflow serving container
 
     img_path_or_stream: image bytestream or filepath
-    ids_to_exclude: identifiers to exclude from the top results
     k: int, number of neighbours/results to return
     """
     qry_img = preprocess_img(img_path_or_stream)
@@ -157,5 +156,3 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
             model_api_response.text = err_message
 
     return model_api_response
-
-
