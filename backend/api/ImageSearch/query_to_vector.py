@@ -3,24 +3,30 @@ import os
 import json 
 import numpy as np
 
-def load_filter_lookup():
-    
-    print("making filter lookup")
+from ImageSearch.models import Classification, MaterialTechnique, Relationship, Institution
 
-    #replace this later with a query from the database
-    types = ["MaterialTechnique", "Classification","Relationship", "Institution"]
+def load_filter_lookup():
+    """
+    creates a nested dictionary that can be used to look ids for strings and create one-hot vectors 
+    """
+    print("making filter lookup")
+    models = [Classification, MaterialTechnique, Relationship, Institution]
+    keys = ["classification","materialtechnique","relationship", "institution"]
+
+    # filter_dict = {
+    #     "classification":{},
+    #     "materialtechnique":{},
+    #     "relationship":{},
+    #     "institution"{}:
+    # }
+
     filter_dict = {}
 
-    base_dir = Path(__file__).resolve().parent.parent
-
-    for t in types:
-        fpath = os.path.join(base_dir, f"fixtures/{t}.json")
-
-        with open(fpath, 'r') as f:
-            fixture = json.load(f) 
-
-        string_lookup = {d['fields']['name']:d['pk'] for d in fixture}
-        key = t.lower()
+    for key, model in zip(keys,models):
+        #get queryset as a list of name, id tuples and format as a dict
+        qs = model.objects.all().values_list("name","pk")
+        string_lookup = {name:pk for name, pk  in qs}
+        #add to the overall dictionary
         filter_dict[key] = string_lookup
 
     return filter_dict
@@ -28,7 +34,7 @@ def load_filter_lookup():
 
 def make_filter_vec(filter_dict, fltr_type, qry_names):
     """
-    
+    uses the filter_dict to convert a list of names into a one hot encoded vector
     """
     qry_vec_len = len(filter_dict[fltr_type])
     
@@ -65,7 +71,8 @@ def make_meta_vec(filter_dict, **kwargs):
                                 fltr_type=param_name.lower(),
                                 qry_names=qry_names)
         vec_list.append(vec)
-    
+
+    # the dimension of this array should match the crorresponding input shape in the retrieval model    
     meta_vec = np.hstack(vec_list).astype(np.int)
 
     return meta_vec
