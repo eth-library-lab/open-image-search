@@ -7,6 +7,7 @@ from PIL import Image
 import requests
 from requests.exceptions import ConnectionError
 
+from settings.settings import PREDICTION_MODEL_BASE_URL
 from settings.settings import DEBUG, FAKE_MODEL_REPONSE
 from ImageSearch.query_to_vector import load_filter_lookup, make_meta_vec, make_year_vec
 
@@ -120,7 +121,7 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
                             ]
                         }
     # format full request
-    model_url = f"http://tf:8501/v1/models/{model_name}:predict"
+    model_url = f"{PREDICTION_MODEL_BASE_URL}/v1/models/{model_name}:predict"
     request_data = json.dumps(request_dict, cls=NumpyEncoder) 
     headers = {"content-type": "application/json"}
 

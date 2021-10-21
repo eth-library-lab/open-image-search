@@ -154,11 +154,17 @@ USE_L10N = True
 USE_TZ = True
 
 
+PREDICTION_MODEL_BASE_URL = os.environ.get("PREDICTION_MODEL_BASE_URL","http://tf:8501")
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 MEDIA_URL =  '/mediafiles/'
 
