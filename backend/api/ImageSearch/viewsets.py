@@ -22,15 +22,13 @@ from ImageSearch.model_filters import combine_filters
 
 def get_ids_from_model_response(model_response):
     
-    # if DEBUG:
-        # print('model_response: ', model_response.text)
 
     model_response_dict = json.loads(model_response.text)
 
     if DEBUG:
-        # print('model_response_dict', model_response_dict)
-        _ids = model_response_dict["predictions"][0]["output_2"]
-        # print("top_results:", _ids)
+        scores = model_response_dict["predictions"][0]["output_1"]
+
+    _ids = model_response_dict["predictions"][0]["output_2"]
 
     return _ids
 
@@ -43,8 +41,6 @@ def get_metadata_for_list_of_ids(_ids):
 
     for obj_id in _ids:
         metadata = qry_set.filter(id=obj_id).values().first()
-        if DEBUG:
-            print("metadata: ", metadata)
         results_metadata.append(metadata)
 
     return results_metadata
@@ -103,11 +99,6 @@ class SearchResultViewset(viewsets.ModelViewSet):
         results = getMetadataForListOfIds(instance.results)        
         resp['results'] = results
 
-        
-        if DEBUG:
-            print('serializer data: ', serializer.data)
-            print('\napi response: ', resp, '\n\n')
-
         return Response(resp, status=200)
 
 
@@ -143,7 +134,6 @@ def get_num_ids_remaining(request):
     get a count of how many records are left after applying filters
     """
     
-    print("request.query_params: ", request.query_params)
     qry_params = request.query_params
 
     total_num_records = ImageMetadata.objects.all().count()    
@@ -165,19 +155,12 @@ def get_ids_to_exclude(request):
     """
     
     """
-    
-    print("request.query_params: ", request.query_params)
     qry_params = request.query_params
-
     
     total_num_records = ImageMetadata.objects.all().count()
-    
-
     ids_to_exclude = combine_filters(**qry_params)
     num_to_exclude = len(ids_to_exclude)
-
     num_remaining = total_num_records - num_to_exclude
-
     resp_data = {
                 "idsToExclude": ids_to_exclude,
                 "num_records":num_remaining,
@@ -191,24 +174,14 @@ def save_search_result(request):
 
         serializer = SaveSearchResultSerializer(data=request.data)
 
-        if DEBUG: 
-            print('in save_search_result')
-            print('request.data: ', request.data)
-
         if serializer.is_valid():
-            if DEBUG: 
-                print("serializer.validated_data['keep']: ", serializer.validated_data['keep'])
             
             if serializer.validated_data['keep'] == True:
                 
-                print('serializer.validated_data: ', serializer.validated_data)
-
                 pk = str(request.data['id'])
-
-                print('pk: ', pk)
                 try:
                     search_record = SearchResult.objects.get(pk=pk)
-                    print('search_record: ', search_record)
+
                 except SearchResult.DoesNotExist as e:
                     return Response("search record not found", status=status.HTTP_404_NOT_FOUND)
         
@@ -241,19 +214,14 @@ def save_search_result(request):
 
 def lookup_metadata_from_ids(_ids):
 
-    qry_set = ImageMetadata.objects.all()
-    if DEBUG:
-        print("qry_set len: ", len(qry_set.values()))
-    
+
     metadata = []
+    qry_set = ImageMetadata.objects.all()
     
     for _id in _ids:
         record_metadata = qry_set.filter(id=_id).values()
         if len(record_metadata)>0:        
             metadata.append(record_metadata[0])
-
-    if DEBUG:
-        print("results_metadata: ", metadata)
 
     return metadata
 
@@ -269,9 +237,6 @@ def create_search_result_record(record_ids, uploaded_image, request):
             image=uploaded_image,
             query_parameters=request.query_params)
         search_result_id = search_result.id
-
-        if DEBUG:
-            print('\nsearch_result: ', search_result, '\n\n')
 
     except PermissionError as pe:
         print("could not write file: ", pe)
@@ -319,9 +284,6 @@ def image_search(request):
                 'resultId':search_result_id,
                 'numPossibleResults':total_num_records,
                 }
-
-            if DEBUG:
-                print('\napi response: ', result, '\n\n')
 
             return Response(result, status=200)
 

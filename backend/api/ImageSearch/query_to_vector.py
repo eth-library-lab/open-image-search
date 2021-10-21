@@ -51,9 +51,6 @@ def make_filter_vec(filter_dict, fltr_type, qry_names):
 
 
 def make_meta_vec(filter_dict, **kwargs):
-
-    for kw in kwargs:
-        print(kw, '-', kwargs[kw])
     
     arg_names = kwargs.keys()
 

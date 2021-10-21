@@ -69,12 +69,8 @@ def preprocess_img(image_path_or_stream):
     img = img.convert("RGB")
     size = 224, 224
     img = resize_image(img, size[0])
-    if DEBUG:
-        print('np array shape: ', np.array(img).shape)
     img = img.resize(size, Image.ANTIALIAS)
     img = np.array(img)
-    if DEBUG:
-        print('np array shape: ', img.shape)
     img = img / 255
     img = img.tolist()
 
@@ -100,8 +96,7 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
         # create vectors from string query params
         meta_vec = make_meta_vec(FILTER_LOOKUP, **qry_params)
         years_vec = make_year_vec(**qry_params)
-        print("meta_vec: ", meta_vec)
-        print("years_vec: ", years_vec)
+
         # send to model
     
     # format request instance
@@ -142,8 +137,6 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
             model_api_response = requests.post(model_url, 
                                                 data=request_data, 
                                                 headers=headers)
-            if DEBUG:
-                print("model_api_response: ", model_api_response)
 
         except ConnectionError as err:
             err_message = "feature extraction model ConnectionError"

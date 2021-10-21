@@ -99,8 +99,6 @@ def combine_filters(**kwargs):
     
     # init an empty list of sets
     set_list = [set(),]
-    for kw in kwargs:
-        print(kw, '-', kwargs[kw])
     
     arg_names = kwargs.keys()
 

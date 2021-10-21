@@ -17,13 +17,14 @@ img = Image.open(img_path)
 # headers = {"content-type": "multipart/form-data"}
 # data = json.dumps({"image": img})
 url = "http://127.0.0.1:8000/api/image-search"
-# qry= "?"
-# qry += "&" + "afterYear=1800"
-# qry += "&" + "beforeYear=1500"
+qry= "?"
+# qry += "&" + "afterYear=1500"
+# qry += "&" + "beforeYear=1800"
 # qry += "&" + "classification=Buch"
 # # qry += "&" + "classification=Buch"
-# qry += "&" + "materialTechnique=velin"
-# url += qry
+qry += "&" + "materialTechnique=radierung"
+url += qry
+
 with open(img_path, 'rb') as img:
     files = {
             'image': (os.path.basename(img_path), img),
@@ -37,8 +38,10 @@ if response.status_code == 200:
     print('ok')
 
 
-    predictions = json.loads(response.text)
-    pprint(predictions, indent=2)
+    resp_dict = json.loads(response.text)
+    print(resp_dict.keys())
+    for result in resp_dict.get("results")[14::-1]: 
+        pprint(result, indent=2)
 else:
     print("response.text: ", response.text)
 print('\n',url)
