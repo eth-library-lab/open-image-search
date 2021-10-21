@@ -25,14 +25,14 @@ services:
     restart: always
 
   api:
-    image: barry8000/graph-samm:api-2021-05-01
+    image: barry8000/graph-samm:api-2021-10-21
     build:
       context: ./backend
       dockerfile: ./Dockerfile.prod
     volumes:
       - mediafiles:/mediafiles
     env_file:
-      - ./backend/api/.env.prod
+      - ./backend/.env.prod
     command: "sh ./entrypoint.sh"
     restart: always
       

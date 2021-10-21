@@ -23,11 +23,12 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 FROM python:3.8-slim 
 
 ENV APP_HOME=/usr/src/app
+ENV PORT 8000
 WORKDIR $APP_HOME
 
 COPY --from=build-stage $APP_HOME .
 RUN pip install --no-cache /usr/src/app/wheels/*
 
 RUN chmod +x /usr/src/app/entrypoint.sh
-# run entrypoint.prod.sh
-# ENTRYPOINT ["sh","entrypoint.sh"]
+
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
