@@ -6,10 +6,12 @@ import pandas as pd
 from PIL import Image
 import requests
 from requests.exceptions import ConnectionError
+import logging
 
 from settings.settings import PREDICTION_MODEL_BASE_URL
 from settings.settings import DEBUG, FAKE_MODEL_REPONSE
 from ImageSearch.query_to_vector import load_filter_lookup, make_meta_vec, make_year_vec
+from GoogleCloud.auth import make_auth_header_for_request
 
 FILTER_LOOKUP = load_filter_lookup()
 
@@ -122,8 +124,13 @@ def retrieve_top_ids(img_path_or_stream, qry_params):
                         }
     # format full request
     model_url = f"{PREDICTION_MODEL_BASE_URL}/v1/models/{model_name}:predict"
-    request_data = json.dumps(request_dict, cls=NumpyEncoder) 
-    headers = {"content-type": "application/json"}
+    request_data = json.dumps(request_dict, cls=NumpyEncoder)
+
+    if DEBUG:
+        logging.info("model_url: ", model_url)
+
+    headers = make_auth_header_for_request(PREDICTION_MODEL_BASE_URL)
+    headers["content-type"] = "application/json"
 
     if FAKE_MODEL_REPONSE and DEBUG:
         fake_resp = json.dumps({"predictions":[[4002, 4004, 4006, 4016, 4034],]})

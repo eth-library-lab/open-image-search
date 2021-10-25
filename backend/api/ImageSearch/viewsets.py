@@ -3,6 +3,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Max, Min
 import numpy as np
 import os
+import logging
 
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -250,6 +251,11 @@ def image_search(request):
     post an image and return a list of most similar images in the database
     """
 
+    if DEBUG:
+        txt = f"request received: {str(request)}"
+        logging.info(txt)
+        print(txt)
+
     if request.method == 'POST':
 
         serializer = ImageSearchSerializer(data=request.data)
@@ -288,4 +294,5 @@ def image_search(request):
             return Response(result, status=200)
 
         else:
+            print("error with serializer")
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
