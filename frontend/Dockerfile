@@ -1,3 +1,4 @@
+# single stage build with hot reloading
 # base image
 FROM node:14.15.4-slim
 

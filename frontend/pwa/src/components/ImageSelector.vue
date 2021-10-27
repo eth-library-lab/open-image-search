@@ -45,21 +45,14 @@
                         ></v-file-input>
                     </v-col>
                 </v-row>
-                <!-- Disused Cancel button
-                    <v-row >
-                    <v-col justify="center" v-if="resultsLoaded" class="ma-0 pa-0">
-                        <v-icon
-                            @click="clearResults()"
-                            class="pa-4"
-                            title="clear results and search image">
-                            mdi-close-box
-                        </v-icon>
-                    </v-col>
-                </v-row> -->
+                <div
+                    >
+                    <!-- v-if="!(resultsLoaded | getIsLoading)" -->
+                    <QueryParameterBar :selectionsDisabled='resultsLoaded' @query-string="onQueryUpdate"/>
+                </div>
                 </v-card>
             </v-col>
         </v-row>
-        <!-- -->
 
         <v-row
             v-if="!(resultsLoaded | getIsLoading)"
@@ -82,11 +75,16 @@
 </template>
 
 <script>
+import QueryParameterBar from '@/components/QueryParameterBar.vue';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+    components: {
+        QueryParameterBar,
+    },
     data: () => ({
-        selectedFile: null
+        selectedFile: null,
+        queryString:null,
     }),
     computed: {
         ...mapGetters(['resultsLoaded', 'isFileSelected','getIsLoading']),
@@ -139,7 +137,15 @@ export default {
         },
         uploadImage() {
             this.changeIsLoadingStatus(true)
-            this.searchSimilarImages(this.selectedFile)
+            this.searchSimilarImages(
+                {
+                "selectedImage":this.selectedFile,
+                "queryString": this.queryString
+                }
+            )
+        },
+        onQueryUpdate(queryString){
+            this.queryString = queryString
         },
     }
 }

@@ -21,6 +21,7 @@
                     cols="11"
                     >
                     <h3>Search Results</h3>
+                    <span class="caption"> showing {{searchResults.length}} out of {{getNumPossibleResults}} images</span>
                   </v-col>
                   <v-col
                     cols="1"
@@ -154,7 +155,7 @@ export default {
                   ResultsLink
     },
     computed: {
-        ...mapGetters(['getIsLoading']),
+        ...mapGetters(['getIsLoading','getNumPossibleResults']),
         resultsUrl(){
           return process.env.VUE_APP_BASE_URL + '/searchresult/'+ this.searchResultId
         },

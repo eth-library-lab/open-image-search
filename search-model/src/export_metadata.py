@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-## Export metadata to django fixture
+## functions for Exporting dataframes to django fixtures
 
 import os, sys
 import pandas as pd
@@ -26,11 +26,9 @@ def create_django_datetimestamp(dt_object=None):
     return created_time
 
 
-def df_to_json_fixture(df,
+def df_to_fixture_list(df,
                        app_name,
                        model_name,
-                       file_name_modifier='',
-                       output_folder=None,
                        use_df_index_as_pk=False,
                        pk_start_num=1000,
                        create_datetimefield_name=None,
@@ -38,13 +36,12 @@ def df_to_json_fixture(df,
                        created_by_value=1):
     
     """
-    convert a dataframe to a django fixture file to populate an database
-    each column becomes a field in the record
+    convert a dataframe to a list of django format fixtures used to populate the database
+    each column becomes a field in the record so df column names must match database fields
     
     df,
-    app_name: app name in django,
-    model_name: model name in django
-    folder: destination folder to output files to
+    app_name: name of the app in django,
+    model_name: model name within the app in django
     use_df_index_as_pk: if True df.index will become the primary key for records
     no checks are performed
     pk_start_num: if use_df_index_as_pk is False, primary keys will start at this
@@ -63,44 +60,59 @@ def df_to_json_fixture(df,
         df[created_by_field_name] = created_by_value
     
     fixture_lst = []
-    for i, row in df.reset_index().iterrows():
+    
+    for i, (index, row) in enumerate(df.iterrows()):
         
         if use_df_index_as_pk==True:       
-            pk = row['index']
+            pk = index
         
         else:
             pk = i+pk_start_num
         
-        fields_dict = row.drop(['index']).to_dict()
+        row = row.dropna()
+        fields_dict = row.to_dict()
         
         record = {'model':model, 
                'pk':pk,
                'fields': fields_dict}
         fixture_lst.append(record)
-    
+
+    return fixture_lst
+
+
+def write_fixture_list_to_json(fixture_lst,
+                               model_name,
+                               output_dir,
+                               file_name_modifier=""):
+
     fname = model_name+'{}.json'.format(file_name_modifier)
-    if output_folder==None:
-        output_folder = '../data/processed/fixtures'
         
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
         
-    fpath = os.path.join(output_folder, fname)
+    fpath = os.path.join(output_dir, fname)
     
     if os.path.exists(fpath):
-        raise Exception('did not save, file already exists: {}'.format(fpath))
+        overwrite = utils.check_overwrite(fpath)
+        if overwrite == False:
+            print(f"skipping writing file: {fpath}")
+            return fixture_lst
+        # raise Exception('did not save, file already exists: {}'.format(fpath))
 
     with open(fpath, 'w') as f:
         json.dump(fixture_lst, 
                   f, 
                   skipkeys=False, 
                   sort_keys=False)
+    print("wrote fixture to: ", fpath)
 
     return fixture_lst
 
 
 def get_list_of_metadata_csvs(metadata_dir):
-
+    """
+    return all filepaths for files in the given directory that end with .csv
+    """
     fpaths = []
 
     for fname in os.listdir(metadata_dir):
@@ -109,6 +121,7 @@ def get_list_of_metadata_csvs(metadata_dir):
             fpaths.append(fpath)
 
         return fpaths
+
 
 def load_csvs_into_df(fpaths):
     """
@@ -127,30 +140,33 @@ def load_csvs_into_df(fpaths):
     return df
 
 
-def main():
+# def main():
 
-    metadata_dir = os.path.join(settings.BASE_DIR, 'data','interim','metadata')
+#     fpaths = get_list_of_metadata_csvs(settings.interim_metadata_dir)
+#     output_dir = settings.fixtures_dir
+#     df = load_csvs_into_df(fpaths)
 
-    fpaths = get_list_of_metadata_csvs(metadata_dir)
-    df = load_csvs_into_df(fpaths)
- 
+#     model_name='ImageMetadata'
+    
+#     fixture_lst = df_to_fixture_list(df,
+#                        app_name='ImageSearch',
+#                        model_name=model_name,
+#                        use_df_index_as_pk=False,
+#                        pk_start_num=1000,
+#                        create_datetimefield_name=None,
+#                        created_by_field_name=None,
+#                        created_by_value=1)
 
-    fixture_dict = df_to_json_fixture(df,
-                    'ImageSearch',
-                    'ImageMetadata',
-                    file_name_modifier='',
-                    output_folder=None,
-                    use_df_index_as_pk=False,
-                    pk_start_num=1000,
-                    create_datetimefield_name='created_date',
-                    created_by_field_name=None,
-                    created_by_value=1)
+#     write_fixture_list_to_json(fixture_lst,
+#                                model_name,
+#                                output_dir,
+#                                file_name_modifier="")
 
-    return fixture_dict
+#     return fixture_lst
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    fixture_dict = main()
+#     fixture_lst = main()
 
 

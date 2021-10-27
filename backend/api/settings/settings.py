@@ -25,6 +25,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "foo")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
+FAKE_MODEL_REPONSE = int(os.environ.get("FAKE_MODEL_REPONSE", default=0))
+if FAKE_MODEL_REPONSE:
+    print("WARNING: Model responses are being faked. Update environment variable to FAKE_MODEL_REPONSE=0")
 ALLOWED_HOSTS = ['*'] #os.environ.get("DJANGO_ALLOWED_HOSTS", '127.0.0.1 localhost').split(" ")
 
 #this sets the base url based on the request. otherwise urls returned would use the locally defined host e.g.: localhost:8000
@@ -151,15 +154,23 @@ USE_L10N = True
 USE_TZ = True
 
 
+PREDICTION_MODEL_BASE_URL = os.environ.get("PREDICTION_MODEL_BASE_URL","http://tf:8501")
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") 
 
-MEDIA_URL =  '/mediafiles/'
-MEDIA_ROOT = '/mediafiles'
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = os.environ.get("GS_BUCKET_NAME")
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
+MEDIA_URL =  '/mediafiles/'
+
+MEDIA_ROOT = '/mediafiles'
+if DEBUG:
+    MEDIA_ROOT = './mediafiles'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'assets/static'),

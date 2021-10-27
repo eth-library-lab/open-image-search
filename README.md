@@ -6,15 +6,46 @@ _- in development_ -
 
 Image Retrieval / Reverse Image Search Application for finding digitised print metadata. Made to support workflows at graphical collections and museums.  
 
-The codebase and application will be publicly available Spring 2021. If you are interested in earlier access, we would love to hear from you. Please get in touch via the ETH Library Lab [contact form](https://www.librarylab.ethz.ch/contact/).
-
-
+The application is hosted online at https://imagesearch.ellprototypes.ch where you can upload your own pictures to find visually similar prints from a database of over 20,0000 prints from the Graphische Sammlung of ETH Zürich.  
 
 <img src="./assets/graph-samm-example-search-cropped.gif" height="400px"/>
 
+## Offline Use
+
+It is also possible to clone the project to run locally on your own computer. This will require some basic experience with using git and the command line but allows you to perform image retrieval queries (reverse image searches) with your own data.  
+
+1. open a terminal in a directory where you want to save the project to
+```shell
+git clone https://github.com/eth-library-lab/open-image-search.git
+cd open-image-search
+```
+2. copy the images that you want to add to the database into this folder
+
+_search-model/data/raw/default/images_  
+
+alternatively
+
+3. (optional) if there are some images that you want to filter out of the dataset (e.g. placeholder images etc.). Copy the image to the 
+
+_search-model/data/raw/default/images_to_remove_
+
+4. (optional) Metadata for the images can be specified by copying a csv file to the folder:  _search-model/data/raw/default/metadata_. Only certain column names are allowed so refer to the metadata section for details.
+
+5. Create a virtual environment and install the software dependencies. 
+```
+python3 -m venv ./venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+6. If the packages have installed correctly then program will be ready to run. 
+
+```
+cd src
+python3 run.py
+```
 
 ## Current Architecture
-
 
 ### Libraries/Frameworks
 

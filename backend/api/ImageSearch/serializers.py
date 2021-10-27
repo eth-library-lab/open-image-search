@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ImageSearch.models import ImageMetadata, SearchResult
+from ImageSearch.models import ImageMetadata, SearchResult, Classification, MaterialTechnique, Relationship, Institution
 
 class ImageMetadataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,3 +33,23 @@ class SearchResultSerializer(serializers.ModelSerializer):
 class SaveSearchResultSerializer(serializers.Serializer):
     id = serializers.UUIDField(read_only=True)
     keep = serializers.BooleanField()
+
+class ClassificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Classification
+        fields = ['id','name']
+
+class MaterialTechniqueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MaterialTechnique
+        fields = ['id','name']
+
+class RelationshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Relationship
+        fields = ['id','name']
+
+class InstitutionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Institution
+        fields = ['id','name']

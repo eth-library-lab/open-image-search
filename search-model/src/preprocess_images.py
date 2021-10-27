@@ -36,9 +36,9 @@ def resize_image(pil_image, min_dimension=224):
 
 def preprocess_image(input_img_path, output_img_path, min_dimension=224): 
     """open an image from a file path, resize it and save"""
-    img = Image.open(input_img_path)
+    img = Image.open(input_img_path).convert("RGB")
     img = resize_image(img, min_dimension)
-    img.save(output_img_path)
+    img.save(output_img_path, 'JPEG')
     
     return
 
@@ -50,7 +50,7 @@ def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fl
     """
 
     print('checking input directory: {}'.format(input_image_dir))
-    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png'], keep_fldr_path=keep_fldr_path)
+    existing_fpaths_input = utils.get_list_of_files_in_dir(input_image_dir, file_types = ['jpg', 'jpeg','png','tif','tiff'], keep_fldr_path=keep_fldr_path)
     print('checking output directory: {}'.format(output_image_dir)) 
     existing_fpaths_output = utils.get_list_of_files_in_dir(output_image_dir, file_types = ['jpg', 'jpeg','png'],keep_fldr_path=keep_fldr_path)
     
@@ -78,7 +78,8 @@ def hash_images_to_remove(removal_image_dir):
                 if filehash not in hash_to_remove:
                     hash_to_remove.append(filehash)
     return hash_to_remove
-     
+
+
 def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     """
     apply the processing pipeline to a directory of images and save them to the output_image_directory
@@ -106,6 +107,8 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
 
         # make_output_fpath
         output_subpath = input_img_path.replace(input_image_dir,'').strip('\\').strip('/')
+        output_subpath = output_subpath.replace(" ", "_")
+        output_subpath = output_subpath.rsplit(".",1)[0] + ".jpeg"
         output_img_path = os.path.join(output_image_dir, output_subpath)
         
         #it the output filepath already exists skip to the next image
@@ -132,7 +135,7 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
 
 
 def main():
-
+    print("---Preprocessing Images---\n")
     input_dir = settings.raw_image_dir 
     output_dir = settings.processed_image_dir
     removal_image_dir = settings.removal_image_dir

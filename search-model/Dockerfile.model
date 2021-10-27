@@ -1,6 +1,9 @@
-FROM tensorflow/serving:latest
+FROM google/tf-serving-scann
 
 # Identify the maintainer of an image
 LABEL maintainer="barry.sunderland@librarylab.ethz.ch"
 
-COPY ./models/feature_extraction/202101182225 /models/model/202101182225
+COPY ./models/retrieval/3 /models/retrieval/3
+COPY ./models/retrieval_exclusion/6 /models/retrieval_exclusion/6
+
+COPY ./docker_models.config /models/docker_models.config

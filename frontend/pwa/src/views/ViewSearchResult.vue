@@ -61,8 +61,12 @@ export default {
     ...mapGetters(['resultsLoaded',
                     'getIsLoading',
                     'getSelectedFile',
-                    'searchResultId'
+                    'searchResultId',
+                    'getNumPossibleResults'
                     ]),
+    numPossibleResults() {
+      return this.getNumPossibleResults()
+    },
     searchResults() {
       return this.$store.getters.getSearchResults
     },

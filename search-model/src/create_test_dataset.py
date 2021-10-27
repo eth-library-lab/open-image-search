@@ -57,8 +57,8 @@ def main(num_records=100):
     """
 
     # load metadata csv to sample from
-    input_dir_path = "../data/raw/ethz"
-    input_fpath = os.path.join(input_dir_path, "metadata/imageSearch_metadata_03.12.csv")
+    input_dir_path = "../data/interim/ethz/metadata"
+    input_fpath = os.path.join(input_dir_path, "imageSearch_relations.csv")
     df = pd.read_csv(input_fpath)
 
     # output directory path
@@ -73,7 +73,7 @@ def main(num_records=100):
     df_test.to_csv(output_fpath, index=False)
 
     # make a list of images to copy
-    images_to_copy = df_test['recordID'].astype(str) + '.png'
+    images_to_copy = df_test['record_id'].astype(str) + '.png'
     images_to_copy = images_to_copy.to_list()
 
     # copy images into test folder
@@ -88,4 +88,4 @@ def main(num_records=100):
 
 if __name__ == "__main__":
 
-    main(num_records=50)
+    main(num_records=100)

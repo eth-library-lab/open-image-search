@@ -15,6 +15,9 @@ export default new Vuex.Store({
     isLoading: false,
     searchResults: [],
     searchResultId: null,
+    numPossibleResults:null,
+    filterOptions: {},
+    filterOptionsLoading:false,
     snackbar: {
       visible: false,
       timeout:10000,
@@ -35,9 +38,10 @@ export default new Vuex.Store({
     CHANGE_ISLOADING_STATUS(state, status) {
       state.isLoading = status
     },
-    SET_SEARCH_RESULTS(state, {searchResults, searchResultId}) {
+    SET_SEARCH_RESULTS(state, {searchResults, searchResultId, numPossibleResults}) {
       state.searchResults = searchResults
       state.searchResultId = searchResultId
+      state.numPossibleResults = numPossibleResults
     },
     SET_SEARCH_RESULT_ID(state, results_id) {
       state.searchResultId = results_id
@@ -57,6 +61,12 @@ export default new Vuex.Store({
       state.snackbar.timeout = 3000
       state.snackbar.text = null
     },
+    UPDATE_FILTER_OPTIONS(state, filterOptions) {
+      state.filterOptions = filterOptions
+    },
+    CHANGE_FILTERS_LOADING_STATUS(state, filterStatus) {
+      state.filterOptionsLoading = filterStatus
+    }
   },
   actions: {
     changeSearchResultId( { commit }, searchResultId) {
@@ -71,12 +81,20 @@ export default new Vuex.Store({
     changeIsLoadingStatus( { commit }, status) {
       commit('CHANGE_ISLOADING_STATUS', status)
     },
-    searchSimilarImages({ commit, dispatch }, selectedImage) {
-      ImageSearchService.uploadImage(selectedImage)
+    changefiltersLoadingStatus( { commit }, status) {
+      commit('CHANGE_FILTERS_LOADING_STATUS', status)
+    },
+    searchSimilarImages({ commit, dispatch }, payload) {
+    
+      var selectedImage = payload.selectedImage
+      var queryString = payload.queryString
+      ImageSearchService.uploadImage(selectedImage, queryString)
         .then(response => {
           const searchResults = response.data.results
-          const searchResultId = response.data.result_id
-          const payload = {searchResults, searchResultId}
+          const searchResultId = response.data.resultId
+          const numPossibleResults = response.data.numPossibleResults
+          console.log("numPossibleResults: ",numPossibleResults)
+          const payload = {searchResults, searchResultId, numPossibleResults}
           commit('SET_SEARCH_RESULTS', payload)
           dispatch('changeResultsLoadedStatus', true)
         })
@@ -165,6 +183,35 @@ export default new Vuex.Store({
           dispatch('changeIsLoadingStatus',false)
         })
     },
+    getFilterOptions({ commit, dispatch }) {
+      dispatch('changefiltersLoadingStatus', true)
+      ImageSearchService.getFilterOptions()
+        .then(response => {
+          // get url for the original search image
+          commit('UPDATE_FILTER_OPTIONS', response.data)
+        })
+        .catch(error => {
+          console.log("getFilterOptions error: ", error.response )
+          console.log("axios error.code:", error.code)
+          this.errored = true
+          // generic error message
+          var snackbarSettings = {
+            text:'Encountered error with filtered service. \n Please try again or try searching with less restrictive filters',
+            timeout:-1
+          }
+          if (error.code == "ECONNABORTED") {
+            snackbarSettings.text='Request timed out. Please try again'
+            console.log(snackbarSettings.text)
+            dispatch('showSnackbar', snackbarSettings)
+          } else {
+            console.log('error: ', error)
+            dispatch('showSnackbar',snackbarSettings)
+          }
+        })
+        .finally(() => {
+          dispatch('changefiltersLoadingStatus', false)
+        })
+    },
     clearSearchResults({ commit }) {
       let payload = { 
         searchResults: [],
@@ -207,6 +254,9 @@ export default new Vuex.Store({
     getSearchResults(state) {
       return state.searchResults
     },
+    getNumPossibleResults(state){
+      return state.numPossibleResults
+    },
     resultsLoaded(state) {
       return state.resultsLoaded
     },
@@ -218,6 +268,12 @@ export default new Vuex.Store({
     },
     searchResultId(state) {
       return state.searchResultId
+    },
+    filterOptions(state) {
+      return state.filterOptions
+    },
+    filterOptionsLoaded(state) {
+      return Object.keys(state.filterOptions).length > 0
     }
 
   },
