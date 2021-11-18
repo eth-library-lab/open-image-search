@@ -98,6 +98,50 @@
                   title="contact ETH Library Lab"/>
               </v-btn>
             </p>
+
+            <h2>Partners</h2>
+            <p align="left">
+              Thanks to our partner institutions for providing openly accessible data from their collections: 
+            </p>
+            <v-card
+              class="d-flex flex-wrap align-center justify-center"
+              color="white"
+              flat
+              over
+              >
+              <v-card
+                class="partner-card"
+                flat
+                target="_"
+                href="https://www.zb.uzh.ch/"
+                >
+                <v-img class="ma-2"
+                  :width="height+40" src="../assets/partner_logos/zentralbibliothek_zurich.png"
+                  >
+                </v-img>
+             </v-card>
+             <v-card
+                class="partner-card"
+                flat
+                target="_"
+                href="https://www.kunsthaus.ch/"
+                >
+                <v-img 
+                  :width="height+100" src="../assets/partner_logos/kunsthaus_zurich.png">
+                </v-img>
+              </v-card>
+              <v-card
+                class="partner-card"
+                flat
+                icon
+                target="_"
+                href="https://www.ub.uni-heidelberg.de/allg/benutzung/bereiche/handschriften/graphischesammlung.html"
+                >
+                <v-img class="ma-2"
+                  :width="height+40" src="../assets/partner_logos/universitat_heidelberg.png">
+                </v-img>
+              </v-card>
+            </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -121,9 +165,13 @@ import LibLabLogo from '@/components/LibLabLogo.vue';
         }
       }   
     }
-</script>
+</script> 
 
 <style lang="css" scoped>
+
+.partner-card:hover {
+  background-color: #99999933;
+}
 
 .no-underline {
   text-decoration:none; 
