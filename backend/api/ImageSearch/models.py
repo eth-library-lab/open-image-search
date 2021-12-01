@@ -42,7 +42,7 @@ class Institution(models.Model):
 
 class ImageMetadata(models.Model):
     
-    record_id = models.IntegerField(blank=False, null=False)
+    record_id = models.IntegerField("provider's original object id", blank=False, null=False)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     title = models.CharField(blank=True, null=True, max_length=300)
     image_url = models.URLField(blank=False, null=False, max_length=300)
@@ -61,8 +61,11 @@ class ImageMetadata(models.Model):
     year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
     year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
     relationship_type_id = models.ManyToManyField(Relationship)
-    image_fpath = models.CharField("local path to image",null=True, max_length=300)
 
+class Image(models.Model):
+    directory = models.CharField("local directory where image is saved", null=True, max_length=300)
+    provider_filename = models.CharField("original filename", max_length=200, null=True, blank=True)
+    image_metadata_id = models.ForeignKey(ImageMetadata, null=True, blank=True, on_delete=models.SET_NULL)
 
 class SearchResult(models.Model):
 
@@ -84,5 +87,5 @@ class FeatureModel(models.Model):
 
 class ImageFeature(models.Model):
     feature = ArrayField(base_field=models.FloatField()) # a flat array
-    image_id = models.ForeignKey(ImageMetadata, verbose_name="image that the features are from", on_delete=models.CASCADE )
+    image_id = models.ForeignKey(Image,verbose_name="image that the features are from", on_delete=models.CASCADE, null=True, blank=True)
     model_id = models.ForeignKey(FeatureModel, verbose_name="model that created the vector", on_delete=models.CASCADE)
