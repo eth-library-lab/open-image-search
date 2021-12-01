@@ -15,24 +15,6 @@ import utils
 import export_metadata
 
 
-# def get_record_ids_from_fpaths(ser_fpaths):
-#     """
-#     using the df from the calculated features csv
-#     add a column with record ids
-#     return df
-#     """
-
-#     ser = ser_fpaths.str.rsplit(pat="/", n=1, expand=True)[1]
-#     ser = ser.str.split(pat=".", n=1, expand=True)[0]
-#     ser = ser.astype(int)
-#     ser.name = 'record_id'
-#     ser.index.rename("model_id", inplace=True)
-
-#     return ser
-
-
-
-
 def create_class_dict(ser):
     
     # use a default dict to return -1 in case key is not found
