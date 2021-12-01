@@ -32,7 +32,7 @@ services:
     volumes:
       - ./backend/api:/usr/src/app
     env_file:
-      - ./backend/api/.env.dev
+      - ./backend/.env.dev
     ports:
       - 8000:8000
     command: "sh ./entrypoint.sh"
