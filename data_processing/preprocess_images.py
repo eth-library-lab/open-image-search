@@ -2,11 +2,13 @@
 # coding: utf-8 
 
 from PIL import Image
-import os
+import os,sys
 import numpy as np
-import utils
-import settings
+import argparse
 import hashlib
+
+sys.path.append("../search-model/src" )
+import utils
 
 def calc_resize_with_apect(size, min_dimension):
     """calculate the dimensions needed to resize an image with the minimum dimension on one side
@@ -62,7 +64,7 @@ def get_list_of_img_fpaths_to_process(input_image_dir, output_image_dir, keep_fl
 
 def hash_images_to_remove(removal_image_dir):
     
-    hash_to_remove = []
+    hashes_to_remove = []
     
     if not os.path.exists(removal_image_dir):
         os.makedirs(removal_image_dir)
@@ -76,8 +78,9 @@ def hash_images_to_remove(removal_image_dir):
                     filehash = hashlib.md5(f.read()).hexdigest()
                     #print(filehash)
                 if filehash not in hash_to_remove:
-                    hash_to_remove.append(filehash)
-    return hash_to_remove
+                    hashes_to_remove.append(filehash)
+
+    return hashes_to_remove
 
 
 def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
@@ -93,7 +96,9 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
     duplicate_imgs = [] 
     hash_keys=dict()
     
-    hash_to_remove = hash_images_to_remove(removal_image_dir)
+    hashes_to_remove=[]
+    if removal_image_dir:
+        hashes_to_remove = hash_images_to_remove(removal_image_dir)
 
     # loop over each file path and save the processed image output
     for i, input_img_path in enumerate(fpaths_to_process):
@@ -101,14 +106,15 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
         # remove duplicate images 
         with open(input_img_path, 'rb') as f:
             filehash = hashlib.md5(f.read()).hexdigest()
-        if filehash in hash_to_remove: # check in hash match with images in error_images folder
+        
+        if filehash in hashes_to_remove: # check in hash match with images in error_images folder
             duplicates.append(i)
             continue 
 
         # make_output_fpath
         output_subpath = input_img_path.replace(input_image_dir,'').strip('\\').strip('/')
         output_subpath = output_subpath.replace(" ", "_")
-        output_subpath = output_subpath.rsplit(".",1)[0] + ".jpeg"
+        output_subpath = output_subpath.rsplit(".", 1)[0] + ".jpeg"
         output_img_path = os.path.join(output_image_dir, output_subpath)
         
         #it the output filepath already exists skip to the next image
@@ -127,20 +133,18 @@ def process_dir_of_images(input_image_dir, output_image_dir, removal_image_dir):
         except FileNotFoundError as e:
             print("    warning: could not preprocess image {}".format(input_img_path))
             print("    ", e)
-        
+
         utils.print_dyn_progress_bar(num_images_to_proc, i)  
 
     #print(duplicates)
     return
 
 
-def main():
-    print("---Preprocessing Images---\n")
-    input_dir = settings.raw_image_dir 
-    output_dir = settings.processed_image_dir
-    removal_image_dir = settings.removal_image_dir
-    
+def main(input_dir,
+         output_dir,
+         removal_image_dir):
 
+    print("---Preprocessing Images---\n")
     process_dir_of_images(input_dir, output_dir, removal_image_dir)
 
     return
@@ -148,4 +152,23 @@ def main():
 
 if __name__ == '__main__':
 
-    main()
+    parser = argparse.ArgumentParser(description='image preprocessing')
+    parser.add_argument('--input_dir',
+                        required=True,
+                        type=str,
+                        help="raw images to resize")
+    parser.add_argument('--output_dir',
+                        required=True,
+                        type=str,
+                        help="output directory to saved processed images to")
+    parser.add_argument('--removal_image_dir',
+                        required=False, 
+                        type=str,
+                        help="directory of images that should be removed from the processed data set")
+    args = parser.parse_args()
+
+    print(args)
+
+    main(input_dir=args.input_dir, 
+        output_dir=args.output_dir,
+        removal_image_dir=args.removal_image_dir)
