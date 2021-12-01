@@ -12,6 +12,8 @@ sys.path.append('../search-model/src')
 import utils
 import argparse
 
+import provider_specific.eth import clean_eth_metadata
+
 def clean_df(df):
     """drop duplicates and empty rows"""
     orig_shape=df.shape
@@ -23,7 +25,7 @@ def clean_df(df):
     dropped_rows = orig_shape[0] - df.shape[0]
     print(f"dropped {dropped_rows} NaN or duplicated rows")
     
-    return df    
+    return df
 
 
 def process_museum_plus_export(df):
@@ -50,24 +52,9 @@ def process_museum_plus_export(df):
     return df
 
 
-def process_eth_metadata(df):
-    
-    # change url to lower resolution request (350x350px)
-    df['image_url'] = df['image_url'].str.replace('resolution=superImageResolution','resolution=highImageResolution')
-    
-    return df
-
-
-def add_id_column(df):
-    
-    df = df.reset_index(drop=True) 
-    df.index = df.index.rename('id')
-    df = df.reset_index()
-    
-    return df 
-
 def main(input_metadata_path=None,
-         output_dir=None) -> pd.DataFrame:
+         output_dir=None,
+         provider=None) -> pd.DataFrame:
 
 
     if input_metadata_path.endswith(".xlsx"):
@@ -76,8 +63,11 @@ def main(input_metadata_path=None,
         df = pd.read_csv(input_metadata_path)
 
     print(f"loaded metadata file ({df.shape[0]} rows)")
-    df = process_museum_plus_export(df)
-    df = add_id_column(df)
+
+    # do provider specific data cleaning here
+    if provider == "eth":
+        df = process_museum_plus_export(df)
+        df = clean_eth_metadata(df)
 
     fname_output = os.path.basename(input_metadata_path)
     fname_output = fname_output.rsplit(".",maxsplit=1)[0] + ".csv"
@@ -88,13 +78,16 @@ def main(input_metadata_path=None,
     df.to_csv(fpath_output, index=False)
     print(f'wrote metadata file ({df.shape[0]} rows) to {fpath_output}')
 
-
     return df
 
 
 if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='metadata_cleaning')
+    parser.add_argument('--provider',
+                        default=None,
+                        type=str,
+                        help="raw metadata csv to remove NaNs and duplicates from")
     parser.add_argument('--input_metadata_fpath',  
                         type=str,
                         help="raw metadata csv to remove NaNs and duplicates from")
@@ -107,10 +100,6 @@ if __name__ == '__main__':
 
 
     main(input_metadata_path = args.input_metadata_fpath,
-         output_dir = args.output_dir)
-
-
-    # main(output_dir=settings.interim_metadata_dir,
-    #      processed_img_dir=settings.processed_image_dir
-    #      )
+         output_dir = args.output_dir,
+         provider=args.provider)
          
