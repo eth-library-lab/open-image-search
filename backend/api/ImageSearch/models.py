@@ -38,7 +38,7 @@ class Relationship(models.Model):
 class Institution(models.Model):
     name = models.CharField("credit line", max_length=100)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
-
+    ref_name = models.CharField("short reference name", unique=True, blank=False, null=False, max_length=5)
 
 class ImageMetadata(models.Model):
     
@@ -64,8 +64,9 @@ class ImageMetadata(models.Model):
 
 class Image(models.Model):
     directory = models.CharField("local directory where image is saved", null=True, max_length=300)
-    provider_filename = models.CharField("original filename", max_length=200, null=True, blank=True)
+    provider_filename = models.CharField("original filename", max_length=200, unique=True)
     image_metadata_id = models.ForeignKey(ImageMetadata, null=True, blank=True, on_delete=models.SET_NULL)
+    institution = models.ForeignKey(Institution, null=True, on_delete=models.SET_NULL)
 
 class SearchResult(models.Model):
 
@@ -87,5 +88,14 @@ class FeatureModel(models.Model):
 
 class ImageFeature(models.Model):
     feature = ArrayField(base_field=models.FloatField()) # a flat array
+    image_id = models.ForeignKey(Image,verbose_name="image that the features are from", on_delete=models.CASCADE, null=True, blank=True)
+    model_id = models.ForeignKey(FeatureModel, verbose_name="model that created the vector", on_delete=models.CASCADE)
+
+class ImageKeyPointDescriptor(models.Model):
+    """
+    similar to imageFeature table but used for keypoint-descriptor features created
+    by algorithms like SIFT
+    """
+    kp_des = ArrayField(base_field=models.FloatField()) # "nested list where 1st element is a list of key points, 2nd element is list of descriptors"
     image_id = models.ForeignKey(Image,verbose_name="image that the features are from", on_delete=models.CASCADE, null=True, blank=True)
     model_id = models.ForeignKey(FeatureModel, verbose_name="model that created the vector", on_delete=models.CASCADE)
