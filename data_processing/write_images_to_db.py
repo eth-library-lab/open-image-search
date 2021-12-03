@@ -1,3 +1,8 @@
+"""
+script to add directory of images to database 
+and copy/rename files with db assigned ids 
+"""
+
 import os,sys
 import argparse
 
@@ -6,7 +11,7 @@ import utils
 
 import shutil
 
-from sqlalchemy import create_engine, insert, text, Table, Column,Integer, MetaData, ForeignKey
+from sqlalchemy import create_engine, insert, text, Table, Column, Integer, MetaData, ForeignKey, select
 
 
 def create_connection_string():
@@ -65,41 +70,79 @@ def make_in_out_fpaths(input_directory,
 
     return input_fpath, output_fpath
 
-
-def main(provider):
-
-    input_directory = f"../data/interim/{provider}/images"
-    output_directory = f"../data/processed/{provider}/images"
-
-    # list images in folder
-    flist = utils.list_files_in_dir(input_directory)
-    flist = [f.replace(input_directory+"/","") for f in flist]
-    # insert records into database
-       
-    values_dicts = [{"directory":output_directory, "provider_filename":f} for f in flist]
-
-    engine = connect_to_db()
-    result = write_images_to_db(engine, values_dicts)
+def get_institution_id(engine, inst_ref_name="ethz"):
     
-    # copy files with newly assigned ids as file names
-    utils.prep_dir(output_directory)
+    stmt = """
+    SELECT id
+    FROM "ImageSearch_institution"
+    WHERE ref_name = :inst_ref_name
+    LIMIT 1;
+    """
+    stmt = text(stmt)
+    
+    with engine.connect() as conn:
+        result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
+    
+    for row in result:
+        return row[0]
 
-    for (new_id, output_directory, provider_filename) in result.fetchall():
+
+
+def rename_files_using_db_ids(input_directory, results):
+    """
+    input_directory: path to the existing files
+    results: an iterable three part tuple of (new_id, output_directory, provider_filename)
+    """
+    total = len(results)
+
+    for i, (new_id, output_directory, provider_filename) in enumerate(results):
     
         in_fpath, out_fpath = make_in_out_fpaths(
                                             input_directory,
                                             provider_filename,
                                             output_directory, 
                                             new_id)
-        print(in_fpath, out_fpath)
-        # shutil.copy2(in_fpath, out_fpath)
+        utils.prep_dir(out_fpath)
+        shutil.copy2(in_fpath, out_fpath)
+
+        utils.print_dyn_progress_bar(total, i)
+
+    print("\nfinished adding images to db and renaming with new ids")
     # use returned id numbers to copy and rename images to processed folder with new file names
+    return
+
+
+def main(inst_ref):
+
+    input_directory = f"../data/interim/{inst_ref}/images"
+    output_directory = f"../data/processed/{inst_ref}/images"
+
+    # list images in folder
+    flist = utils.list_files_in_dir(input_directory)
+    flist = [f.replace(input_directory+"/","") for f in flist]
+
+    # prep values and insert into database
+    engine = connect_to_db()
+    inst_id = get_institution_id(engine, inst_ref_name=inst_ref)
+    
+    values_dicts = [{"directory":output_directory, 
+                     "provider_filename":f,
+                     "institution_id":inst_id} for f in flist]
+
+    # result = write_images_to_db(engine, values_dicts)
+    # results = result.fetchall()
+
+    # # copy files with newly assigned ids as file names
+    # utils.prep_dir(output_directory)
+    # rename_files_using_db_ids(input_directory, results)
+
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='metadata_cleaning')
-    parser.add_argument("--provider",  type=str,
-                        help="name of data provider for this directory of images (forms part of directory path")
+    description= """creates database records for a directory of images and makes copies of the images with the new id name"""
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument("--inst_ref",  type=str,
+                        help="short name of data provider for this directory of images (used to form the directory path)")
     args = parser.parse_args()
 
-    main(provider=args.provider)
+    main(inst_ref=args.inst_ref)
