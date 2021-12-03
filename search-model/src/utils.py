@@ -176,7 +176,7 @@ def get_list_of_files_in_dir(fldr_path, file_types = ['jpg', 'jpeg','png'], keep
             
             if file_types == 'all':
                 existing_flist.append(cur_fpath)
-            elif (fname.split('.')[-1].lower() in file_types) and ('.ipynb_checkpoints' not in cur_fpath):
+            elif (fname.rsplit(".",maxsplit=1)[-1].lower() in file_types) and ('.ipynb_checkpoints' not in cur_fpath):
                 existing_flist.append(cur_fpath)
     
     print("{:,} files found in directory".format(len(existing_flist)))
