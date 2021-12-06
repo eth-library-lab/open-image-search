@@ -10,27 +10,7 @@ from datetime import datetime as dt
 
 from sqlalchemy import create_engine, insert, text, Table, Column, Integer, MetaData, ForeignKey, select
 
-
-def create_connection_string():
-
-    user=os.environ.get("DB_USER")
-    password=os.environ.get("DB_PASSWORD")
-    host=os.environ.get("DB_HOST")
-    port=os.environ.get("DB_PORT")
-    dbname=os.environ.get("DB_NAME")
-
-    con_str = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
-
-    return con_str
-
-
-def connect_to_db():
-
-    con_str = create_connection_string()
-    engine = create_engine(con_str)
-    
-    return engine
-
+from utils_db import create_db_engine
 
 def institution_exists(engine, inst_ref_name="ethz"):
     
@@ -75,7 +55,7 @@ def write_institution_to_db(engine, values_dict):
 def main(name, ref_name):
 
     # prep values and insert into database
-    engine = connect_to_db()
+    engine = create_db_engine()
     exists = institution_exists(engine, inst_ref_name=ref_name)
     if exists==False:
         values_dict = {"name":name,

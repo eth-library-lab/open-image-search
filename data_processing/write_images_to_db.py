@@ -13,26 +13,7 @@ import shutil
 
 from sqlalchemy import create_engine, insert, text, Table, Column, Integer, MetaData, ForeignKey, select
 
-
-def create_connection_string():
-
-    user=os.environ.get("DB_USER")
-    password=os.environ.get("DB_PASSWORD")
-    host=os.environ.get("DB_HOST")
-    port=os.environ.get("DB_PORT")
-    dbname=os.environ.get("DB_NAME")
-
-    con_str = f"postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}"
-
-    return con_str
-
-
-def connect_to_db():
-
-    con_str = create_connection_string()
-    engine = create_engine(con_str)
-    
-    return engine
+from utils_db import create_db_engine
 
 
 def write_images_to_db(engine, values_dicts):
@@ -122,7 +103,7 @@ def main(inst_ref):
     flist = [f.replace(input_directory+"/","") for f in flist]
 
     # prep values and insert into database
-    engine = connect_to_db()
+    engine = create_db_engine()
     inst_id = get_institution_id(engine, inst_ref_name=inst_ref)
     
     values_dicts = [{"directory":output_directory, 
