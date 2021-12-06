@@ -64,9 +64,16 @@ class ImageMetadata(models.Model):
 
 class Image(models.Model):
     directory = models.CharField("local directory where image is saved", null=True, max_length=300)
-    provider_filename = models.CharField("original filename", max_length=200, unique=True)
+    provider_filename = models.CharField("original filename", max_length=200)
     image_metadata_id = models.ForeignKey(ImageMetadata, null=True, blank=True, on_delete=models.SET_NULL)
     institution = models.ForeignKey(Institution, null=True, on_delete=models.SET_NULL)
+
+    class Meta: 
+        constraints = [models.UniqueConstraint(
+                                fields=['provider_filename', 'institution'], 
+                                name='unique_original_filename'),
+                      ]
+
 
 class SearchResult(models.Model):
 
