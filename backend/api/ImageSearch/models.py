@@ -84,7 +84,7 @@ class SearchResult(models.Model):
 class FeatureModel(models.Model):
     name = models.CharField(max_length=200)
     created_date = models.DateTimeField("when the model was trained", auto_now=True)
-
+    description = models.CharField(max_length=500)
 
 class ImageFeature(models.Model):
     feature = ArrayField(base_field=models.FloatField()) # a flat array
