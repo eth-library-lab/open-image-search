@@ -103,6 +103,6 @@ class ImageKeyPointDescriptor(models.Model):
     similar to imageFeature table but used for keypoint-descriptor features created
     by algorithms like SIFT
     """
-    kp_des = ArrayField(base_field=models.FloatField()) # "nested list where 1st element is a list of key points, 2nd element is list of descriptors"
+    keyp_des = models.JSONField("dict of keypoints and descriptors in the image")
     image_id = models.ForeignKey(Image,verbose_name="image that the features are from", on_delete=models.CASCADE, null=True, blank=True)
     model_id = models.ForeignKey(FeatureModel, verbose_name="model that created the vector", on_delete=models.CASCADE)

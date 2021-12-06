@@ -3,9 +3,7 @@ import pandas as pd
 
 import cv2
 from PIL import Image
-import matplotlib.pyplot as plt
-import tf_clahe
-import tqdm
+# import matplotlib.pyplot as plt
 
 
 import os
@@ -16,8 +14,6 @@ sys.path.append('../src')
 
 from dotenv import load_dotenv
 load_dotenv("./.env.nbsettings")
-    
-from utils import get_list_of_files_in_dir
 
 
 def compute_sift(img, rootsift = True):
@@ -117,14 +113,14 @@ def match_sift_ransac(img1, img2, des1,des2, plot_match=False, thre = 100):
                    flags = 2)
 
         img3 = cv2.drawMatches(img1,des1[0],img2,des2[0],good,None,**draw_params)
-        plt.imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)),plt.show()
+        # plt.imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)),plt.show()
         
-        if plot_match:
-            fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 6))
-            axes[0].imshow(cv2.cvtColor(img1, cv2.COLOR_BGR2RGB))
-            axes[1].imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB))
-            fig.tight_layout()
-            plt.show()
+        # if plot_match:
+        #     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 6))
+        #     axes[0].imshow(cv2.cvtColor(img1, cv2.COLOR_BGR2RGB))
+        #     axes[1].imshow(cv2.cvtColor(img2, cv2.COLOR_BGR2RGB))
+        #     fig.tight_layout()
+        #     plt.show()
 
         #plt.imshow(cv2.cvtColor(img3, cv2.COLOR_BGR2RGB)),plt.show()
         
@@ -227,7 +223,7 @@ def create_dict_of_des_by_id(search_fpaths_input):
     create a dictionary with image id as key, keypoints and descriptors as values
     '''
     des_dic = {}
-    for path in tqdm.tqdm(search_fpaths_input): 
+    for path in search_fpaths_input: 
         img_id = create_img_id(path)
         img = cv2.imread(path)
 
@@ -239,3 +235,37 @@ def create_dict_of_des_by_id(search_fpaths_input):
             feat_list.append(temp)
         des_dic[img_id] = feat_list
     return des_dic
+
+
+def format_sift_features_as_list(points,descps):
+    
+    feat_list = []
+
+    for point,descp in zip(points, descps):
+        temp = [list(point.pt),
+                point.size,
+                point.angle,
+                point.response,
+                point.octave,
+                point.class_id,
+                list(descp)]
+        feat_list.append(temp)
+
+    return feat_list
+
+
+def format_sift_features_as_dict(points ,descps):
+    "unpack the cv2 KeyPoint objects into a list of dicts with each point type and a list of descriptors"
+    points_lst = []
+    descriptor_lst = []
+
+    for point, descp in zip(points, descps):
+        points_lst.append({"pt" : list(point.pt),
+                "size" : point.size,
+                "angle" : point.angle,
+                "response" : point.response,
+                "octave" : point.octave,
+                "class_id" : point.class_id})
+        descriptor_lst.append(list(descp))
+
+    return {"points":points_lst, "descriptors":descriptor_lst}
