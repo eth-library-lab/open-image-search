@@ -88,7 +88,7 @@ def rename_files_using_db_ids(input_directory, results):
 
         utils.print_dyn_progress_bar(total, i)
 
-    print("\nfinished adding images to db and renaming with new ids")
+    print("\nfinished adding {:,}images to db and renaming with new ids".format(total))
     # use returned id numbers to copy and rename images to processed folder with new file names
     return
 
@@ -110,12 +110,12 @@ def main(inst_ref):
                      "provider_filename":f,
                      "institution_id":inst_id} for f in flist]
 
-    # result = write_images_to_db(engine, values_dicts)
-    # results = result.fetchall()
+    result = write_images_to_db(engine, values_dicts)
+    results = result.fetchall()
 
     # # copy files with newly assigned ids as file names
-    # utils.prep_dir(output_directory)
-    # rename_files_using_db_ids(input_directory, results)
+    utils.prep_dir(output_directory)
+    rename_files_using_db_ids(input_directory, results)
 
 
 if __name__ == "__main__":
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     description= """creates database records for a directory of images and makes copies of the images with the new id name"""
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--inst_ref",  type=str,
-                        help="short name of data provider for this directory of images (used to form the directory path)")
+                        help="short reference name for data provider for this directory of images (used to form the directory path)")
     args = parser.parse_args()
 
     main(inst_ref=args.inst_ref)
