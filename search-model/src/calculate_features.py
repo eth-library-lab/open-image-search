@@ -82,29 +82,6 @@ def append_tf_features_to_csv(features, labels, fpath):
     return    
 
 
-# def create_tf_dataset(batch_size):
-#     """
-    
-#     """
-
-#     csv_fname = '../data/raw/prints.csv'
-#     df = pd.read_csv(csv_fname, index_col=0)
-#     num_images = df.shape[0]
-
-#     ds = utils_tf.make_tfdataset_from_df(df,
-#                             'img_path',
-#                             'object_id',
-#                             batch_size=batch_size,
-#                             for_training=False,
-#                             normalize=False,
-#                             augment=False,
-#                             augment_func=None,
-#                             rgb_values=([0,0,0],[1,1,1]),
-#                             conv_color='rgb')
-
-#     return ds, num_images
-
-
 def calculate_total_steps(num_images, batch_size):
     """calculate the number of steps needed to run all images through model"""
     total_steps = int(np.ceil(num_images / batch_size))
@@ -132,7 +109,7 @@ def main():
     print_settings(settings)
     features_output_fldr_path = os.path.dirname(settings.interim_features_fpath)
 
-    input_image_dir = settings.processed_image_dir
+    preprocessed_image_dir = settings.processed_image_dir
     input_image_csv = None
 
     # load csv and make tensorflow dataset
@@ -142,14 +119,14 @@ def main():
         filepath_col_name=settings.filepath_col_name
         label_col_name=settings.label_col_name
 
-    elif input_image_dir:
-        print('using files in directory: ', input_image_dir)
-        df = utils.make_df_file_list(input_image_dir)
+    elif preprocessed_image_dir:
+        print('using files in directory: ', preprocessed_image_dir)
+        df = utils.make_df_file_list(preprocessed_image_dir)
         filepath_col_name='file_path'
         label_col_name='identifier'
 
         df[label_col_name] = df[filepath_col_name].apply(
-            lambda fpath: os.path.basename(fpath).split(".")[0] 
+            lambda fpath: os.path.basename(fpath).rsplit(".",maxsplit=1)[0]
         )
 
     num_images = df.shape[0]    
