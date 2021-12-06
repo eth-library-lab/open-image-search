@@ -70,32 +70,35 @@ def main():
     num_imgs = len(img_list)
     print(f"num images to calculate keypoints, descriptors for: {num_imgs}")
     
-    # calculate keypoint, descriptors for the list of images
-    values_dicts = []
-    total = num_imgs
+    if num_imgs>0:
+        # calculate keypoint, descriptors for the list of images
+        values_dicts = []
+        total = num_imgs
 
-    for i, (img_id, img_dir, _ )  in enumerate(img_list):
-        fname = str(img_id) + ".jpeg"
-        fpath = os.path.join(img_dir, fname)
-        img = cv2.imread(fpath)
-        #calculate keypoints and descriptors
-        [points,descps] = compute_sift(img, rootsift=True)
-        kp_des = format_sift_features_as_dict(points, descps)
-        #format as json
-        kp_des = json.dumps(kp_des, cls=NumpyEncoder)
-        temp_dict = {"keyp_des":kp_des,
-                     "image_id_id":img_id,
-                     "model_id_id":1}
-        values_dicts.append(temp_dict)
-        utils.print_dyn_progress_bar(total, i)
+        for i, (img_id, img_dir, _ )  in enumerate(img_list):
+            fname = str(img_id) + ".jpeg"
+            fpath = os.path.join(img_dir, fname)
+            img = cv2.imread(fpath)
+            #calculate keypoints and descriptors
+            [points,descps] = compute_sift(img, rootsift=True)
+            kp_des = format_sift_features_as_dict(points, descps)
+            #format as json
+            kp_des = json.dumps(kp_des, cls=NumpyEncoder)
+            temp_dict = {"keyp_des":kp_des,
+                        "image_id_id":img_id,
+                        "model_id_id":1}
+            values_dicts.append(temp_dict)
+            utils.print_dyn_progress_bar(total, i)
 
-    print("\nfinished calculating keypoints, descriptors")
+        print("\nfinished calculating keypoints, descriptors")
 
-    print("writing to database")
-    #write kp,des to database
+        print("writing to database")
+        #write kp,des to database
 
-    result = write_keypoints_to_db(engine, values_dicts)
-    results = result.fetchall()
+        result = write_keypoints_to_db(engine, values_dicts)
+        results = result.fetchall()
+    
+    print("done")
 
 
 if __name__ == "__main__":
