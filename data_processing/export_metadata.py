@@ -10,8 +10,6 @@ from datetime import datetime as dt
 
 sys.path.append('../src')
 import utils
-import settings
-
 
 def create_django_datetimestamp(dt_object=None):
     
@@ -140,33 +138,5 @@ def load_csvs_into_df(fpaths):
     return df
 
 
-# def main():
-
-#     fpaths = get_list_of_metadata_csvs(settings.interim_metadata_dir)
-#     output_dir = settings.fixtures_dir
-#     df = load_csvs_into_df(fpaths)
-
-#     model_name='ImageMetadata'
-    
-#     fixture_lst = df_to_fixture_list(df,
-#                        app_name='ImageSearch',
-#                        model_name=model_name,
-#                        use_df_index_as_pk=False,
-#                        pk_start_num=1000,
-#                        create_datetimefield_name=None,
-#                        created_by_field_name=None,
-#                        created_by_value=1)
-
-#     write_fixture_list_to_json(fixture_lst,
-#                                model_name,
-#                                output_dir,
-#                                file_name_modifier="")
-
-#     return fixture_lst
-
-
-# if __name__ == '__main__':
-
-#     fixture_lst = main()
 
 
