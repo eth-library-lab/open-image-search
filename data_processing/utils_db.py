@@ -24,6 +24,25 @@ def create_db_engine():
     return engine
 
 
+def institution_exists(engine, inst_ref_name:str):
+    
+    stmt = """
+    SELECT id, ref_name
+    FROM "ImageSearch_institution"
+    WHERE ref_name = :inst_ref_name
+    """
+    stmt = text(stmt)
+    
+    with engine.connect() as conn:
+        result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
+
+    exists=False
+    for row in result:
+        print("found existing institution: ", row)
+        exists=True
+
+    return exists
+
 class NumpyEncoder(json.JSONEncoder):
     """ Custom encoder for numpy data types """
     def default(self, obj):

@@ -10,26 +10,7 @@ from datetime import datetime as dt
 
 from sqlalchemy import create_engine, insert, text, Table, Column, Integer, MetaData, ForeignKey, select
 
-from utils_db import create_db_engine
-
-def institution_exists(engine, inst_ref_name="ethz"):
-    
-    stmt = """
-    SELECT id, ref_name
-    FROM "ImageSearch_institution"
-    WHERE ref_name = :inst_ref_name
-    """
-    stmt = text(stmt)
-    
-    with engine.connect() as conn:
-        result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
-
-    exists=False
-    for row in result:
-        print("found existing institution: ", row)
-        exists=True
-
-    return exists
+from utils_db import create_db_engine, institution_exists
 
 
 def write_institution_to_db(engine, values_dict):
@@ -52,13 +33,17 @@ def write_institution_to_db(engine, values_dict):
 
 
 
-def main(name, ref_name):
+def main(args):
 
+    name=args.name, 
+    ref_name=args.ref_name
+    isil_id = args.isil_id
     # prep values and insert into database
     engine = create_db_engine()
     exists = institution_exists(engine, inst_ref_name=ref_name)
     if exists==False:
         values_dict = {"name":name,
+                       "isil_id":isil_id,
                        "ref_name":ref_name,
                        "created_date":dt.now()}
         write_institution_to_db(engine, values_dict)
@@ -73,6 +58,8 @@ if __name__ == "__main__":
                     help="official name of institution/data provider")
     parser.add_argument("--ref_name",  type=str,
                         help="short reference name of the data provider (used to form the directory path)")
+    parser.add_argument("--isil_id",  type=str,
+                        help="official isil identifier for the institution")
     args = parser.parse_args()
 
-    main(name=args.name, ref_name=args.ref_name)
+    main(args)
