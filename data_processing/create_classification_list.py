@@ -13,19 +13,19 @@ import export_metadata
 
 DATA_DIR = "../data"
 
-def load_df():
+def load_df(args):
     # list of files to load classification terms from
     fpaths = [
-        (DATA_DIR, "raw","ethz","metadata","imageSearch_relations.xlsx"),
+        (DATA_DIR, "raw","lists","classification.xlsx"),
     ]
 
     df_list = []
     for fpath in fpaths:
         fpath = os.path.join(*fpath)
         if fpath.endswith(".xlsx"):
-            df = pd.read_excel(fpath)
+            df = pd.read_excel(fpath, **args)
         else:
-            df = pd.read_csv(fpath)
+            df = pd.read_csv(fpath, **args)
         
         df_list.append(df)
 
@@ -36,36 +36,35 @@ def load_df():
 
 def main():
 
-    df = load_df()
+    df = load_df({"header":None})
     
-    col_name="classification"
-    #### classification types ####
-    if col_name in df.columns:
-        ser = df[col_name]
-        ser = ser.str.strip().replace("",np.nan).dropna()
-        ser = ser.drop_duplicates()
-        ser = ser.str.lower()
+    ser = df[0]
+    ser = ser.str.strip().replace("",np.nan).dropna()
+    ser = ser.drop_duplicates()
+    ser = ser.str.lower()
+    ser.name = "name"
+    # write classification csv and fixture
+    model_name = 'Classification'
 
-        # write classification csv and fixture
-        model_name = 'Classification'
+    tdf = pd.DataFrame(ser)
+    output_dir = os.path.join(DATA_DIR, "processed","lists")
+    csv_path = os.path.join(output_dir, model_name+".csv")
+    tdf.to_csv(csv_path, index=False)
+    print(f"wrote {model_name} file with {tdf.shape[0]} rows")
 
-        tdf = pd.DataFrame(ser)
-        output_dir = os.path.join(DATA_DIR, "processed","lists")
-        csv_path = os.path.join(output_dir, model_name+".csv")
-        tdf.to_csv(csv_path, index=False)
-
-        # write json fixture
-        fixture_lst = export_metadata.df_to_fixture_list(tdf,
-                    app_name='ImageSearch',
-                    model_name=model_name,
-                    use_df_index_as_pk=True,
-                    create_datetimefield_name="created_date",
-                    created_by_field_name=None,
-                    )
-        export_metadata.write_fixture_list_to_json(fixture_lst,
-                                model_name,
-                                output_dir,
-                                file_name_modifier="")
+    # write json fixture
+    fixture_lst = export_metadata.df_to_fixture_list(tdf,
+                app_name='ImageSearch',
+                model_name=model_name,
+                use_df_index_as_pk=False,
+                pk_start_num=1,
+                create_datetimefield_name="created_date",
+                created_by_field_name=None,
+                )
+    export_metadata.write_fixture_list_to_json(fixture_lst,
+                            model_name,
+                            output_dir,
+                            file_name_modifier="")
 
 
 if __name__ ==  '__main__':
