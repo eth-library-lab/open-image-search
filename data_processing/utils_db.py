@@ -1,7 +1,10 @@
 import os
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, Table, MetaData, text
 import json
 import numpy as np
+import pandas as pd
+from typing import List
+from datetime import datetime as dt
 
 
 def create_connection_string():
@@ -16,13 +19,25 @@ def create_connection_string():
 
     return con_str
 
-
 def create_db_engine():
 
     con_str = create_connection_string()
     engine = create_engine(con_str)
     
     return engine
+
+
+def create_django_datetimestamp(dt_object=None):
+    
+    if dt_object==None:
+        created_time = dt.now()
+    else:
+        created_time = dt_object
+    # for django, timefield must be in format YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]
+    # e.g. "2020-05-26T11:40:56+01:00"
+    created_time = created_time.strftime('%Y-%m-%dT%H:%M:%S+01:00')
+    
+    return created_time
 
 
 def institution_exists(engine, inst_ref_name:str):
@@ -43,6 +58,38 @@ def institution_exists(engine, inst_ref_name:str):
         exists=True
 
     return exists
+
+
+def series_to_values_dicts(ser:pd.Series, field_name:str)-> List[dict,]:
+
+    tstamp = create_django_datetimestamp()
+    val_dicts = [{field_name:v, "created_date":tstamp} for v in ser]
+    return val_dicts
+
+
+def write_values_dict_to_db(engine, values_dict:dict, table_name:str) -> List:
+    """
+    example:
+    table_name="ImageSearch_classification"
+    """
+    # reflect the existing table properties
+    metadata_obj = MetaData()
+    table = Table(table_name, metadata_obj, autoload_with=engine)
+
+    # create the sql statement with sqlalchemy methods
+    stmt = (table.insert()
+                    .values(values_dict)
+                    .returning(table.c.id)
+    )
+
+    # execute the statement
+    with engine.connect() as conn:
+        try:
+            result = conn.execute(stmt)
+        except Exception as e:
+            print(e)
+            return []
+    return result
 
 
 def get_institution_id(engine, inst_ref_name="ethz"):
