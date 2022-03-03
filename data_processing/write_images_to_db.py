@@ -13,7 +13,7 @@ import shutil
 
 from sqlalchemy import create_engine, insert, text, Table, Column, Integer, MetaData, ForeignKey, select
 
-from utils_db import create_db_engine
+from utils_db import create_db_engine, get_institution_id
 
 
 def write_images_to_db(engine, values_dicts):
@@ -36,7 +36,7 @@ def write_images_to_db(engine, values_dicts):
         result = conn.execute(stmt)
 
     return result
-
+ 
 
 def make_in_out_fpaths(input_directory,
                 input_fname,
@@ -50,22 +50,6 @@ def make_in_out_fpaths(input_directory,
     output_fpath = os.path.join(output_directory, output_fname)
 
     return input_fpath, output_fpath
-
-def get_institution_id(engine, inst_ref_name="ethz"):
-    
-    stmt = """
-    SELECT id
-    FROM "ImageSearch_institution"
-    WHERE ref_name = :inst_ref_name
-    LIMIT 1;
-    """
-    stmt = text(stmt)
-    
-    with engine.connect() as conn:
-        result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
-    
-    for row in result:
-        return row[0]
 
 
 
@@ -105,8 +89,8 @@ def main(inst_ref):
     # prep values and insert into database
     engine = create_db_engine()
     inst_id = get_institution_id(engine, inst_ref_name=inst_ref)
-    
-    values_dicts = [{"directory":output_directory, 
+
+    values_dicts = [{"directory":output_directory,
                      "provider_filename":f,
                      "institution_id":inst_id} for f in flist]
 

@@ -1,7 +1,8 @@
 import os
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import json
 import numpy as np
+
 
 def create_connection_string():
 
@@ -42,6 +43,24 @@ def institution_exists(engine, inst_ref_name:str):
         exists=True
 
     return exists
+
+
+def get_institution_id(engine, inst_ref_name="ethz"):
+    
+    stmt = """
+    SELECT id
+    FROM "ImageSearch_institution"
+    WHERE ref_name = :inst_ref_name
+    LIMIT 1;
+    """
+    stmt = text(stmt)
+    
+    with engine.connect() as conn:
+        result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
+    
+    for row in result:
+        return row[0]
+
 
 class NumpyEncoder(json.JSONEncoder):
     """ Custom encoder for numpy data types """
