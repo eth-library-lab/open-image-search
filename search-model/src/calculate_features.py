@@ -158,7 +158,7 @@ def main():
     # make an output csv file to store the features in
     exists = os.path.exists(settings.interim_features_fpath) == True
     if exists:
-        overwrite = utils.check_overwrite(settings.interim_features_fpath)
+        overwrite = utils.overwrite_if_exists(settings.interim_features_fpath)
         if overwrite == False:
             print("skipping feature extraction")
             return
