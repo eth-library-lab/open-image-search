@@ -12,7 +12,7 @@ class Person(models.Model):
 
 
 class Classification(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     
     def __str__(self):
@@ -20,7 +20,7 @@ class Classification(models.Model):
 
 
 class MaterialTechnique(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
 
     def __str__(self):
@@ -28,7 +28,7 @@ class MaterialTechnique(models.Model):
 
 
 class Relationship(models.Model):
-    name = models.CharField("name relationship type", max_length=100)
+    name = models.CharField("name relationship type", max_length=100, unique=True)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
 
     def __str__(self):
