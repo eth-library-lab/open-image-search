@@ -37,7 +37,9 @@ services:
       - 8000:8000
     command: "sh ./entrypoint.sh"
     restart: always
-      
+    depends_on:
+      - db
+
   tf:
     image: barry8000/graph-samm:ret-latest
     build:
