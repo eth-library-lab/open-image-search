@@ -89,7 +89,7 @@ def write_values_dict_to_db(engine, values_dict:dict, table_name:str) -> List:
         except Exception as e:
             print(e)
             return []
-    return result
+    return result.fetchall()
 
 
 def get_institution_id(engine, inst_ref_name="ethz"):
