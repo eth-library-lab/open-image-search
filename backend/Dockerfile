@@ -27,4 +27,4 @@ COPY --from=build-stage $APP_HOME .
 RUN pip install --no-cache /usr/src/app/wheels/*
 
 # run entrypoint.prod.sh
-# ENTRYPOINT ["sh","entrypoint.sh"]
+ENTRYPOINT ["sh","entrypoint.sh"]
