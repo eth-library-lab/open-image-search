@@ -29,7 +29,8 @@ class Relationship(models.Model):
 
 
 class Institution(models.Model):
-    name = models.CharField("credit line", max_length=100)
+    name = models.CharField("credit line i.e.: long-form insitution name", max_length=100, unique=True)
+    isil_id = models.CharField("isil identifier, e.g. CH-000511-9", max_length=12, unique=True)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     ref_name = models.CharField("short reference name", unique=True, blank=False, null=False, max_length=5)
 
