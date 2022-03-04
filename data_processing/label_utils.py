@@ -20,7 +20,7 @@ def create_class_dict(ser):
     return class_dict
 
 
-def load_feature_types(table_name:str)-> defaultdict:
+def load_feature_labels(table_name:str)-> defaultdict:
     """
     query db to get list of types e.g. classification types
     """
@@ -93,7 +93,7 @@ def tokens_to_ragged_feature_vector(ser:pd.Series, class_dict:defaultdict) -> pd
     return ser
 
 
-def process_series(input_ser, class_dict):
+def label_series(input_ser, class_dict):
 
     ser = input_ser.fillna("").str.lower()
     # tokenize strings in pandas series
