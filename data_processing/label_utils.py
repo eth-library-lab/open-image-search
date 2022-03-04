@@ -1,7 +1,7 @@
 """utils for labelling text based features"""
 import numpy as np
 import pandas as pd
-from sqlalchemy import text
+from sqlalchemy import text, MetaData, Table, select
 import json
 import re
 from collections import defaultdict
@@ -25,19 +25,25 @@ def load_feature_types(table_name:str)-> defaultdict:
     query db to get list of types e.g. classification types
     """
 
+    feature_tables =["ImageSearch_classification", 
+                     "ImageSearch_materialtechnique",
+                     "ImageSearch_relationship",
+                    ]
+    assert table_name in feature_tables, f"requested table {table_name} must be one of {feature_tables}"
+
     engine = create_db_engine()
-    STMT = """
-    SELECT id, name
-    FROM :table_name;
-    """
-    stmt = text(STMT)
-    
-    with engine.connect() as conn:
-        result = conn.execute(stmt, {"table_name":table_name})
+
+    # reflect the existing table properties
+    metadata_obj = MetaData()
+    t = Table(table_name, metadata_obj, autoload_with=engine)
+
+    # query the db
+    s = select(t.c.id, t.c.name)
+    conn = engine.connect()
+    res = conn.execute(s)
 
     res_d = defaultdict(lambda: -1)
-    for row in result:
-        print("found existing: ", row.id,"  ", row.name)
+    for row in res:
         res_d[row.name] = row.id    
 
     return res_d
