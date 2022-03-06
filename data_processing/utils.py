@@ -275,3 +275,20 @@ def is_file_older_than(fpath, **timedelta_args):
     time_limit = time_limit.timestamp()
 
     return mod_time < time_limit
+
+
+def chunk_df(df:pd.DataFrame, chunksize=100) -> pd.DataFrame:
+    """ 
+    returns a generator iterate over a dataframe in chunks (using iloc)
+    """
+
+    n_rows = df.shape[0]
+    lower_idx = 0
+    upper_idx = lower_idx+chunksize
+    
+    while lower_idx <= (n_rows-1):
+
+        yield df.iloc[lower_idx:upper_idx, :]
+    
+        lower_idx += chunksize
+        upper_idx = lower_idx+chunksize
