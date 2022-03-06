@@ -10,18 +10,7 @@ from datetime import datetime as dt
 
 sys.path.append('../src')
 import utils
-
-def create_django_datetimestamp(dt_object=None):
-    
-    if dt_object==None:
-        created_time = dt.now()
-    else:
-        created_time = dt_object
-    # for django, timefield must be in format YYYY-MM-DD HH:MM[:ss[.uuuuuu]][TZ]
-    # e.g. "2020-05-26T11:40:56+01:00"
-    created_time = created_time.strftime('%Y-%m-%dT%H:%M:%S+01:00')
-    
-    return created_time
+from utils_db import create_django_datetimestamp
 
 
 def df_to_fixture_list(df,
