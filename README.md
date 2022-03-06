@@ -58,7 +58,7 @@ python3 run.py
 
 The application is currently in a prototype phase with the following simplified architecture. Each service runs in a docker container.
 
-<img src="./assets/Prototype-Architecture.png" width="400"/>
+<img src="./assets/Architecture.png" width="400"/>
 
 <br/><br/>      
 
