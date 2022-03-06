@@ -70,7 +70,6 @@ class ImageMetadataViewset(viewsets.ModelViewSet):
 
 
 class SearchResultViewset(viewsets.ModelViewSet):
-
     """
     list:
     Returns a list of all search results
@@ -97,7 +96,7 @@ class SearchResultViewset(viewsets.ModelViewSet):
         serializer = self.get_serializer(instance)
         resp = serializer.data
         #load metdata for list of ids        
-        results = getMetadataForListOfIds(instance.results)        
+        results = get_metadata_for_list_of_ids(instance.results)        
         resp['results'] = results
 
         return Response(resp, status=200)
