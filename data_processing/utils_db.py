@@ -92,8 +92,14 @@ def write_values_dict_to_db(engine, values_dict:dict, table_name:str) -> List:
     return result.fetchall()
 
 
-def get_institution_id(engine, inst_ref_name="ethz"):
-    
+def get_institution_id(engine, inst_ref_name="ethz")->str:
+    """ 
+    look up the primary key id number given the short reference
+    name for an institution 
+    """
+
+    id = None
+
     stmt = """
     SELECT id
     FROM "ImageSearch_institution"
@@ -105,8 +111,11 @@ def get_institution_id(engine, inst_ref_name="ethz"):
     with engine.connect() as conn:
         result = conn.execute(stmt, {"inst_ref_name":inst_ref_name})
     
-    for row in result:
-        return row[0]
+    row = result.first()
+    if row:
+        id = row.id
+
+    return id
 
 
 class NumpyEncoder(json.JSONEncoder):
