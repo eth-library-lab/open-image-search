@@ -34,38 +34,50 @@ class Institution(models.Model):
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     ref_name = models.CharField("short reference name", unique=True, blank=False, null=False, max_length=5)
 
+
 class ImageMetadata(models.Model):
-    
-    record_id = models.IntegerField("provider's original object id", blank=False, null=False)
+    """mainly unedited/extracted text based metadata for images"""
+    institution_id = models.ForeignKey(Institution, db_column="institution_id", blank=True, null=True, on_delete=models.SET_NULL)
+    record_name = models.CharField("provider's original object id", max_length=200, blank=False, null=False)
     created_date = models.DateTimeField("db_created_date", auto_now=True)
     title = models.CharField(blank=True, null=True, max_length=300)
     image_url = models.URLField(blank=False, null=False, max_length=300)
     record_url = models.URLField(blank=False, null=False, max_length=300)
     inventory_number = models.CharField(blank=True, null=True, max_length=50)
-    person = models.CharField("artist who produced work",blank=True, null=True, max_length=1500)
-    date = models.CharField("date of the work", blank=True, null=True, max_length=200)
-    classification =  models.CharField("type of work", blank=True, null=True, max_length=200)
-    classification_id = models.ForeignKey(Classification, blank=True,null=True, on_delete=models.SET_NULL)
-    material_technique = models.CharField("techniques used", blank=True, null=True, max_length=200)
-    material_technique_id = models.ManyToManyField(MaterialTechnique)
-    institution_isil = models.CharField("credit line", blank=True, null=True, max_length=50)
-    institution_isil_id = models.ForeignKey(Institution, blank=True, null=True, on_delete=models.SET_NULL) 
     image_licence = models.CharField("image licence", blank=True, null=True, max_length=50)
-    year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
-    year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
-    relationship_type_id = models.ManyToManyField(Relationship)
+    person = models.CharField("artist who produced work", blank=True, null=True, max_length=1500)
+    date = models.CharField("date of the work", blank=True, null=True, max_length=200)
+    classification = models.CharField("type of work", blank=True, null=True, max_length=500)
+    material_technique = models.CharField("techniques used", blank=True, null=True, max_length=500)
+    relationship = models.CharField("relationships assosciated with this work", blank=True, null=True, max_length=500)
+    
+    class Meta:
+        constraints = [models.UniqueConstraint(
+                                fields=['institution_id', 'record_name'],
+                                name='unique record'),]
+
 
 class Image(models.Model):
     directory = models.CharField("local directory where image is saved", null=True, max_length=300)
     provider_filename = models.CharField("original filename", max_length=200)
+    institution_id = models.ForeignKey(Institution, blank=True, null=True, on_delete=models.SET_NULL)
     image_metadata_id = models.ForeignKey(ImageMetadata, null=True, blank=True, on_delete=models.SET_NULL)
-    institution = models.ForeignKey(Institution, null=True, on_delete=models.SET_NULL)
 
     class Meta: 
         constraints = [models.UniqueConstraint(
-                                fields=['provider_filename', 'institution'], 
-                                name='unique_original_filename'),
-                      ]
+                                fields=['provider_filename', 'institution_id'],
+                                name='unique_original_filename'),]
+
+
+class ImageMetadataFeatures(models.Model):
+    
+    image_metadata_id = models.ForeignKey(ImageMetadata, db_column="image_metadata_id", on_delete=models.CASCADE)
+    created_date = models.DateTimeField("db_created_date", auto_now=True)
+    year_min = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
+    year_max = models.IntegerField(blank=True, null=True, default=-1, validators=[MinValueValidator(-1), MaxValueValidator(9999)])
+    classification_id = models.ManyToManyField(Classification)
+    material_technique_tag = models.ManyToManyField(MaterialTechnique)
+    relationship_id = models.ManyToManyField(Relationship)
 
 
 class SearchResult(models.Model):
@@ -86,10 +98,12 @@ class FeatureModel(models.Model):
     created_date = models.DateTimeField("when the model was trained", auto_now=True)
     description = models.CharField(max_length=500)
 
+
 class ImageFeature(models.Model):
     feature = ArrayField(base_field=models.FloatField()) # a flat array
     image_id = models.ForeignKey(Image,verbose_name="image that the features are from", on_delete=models.CASCADE, null=True, blank=True)
     model_id = models.ForeignKey(FeatureModel, verbose_name="model that created the vector", on_delete=models.CASCADE)
+
 
 class ImageKeyPointDescriptor(models.Model):
     """
