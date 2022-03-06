@@ -46,7 +46,8 @@ def main(args):
                        "isil_id":isil_id,
                        "ref_name":ref_name,
                        "created_date":dt.now()}
-        write_institution_to_db(engine, values_dict)
+        res = write_institution_to_db(engine, values_dict)
+        print(f"created record for {ref_name} in db. id is: {res.fetchone().id}")
     else:
         print(f"institution: '{ref_name}' already exists")
 
