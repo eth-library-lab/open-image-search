@@ -20,7 +20,7 @@ def create_class_dict(ser):
     return class_dict
 
 
-def load_feature_labels(table_name:str)-> defaultdict:
+def load_feature_labels(table_name:str, engine=None)-> defaultdict:
     """
     query db to get list of types e.g. classification types
     """
@@ -30,8 +30,9 @@ def load_feature_labels(table_name:str)-> defaultdict:
                      "ImageSearch_relationship",
                     ]
     assert table_name in feature_tables, f"requested table {table_name} must be one of {feature_tables}"
-
-    engine = create_db_engine()
+    
+    if engine == None:
+        engine = create_db_engine()
 
     # reflect the existing table properties
     metadata_obj = MetaData()
